@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Web;
+
+namespace IntensiveUse.Models
+{
+    [Table("files")]
+    public class UploadFile
+    {
+        public UploadFile()
+        {
+            CreateTime = DateTime.Now;
+        }
+        [Key]
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+        /// <summary>
+        /// 文件名
+        /// </summary>
+        [MaxLength(127)]
+        public string FileName { get; set; }
+        /// <summary>
+        /// 提交时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
+        /// <summary>
+        /// 保存路径
+        /// </summary>
+        [MaxLength(127)]
+        public string SavePath { get; set; }
+        /// <summary>
+        /// 文件分析状态
+        /// </summary>
+        [Column("State",TypeName="INT")]
+        public UploadFileProceedState State { get; set; }
+        /// <summary>
+        /// 文件分析信息
+        /// </summary>
+        [MaxLength(1023)]
+        public string ProcessMessage { get; set; }
+    }
+
+
+    public enum UploadFileExcel
+    {
+        表1 = 0,
+        表2 = 1,
+        表3 = 2
+    }
+
+    public enum UploadFileProceedState
+    {
+        UnProceed,
+        Proceeded,
+        Error
+    }
+}
