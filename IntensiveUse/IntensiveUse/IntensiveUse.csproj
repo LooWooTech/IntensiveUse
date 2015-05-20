@@ -159,6 +159,7 @@
     <Compile Include="Form\IForm.cs" />
     <Compile Include="Form\TableBase.cs" />
     <Compile Include="Form\TableOne.cs" />
+    <Compile Include="Form\TableThree.cs" />
     <Compile Include="Form\TableTwo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
