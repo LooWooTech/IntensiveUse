@@ -8,29 +8,29 @@ using System.Web;
 namespace IntensiveUse.Models
 {
     /// <summary>
-    /// 新增建设用地
+    /// 批准批次土地供应面积
     /// </summary>
-    [Table("newconstruction")]
-    public class NewConstruction
+    [Table("ratify")]
+    public class Ratify
     {
         [Key]
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         /// <summary>
-        /// 新增建设用地
+        /// 批准批次土地面积
         /// </summary>
-        public double Construction { get; set; }
+        public double Area { get; set; }
         /// <summary>
-        /// 新增城乡建设用地
+        /// 截止评价基准年底的已供地面积
         /// </summary>
-        public double Town { get; set; }
-        /// <summary>
-        /// 行政区ID
-        /// </summary>
-        public int CID { get; set; }
+        public double Already { get; set; }
         /// <summary>
         /// 年份
         /// </summary>
         public string Year { get; set; }
+        /// <summary>
+        /// 行政区ID
+        /// </summary>
+        public int RID { get; set; }
     }
 }

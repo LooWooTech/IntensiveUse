@@ -174,8 +174,10 @@
     <Compile Include="Models\ConstructionLand.cs" />
     <Compile Include="Models\Economy.cs" />
     <Compile Include="Models\IUDbContext.cs" />
+    <Compile Include="Models\LandSupply.cs" />
     <Compile Include="Models\NewConstruction.cs" />
     <Compile Include="Models\People.cs" />
+    <Compile Include="Models\Ratify.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\UploadFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

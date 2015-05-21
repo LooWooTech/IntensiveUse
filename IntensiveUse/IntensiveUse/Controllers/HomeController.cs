@@ -43,6 +43,9 @@ namespace IntensiveUse.Controllers
                 case UploadFileExcel.表2:
                     engine = new TableTwo();
                     break;
+                case UploadFileExcel.表3:
+                    engine = new TableThree();
+                    break;
                 default: break;
             }
             engine.Gain(FilePath);

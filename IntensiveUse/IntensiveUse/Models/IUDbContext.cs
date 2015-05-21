@@ -17,5 +17,8 @@ namespace IntensiveUse.Models
         public DbSet<Economy> Economys { get; set; }
         public DbSet<AgricultureLand> Agricultures { get; set; }
         public DbSet<ConstructionLand> Constructions { get; set; }
+        public DbSet<NewConstruction> NewConstructions { get; set; }
+        public DbSet<LandSupply> LandSupplys { get; set; }
+        public DbSet<Ratify> Ratifys { get; set; }
     }
 }
