@@ -1,15 +1,55 @@
-﻿using IntensiveUse.Models;
+﻿using IntensiveUse.Helper;
+using IntensiveUse.Models;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.WebPages.Html;
+using System.Xml;
 
 namespace IntensiveUse.Manager
 {
-    public class ExcelManager:ManagerBase
+    public class ExcelManager:ManagerBase,IDisposable
     {
+        private static readonly object syncRoot = new object();
+
+        private XmlDocument configXml;
+        public ExcelManager()
+        {
+            configXml = new XmlDocument();
+            configXml.Load(ConfigurationManager.AppSettings["TABLE_FILE_PATH"]);
+        }
+        public IWorkbook DownLoad(OutputExcel Type)
+        {
+            string TempFile = GetExcelPath(Type.ToString());
+            IWorkbook workbook = ExcelHelper.OpenWorkbook(TempFile);
+            ISheet sheet = workbook.GetSheetAt(0);
+            if (sheet == null)
+            {
+                throw new ArgumentException("未获取相关sheet信息");
+            }
+            Read(ref workbook);
+            return workbook;
+        }
+
+        public void Read(ref IWorkbook workbook)
+        {
+
+        }
+
+        public string GetExcelPath(string excelName)
+        {
+            var node = configXml.SelectSingleNode("/Tables/Table[@Title='" + excelName + "']/File");
+            if (node == null)
+            {
+                throw new ArgumentException("配置文件中未获取"+excelName+"相关信息");
+            }
+            return node.Attributes["Path"].Value;
+        }
+
         public Region Find(string Name)
         {
             using (var db = GetIntensiveUseContext())
@@ -42,8 +82,6 @@ namespace IntensiveUse.Manager
                     else
                     {
                         DICT[item].ID = temp.ID;
-                        
-                        //db.Entry(DICT[item]).State = EntityState.Modified;
                         db.Entry(temp).CurrentValues.SetValues(DICT[item]);
                     }
                     db.SaveChanges();
@@ -65,7 +103,6 @@ namespace IntensiveUse.Manager
                     else
                     {
                         DICT[item].ID = temp.ID;
-                        //db.Entry(DICT[item]).State = EntityState.Modified;
                         db.Entry(temp).CurrentValues.SetValues(DICT[item]);
                     }
                     db.SaveChanges();

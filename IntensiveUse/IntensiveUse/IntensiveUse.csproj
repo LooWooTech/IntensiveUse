@@ -164,6 +164,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Helper\UploadHelper.cs" />
     <Compile Include="Manager\ExcelManager.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Models\IUDbContext.cs" />
     <Compile Include="Models\LandSupply.cs" />
     <Compile Include="Models\NewConstruction.cs" />
+    <Compile Include="Models\OutPutList.cs" />
     <Compile Include="Models\People.cs" />
     <Compile Include="Models\Ratify.cs" />
     <Compile Include="Models\Region.cs" />
@@ -184,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="TableInfo.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -198,6 +201,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
+    <Folder Include="EXCEL\" />
     <Folder Include="Scripts\" />
     <Folder Include="Temp\" />
   </ItemGroup>
@@ -218,6 +222,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\UploadFile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

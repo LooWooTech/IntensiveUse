@@ -1,4 +1,5 @@
-﻿using IntensiveUse.Manager;
+﻿using IntensiveUse.Helper;
+using IntensiveUse.Manager;
 using IntensiveUse.Models;
 using NPOI.SS.UserModel;
 using System;
@@ -19,7 +20,7 @@ namespace IntensiveUse.Form
        
         public void Gain(string FilePath)
         {
-            ISheet sheet = Open(FilePath);
+            ISheet sheet = ExcelHelper.Open(FilePath);
             IRow row = RowGet(sheet, Start);
             GetMessage(row);
             bool Flag = true;

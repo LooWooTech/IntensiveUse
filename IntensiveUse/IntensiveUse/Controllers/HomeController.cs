@@ -1,8 +1,12 @@
 ﻿using IntensiveUse.Form;
 using IntensiveUse.Models;
+using IntensiveUse.Helper;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -51,6 +55,17 @@ namespace IntensiveUse.Controllers
             engine.Gain(FilePath);
             engine.Save(Core);
             return View();
+        }
+
+        public ActionResult DownLoad(OutputExcel Excel)
+        {
+            IWorkbook workbook=null;
+            MemoryStream ms = new MemoryStream();
+            workbook = Core.ExcelManager.DownLoad(Excel);
+            workbook.Write(ms);
+            ms.Flush();
+            byte[] fileContents = ms.ToArray();
+            return File(fileContents, "application/ms-excel", Excel.GetDescription());
         }
     }
 }

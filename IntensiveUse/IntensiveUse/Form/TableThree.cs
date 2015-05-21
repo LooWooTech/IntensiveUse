@@ -1,4 +1,5 @@
-﻿using IntensiveUse.Manager;
+﻿using IntensiveUse.Helper;
+using IntensiveUse.Manager;
 using IntensiveUse.Models;
 using NPOI.SS.UserModel;
 using System;
@@ -18,7 +19,7 @@ namespace IntensiveUse.Form
         public Dictionary<string, Ratify> DictRatify { get; set; }
         public void Gain(string FilePath)
         {
-            ISheet sheet = Open(FilePath);
+            ISheet sheet = ExcelHelper.Open(FilePath);
             IRow row = RowGet(sheet, Start);
             GetMessage(row);
             row = RowGet(sheet, 2);

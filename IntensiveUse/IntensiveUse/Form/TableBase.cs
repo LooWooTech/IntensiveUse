@@ -11,32 +11,7 @@ namespace IntensiveUse.Form
     public class TableBase
     {
         public string Name { get; set; }
-        public ISheet Open(string FilePath)
-        {
-            IWorkbook workbook = null;
-            try
-            {
-                using (FileStream fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
-                {
-                    workbook = WorkbookFactory.Create(fs);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException("打开文件：" + FilePath + "失败，错误原因如下：" + ex.ToString());
-            }
-            if (workbook == null)
-            {
-                throw new ArgumentException("打开Excel表格失败！");
-            }
-            if (workbook.NumberOfSheets == 0)
-            {
-                throw new ArgumentException("Excel文件中没有表格。");
-            }
-
-            var sheet = workbook.GetSheetAt(0);
-            return sheet;
-        }
+        
 
         private  Regex _yearRe = new Regex(@"^20[0-9]{2}", RegexOptions.Compiled);
         public  bool VerificationYear(string value)
