@@ -32,6 +32,10 @@ namespace IntensiveUse.Form
             {
                 cell=row.GetCell(Count,MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 value=GetValue(cell).Replace("年","");
+                if (string.IsNullOrEmpty(value))
+                {
+                    break;
+                }
                 if(!VerificationYear(value)){
                     Flag=false;
                 }else{

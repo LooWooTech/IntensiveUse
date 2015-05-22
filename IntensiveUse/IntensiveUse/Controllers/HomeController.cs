@@ -64,11 +64,11 @@ namespace IntensiveUse.Controllers
         {
             IWorkbook workbook=null;
             MemoryStream ms = new MemoryStream();
-            workbook = Core.ExcelManager.DownLoad(Excel);
+            workbook = Core.ExcelManager.DownLoad(Excel,City);
             workbook.Write(ms);
             ms.Flush();
             byte[] fileContents = ms.ToArray();
-            return File(fileContents, "application/ms-excel", Excel.GetDescription());
+            return File(fileContents, "application/ms-excel", Excel.GetDescription()+".xls");
         }
     }
 }

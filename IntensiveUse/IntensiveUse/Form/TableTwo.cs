@@ -36,6 +36,10 @@ namespace IntensiveUse.Form
                 }
                 cell = row.GetCell(Begin, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 value = GetValue(cell).Replace("年","");
+                if (string.IsNullOrEmpty(value))
+                {
+                    break;
+                }
                 if (!VerificationYear(value))
                 {
                     Flag = false;
@@ -114,6 +118,7 @@ namespace IntensiveUse.Form
             {
                 other+=Data[i];
             }
+            sum += sub;
             sum += other;
             if (!DictConstruction.ContainsKey(Year))
             {

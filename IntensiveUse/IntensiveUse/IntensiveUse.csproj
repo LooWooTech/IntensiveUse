@@ -157,6 +157,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Form\IForm.cs" />
+    <Compile Include="Form\ISchedule.cs" />
     <Compile Include="Form\ScheduleOne.cs" />
     <Compile Include="Form\TableBase.cs" />
     <Compile Include="Form\TableOne.cs" />

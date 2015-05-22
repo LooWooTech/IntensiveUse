@@ -1,4 +1,5 @@
-﻿using IntensiveUse.Helper;
+﻿using IntensiveUse.Form;
+using IntensiveUse.Helper;
 using IntensiveUse.Models;
 using NPOI.SS.UserModel;
 using System;
@@ -25,26 +26,23 @@ namespace IntensiveUse.Manager
             configXml.Load(ConfigurationManager.AppSettings["TABLE_FILE_PATH"]);
             CityConfigXml.Load(ConfigurationManager.AppSettings["CITY_FILE_PATH"]);
         }
-        public IWorkbook DownLoad(OutputExcel Type)
+        public IWorkbook DownLoad(OutputExcel Type,string City)
         {
             string TempFile = GetExcelPath(Type.ToString()).GetAbsolutePath();
-
-            IWorkbook workbook = ExcelHelper.OpenWorkbook(TempFile);
-            Read(ref workbook);
+            ISchedule load = null;
+            switch (Type)
+            {
+                case OutputExcel.附表1A1:
+                    break;
+                case OutputExcel.附表1A2:
+                    load = new ScheduleOne();
+                    break;
+                default: break;
+            }
+            IWorkbook workbook = load.Write(TempFile, Core, City);
+            //Read(ref workbook);
             return workbook;
         }
-
-        public void Read(ref IWorkbook workbook)
-        {
-            ISheet sheet = workbook.GetSheetAt(0);
-            if (sheet == null)
-            {
-                throw new ArgumentException("未获取相关sheet信息");
-            }
-            List<string> Years = GetFourYears();
-        }
-
-
         public string GetExcelPath(string excelName)
         {
             var node = configXml.SelectSingleNode("/Tables/Table[@Title='" + excelName + "']/File");
