@@ -26,6 +26,7 @@ namespace IntensiveUse.Controllers
 
         public ActionResult City()
         {
+            ViewBag.List = Core.ExcelManager.GetCity();
             return View();
         }
 
@@ -57,7 +58,9 @@ namespace IntensiveUse.Controllers
             return View();
         }
 
-        public ActionResult DownLoad(OutputExcel Excel)
+
+        [HttpPost]
+        public ActionResult DownLoad(OutputExcel Excel,string City)
         {
             IWorkbook workbook=null;
             MemoryStream ms = new MemoryStream();

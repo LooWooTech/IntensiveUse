@@ -13,7 +13,7 @@ namespace IntensiveUse.Form
     {
         private const int Start = 4;
         private const int Begin = 1;
-        private int[] AgSerial = { 4, 5, 6, 7, 17, 32, 25, 28, 33, 9, 10, 12, 11, 15, 16, 18, 19, 20, 24, 29, 13, 22, 23, 26, 27, 35, 34, 36, 37 };
+        private int[] AgSerial = { 4, 5, 6, 7, 17, 32, 25, 28, 33, 9, 10, 12, 11, 15, 16, 18, 19, 20, 24, 29, 13, 22, 23, 26, 27, 30, 34,35, 36, 37 };
         public string Code { get; set; }
         public Dictionary<string, AgricultureLand> DictAgriculture { get; set; }
         public Dictionary<string, ConstructionLand> DictConstruction { get; set; }
@@ -84,11 +84,17 @@ namespace IntensiveUse.Form
             {
                 DictConstruction = new Dictionary<string, ConstructionLand>();
             }
-
+            double sub = 0.0;
+            double sum = 0.0;
+            for (var i = 0; i < 9; i++)
+            {
+                sub += Data[i];
+            }
             if (!DictAgriculture.ContainsKey(Year))
             {
                 DictAgriculture.Add(Year, new AgricultureLand
                 {
+                    Subtotal=sub,
                     Arable = Data[0],
                     Garden = Data[1],
                     Forest = Data[2],
@@ -97,19 +103,35 @@ namespace IntensiveUse.Form
                     Year = Year
                 });
             }
+            sum += sub;
+            sub = 0;
+            for (var i = 9; i < 21; i++)
+            {
+                sub+=Data[i];
+            }
+            double other = 0.0;
+            for (var i = 21; i < 30; i++)
+            {
+                other+=Data[i];
+            }
+            sum += other;
             if (!DictConstruction.ContainsKey(Year))
             {
                 DictConstruction.Add(Year, new ConstructionLand
                 {
+                    SubTotal = sub,
                     Town = Data[9] + Data[10],
                     MiningLease = Data[11],
                     County = Data[12],
                     Traffic = Data[13] + Data[14] + Data[15] + Data[16] + Data[17] + Data[18] + Data[19],
                     OtherConstruction = Data[20],
-                    Other = Data[21] + Data[22] + Data[23] + Data[24] + Data[25] + Data[26] + Data[27] + Data[28],
+                    Other = other,
+                    Sum=sum,
                     Year = Year
                 });
             }
+               
+               
 
         }
 

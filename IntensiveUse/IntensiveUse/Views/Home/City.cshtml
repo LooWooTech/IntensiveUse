@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "地级市";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<string> list=ViewBag.List;
 }
 
 <table class="table table-bordered">
@@ -24,6 +25,8 @@
     }
 </table>
 
+
+
 <table class="table table-bordered">
     <tr>
         <th>输出表单名称</th>
@@ -34,7 +37,41 @@
     {
         <tr>
             <td>@(item.ToString())-@(item.GetDescription())</td>
-            <td></td>
+            <td>
+                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#@(item.ToString())">下载</button>
+                <div class="modal fade" id="@(item.ToString())" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">地级市选择</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" method="post" action="/Home/DownLoad">
+                                    <div class="form-group">
+                                        <label for="City" class="control-label col-lg-2">地级市</label>
+                                        <div class="col-lg-6">
+                                            <select name="City" class="form-control">
+                                                @foreach (var city in list)
+                                                {
+                                                    <option value="@city">@city</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <input type="text" value="@(item)" style="display:none" name="Excel" />
+                                    <div class="form-group">
+                                        <div class="col-lg-10 col-lg-offset-2">
+                                            <button type="submit" class="btn btn-primary">确定</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
             <td></td>
         </tr>
     }

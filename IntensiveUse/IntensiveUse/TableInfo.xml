@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Tables>
   <Table Title="附表1A1" Name="">
-    <File Title="模板" Path="/EXCEL/附表1A1.xls"></File>
+    <File Title="模板" Path="EXCEL/附表1A1.xls"></File>
   </Table>
   <Table Title="附表1A2" Name="">
-    <File Title="模板" Path="/EXCEL/附表1A2.xls"></File>
+    <File Title="模板" Path="EXCEL/附表1A2.xls"></File>
   </Table>
 </Tables>

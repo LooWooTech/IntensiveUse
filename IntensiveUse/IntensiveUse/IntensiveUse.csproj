@@ -157,6 +157,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Form\IForm.cs" />
+    <Compile Include="Form\ScheduleOne.cs" />
     <Compile Include="Form\TableBase.cs" />
     <Compile Include="Form\TableOne.cs" />
     <Compile Include="Form\TableThree.cs" />
@@ -167,10 +168,14 @@
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Helper\UploadHelper.cs" />
+    <Compile Include="Manager\EconomyManager.cs" />
     <Compile Include="Manager\ExcelManager.cs" />
     <Compile Include="Manager\FileManager.cs" />
+    <Compile Include="Manager\LandSupplyManager.cs" />
+    <Compile Include="Manager\LandUseManager.cs" />
     <Compile Include="Manager\ManagerBase.cs" />
     <Compile Include="Manager\ManagerCore.cs" />
+    <Compile Include="Manager\PeopleManager.cs" />
     <Compile Include="Models\AgricultureLand.cs" />
     <Compile Include="Models\ConstructionLand.cs" />
     <Compile Include="Models\Economy.cs" />
@@ -185,7 +190,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CityInfo.xml" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootswatch.min.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\main.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\html5shiv.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\Respond.min.js" />
     <Content Include="TableInfo.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -200,9 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
     <Folder Include="EXCEL\" />
-    <Folder Include="Scripts\" />
     <Folder Include="Temp\" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +242,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\UploadFile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\main.less" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -17,6 +17,10 @@ namespace IntensiveUse.Models
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         /// <summary>
+        /// 小计
+        /// </summary>
+        public double SubTotal { get; set; }
+        /// <summary>
         /// 城镇用地
         /// </summary>
         public double Town { get; set; }
@@ -40,6 +44,10 @@ namespace IntensiveUse.Models
         /// 其他用地
         /// </summary>
         public double Other { get; set; }
+        /// <summary>
+        /// 总面积
+        /// </summary>
+        public double Sum { get; set; }
         /// <summary>
         /// 年份
         /// </summary>

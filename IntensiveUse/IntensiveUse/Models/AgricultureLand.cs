@@ -17,6 +17,10 @@ namespace IntensiveUse.Models
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         /// <summary>
+        /// 小计
+        /// </summary>
+        public double Subtotal { get; set; }
+        /// <summary>
         /// 耕地
         /// </summary>
         public double Arable { get; set; }

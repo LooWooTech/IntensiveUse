@@ -42,6 +42,12 @@ namespace IntensiveUse.Helper
             return workbook;
         }
 
+
+        public static string GetAbsolutePath(this string File)
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, File);
+        }
+
         
         
     }
