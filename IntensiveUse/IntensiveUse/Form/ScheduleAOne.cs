@@ -9,12 +9,12 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleOne:ISchedule
+    public class ScheduleAOne:ISchedule
     {
         public Dictionary<string, List<double>> DictData { get; set; }
         public int Start = 1;
         public int Begin = 5;
-        public ScheduleOne()
+        public ScheduleAOne()
         {
             if (DictData == null)
             {
@@ -52,7 +52,7 @@ namespace IntensiveUse.Form
                 {
                     row = sheet.GetRow(line++);
                     cell = row.GetCell(Begin, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                    cell.SetCellValue(entity.ToString("0.00"));
+                    cell.SetCellValue(Math.Round(entity,2));
                 }
                 Begin++;
             }

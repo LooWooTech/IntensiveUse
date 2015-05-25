@@ -26,7 +26,7 @@ namespace IntensiveUse.Form
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
             {
-                throw new ArgumentException("打开模板失败");
+                throw new ArgumentException("打开模板失败,服务器缺失文件");
             }
             Message(Core, City);
             int StartRow = 0;

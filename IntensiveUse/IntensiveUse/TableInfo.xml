@@ -9,4 +9,7 @@
   <Table Title="附表1A3" Name="">
     <File Title="模板" Path="EXCEL/附表1A3.xls"></File>
   </Table>
+  <Table Title="附表1A4" Name="">
+    <File Title="模板" Path="EXCEL/附表1A4.xls"></File>
+  </Table>
 </Tables>

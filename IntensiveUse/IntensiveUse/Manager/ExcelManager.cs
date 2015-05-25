@@ -35,15 +35,17 @@ namespace IntensiveUse.Manager
                 case OutputExcel.附表1A1:
                     break;
                 case OutputExcel.附表1A2:
-                    load = new ScheduleOne();
+                    load = new ScheduleAOne();
                     break;
                 case OutputExcel.附表1A3:
                     load = new ScheduleAThree();
                     break;
+                case OutputExcel.附表1A4:
+                    load = new ScheduleAFour();
+                    break;
                 default: break;
             }
             IWorkbook workbook = load.Write(TempFile, Core, City);
-            //Read(ref workbook);
             return workbook;
         }
         public string GetExcelPath(string excelName)

@@ -158,9 +158,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Form\IForm.cs" />
     <Compile Include="Form\ISchedule.cs" />
+    <Compile Include="Form\ScheduleAFour.cs" />
     <Compile Include="Form\ScheduleAThree.cs" />
     <Compile Include="Form\ScheduleBTwo.cs" />
-    <Compile Include="Form\ScheduleOne.cs" />
+    <Compile Include="Form\ScheduleAOne.cs" />
     <Compile Include="Form\TableBase.cs" />
     <Compile Include="Form\TableOne.cs" />
     <Compile Include="Form\TableThree.cs" />
@@ -265,6 +266,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EXCEL\附表1B2.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A4.xls" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
