@@ -37,6 +37,9 @@ namespace IntensiveUse.Manager
                 case OutputExcel.附表1A2:
                     load = new ScheduleOne();
                     break;
+                case OutputExcel.附表1A3:
+                    load = new ScheduleAThree();
+                    break;
                 default: break;
             }
             IWorkbook workbook = load.Write(TempFile, Core, City);
@@ -68,6 +71,23 @@ namespace IntensiveUse.Manager
                 Citys.Add(n.Attributes["Name"].Value);
             }
             return Citys;
+        }
+
+        public List<string> GetDistrict(string City)
+        {
+            List<string> Disticts = new List<string>();
+            var node = CityConfigXml.SelectSingleNode("/Citys/City[@Name='" + City + "']");
+            if (node == null)
+            {
+                throw new ArgumentException("未获取"+City+"所辖区相关信息");
+            }
+            var nodes = node.SelectNodes("Division");
+            for (var i = 0; i < nodes.Count; i++)
+            {
+                var n = nodes[i];
+                Disticts.Add(n.Attributes["Name"].Value);
+            }
+            return Disticts;
         }
 
         public Region Find(string Name)

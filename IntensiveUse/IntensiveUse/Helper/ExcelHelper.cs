@@ -48,7 +48,43 @@ namespace IntensiveUse.Helper
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, File);
         }
 
-        
-        
+        public static IRow OpenRow(ref ISheet sheet, int ID)
+        {
+            IRow row = sheet.GetRow(ID);
+            if (row == null)
+            {
+                row = sheet.CreateRow(ID);
+            }
+            return row;
+        }
+
+        public static ICell OpenCell(ref IRow row ,int ID){
+            ICell cell=row.GetCell(ID,MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            if(cell==null){
+                cell=row.CreateCell(ID);
+            }
+            return cell;
+        }
+
+    }
+
+
+    public class Situation
+    {
+        /// <summary>
+        /// 增长量
+        /// </summary>
+        public double Increment { get; set; }
+        /// <summary>
+        /// 增长幅度
+        /// </summary>
+        public double Extent { get; set; }
+    }
+
+    public enum Division
+    {
+        Total=0,
+        Town=1,
+        County=2
     }
 }

@@ -6,4 +6,7 @@
   <Table Title="附表1A2" Name="">
     <File Title="模板" Path="EXCEL/附表1A2.xls"></File>
   </Table>
+  <Table Title="附表1A3" Name="">
+    <File Title="模板" Path="EXCEL/附表1A3.xls"></File>
+  </Table>
 </Tables>

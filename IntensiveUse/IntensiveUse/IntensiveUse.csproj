@@ -158,6 +158,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Form\IForm.cs" />
     <Compile Include="Form\ISchedule.cs" />
+    <Compile Include="Form\ScheduleAThree.cs" />
+    <Compile Include="Form\ScheduleBTwo.cs" />
     <Compile Include="Form\ScheduleOne.cs" />
     <Compile Include="Form\TableBase.cs" />
     <Compile Include="Form\TableOne.cs" />
@@ -220,7 +222,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="EXCEL\" />
     <Folder Include="Temp\" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +253,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\main.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A1.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A2.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A3.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1B2.xls" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
