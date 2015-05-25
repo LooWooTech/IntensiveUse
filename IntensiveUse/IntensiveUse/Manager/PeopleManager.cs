@@ -198,6 +198,21 @@ namespace IntensiveUse.Manager
             }
         }
 
+        public double[] GainUII(int Year,int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                string em=Year.ToString();
+                People people = db.Peoples.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == em.ToLower());
+                if (people == null)
+                {
+                    people = new People();
+                }
+
+            }
+            return null;
+        }
+
 
     }
 }

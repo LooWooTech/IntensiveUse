@@ -70,5 +70,7 @@ namespace IntensiveUse.Controllers
             byte[] fileContents = ms.ToArray();
             return File(fileContents, "application/ms-excel", Excel.GetDescription()+".xls");
         }
+
+        
     }
 }
