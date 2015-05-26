@@ -13,7 +13,6 @@ namespace IntensiveUse.Form
     {
         public const int Start = 2;
         public const int Begin = 4;
-        public const string Name = "附表1A-6地级以上城市（县级市）区域用地状况定量评价指标理想值汇总表";
         public List<double> Data { get; set; }
         public ScheduleASix()
         {
@@ -25,39 +24,41 @@ namespace IntensiveUse.Form
 
         public Exponent Read(string FilePath)
         {
+            Queue<double> queue = new Queue<double>();
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
             {
                 throw new ArgumentException("表格中没有sheet，请核对表格");
             }
-            IRow row = sheet.GetRow(0);
-            ICell cell = row.GetCell(0, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-            if (cell == null)
-            {
-                throw new ArgumentException("未读取到"+Name+"相关数据");
-            }
-            string value = cell.ToString();
-            if (value != Name)
-            {
-                throw new ArgumentException("请核对上传的表格");
-            }
+            IRow row = null;
+            ICell cell = null;
+            string value =string.Empty;
             int Count = sheet.LastRowNum;
-            for (var i = Start; i < Count; i++)
+            for (var i = Start; i <=Count; i++)
             {
                 row = sheet.GetRow(i);
                 if (row == null)
                 {
                     break;
                 }
-                cell = row.GetCell(Start + 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                cell = row.GetCell(Begin + 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 double m = 0.0;
                 value = cell.ToString().Replace("%", "").Trim();
                 double.TryParse(value, out m);
-                Data.Add(m);
+                queue.Enqueue(m);
+            }
+            Exponent exponent = new Exponent();
+            System.Reflection.PropertyInfo[] propList = typeof(Exponent).GetProperties();
+            foreach (var item in propList)
+            {
+                if (item.PropertyType.Equals(typeof(double)))
+                {
+                    item.SetValue(exponent, queue.Dequeue(), null);
+                }
             }
 
-            return new Exponent();
+            return exponent;
         }
         public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City)
         {

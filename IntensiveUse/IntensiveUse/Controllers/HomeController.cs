@@ -59,9 +59,22 @@ namespace IntensiveUse.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadOutExcel()
+        public ActionResult UploadOutExcel(OutputExcel Type,string City,int Year)
         {
-
+            var FilePath = Core.FileManager.SaveFile(HttpContext, Type.ToString());
+            ScheduleASix engine = new ScheduleASix();
+            Exponent exponent=engine.Read(FilePath);
+            if (exponent == null)
+            {
+                throw new ArgumentException("未读取到相关理想数据");
+            }
+            exponent.Year = Year.ToString();
+            exponent.RID = Core.ExcelManager.GetID(City);
+            int ID = Core.ExponentManager.Add(exponent);
+            if (ID <= 0)
+            {
+                throw new ArgumentException("保存理想值失败");
+            }
             return View("UploadFile");
         }
 

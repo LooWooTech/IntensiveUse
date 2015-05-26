@@ -42,5 +42,11 @@ namespace IntensiveUse.Manager
         {
             get { return _landuseManager == null ? _landuseManager = new LandUseManager() : _landuseManager; }
         }
+
+        private ExponentManager _exponentManager;
+        public ExponentManager ExponentManager
+        {
+            get { return _exponentManager == null ? _exponentManager = new ExponentManager() : _exponentManager; }
+        }
     }
 }
