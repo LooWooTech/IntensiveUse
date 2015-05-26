@@ -22,7 +22,7 @@ namespace IntensiveUse.Form
                 DictData = new Dictionary<string, List<double>>();
             }
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core, string City)
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City)
         {
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
@@ -31,7 +31,7 @@ namespace IntensiveUse.Form
                 throw new ArgumentException("打开模板失败,服务器缺失文件");
             }
             TempRow = sheet.GetRow(Start);
-            Message(Core, City);
+            Message(Core,Year, City);
             int Count = DictData.Count;
             IRow row = ExcelHelper.OpenRow(ref sheet,Start+2);
             ICell cell = null;
@@ -94,11 +94,11 @@ namespace IntensiveUse.Form
             return cell;
         }
 
-        public void Message(ManagerCore Core,string City)
+        public void Message(ManagerCore Core,int Year,string City)
         {
             List<string> Division = Core.ExcelManager.GetDistrict(City);
             int CID=Core.ExcelManager.GetID(City);
-            Situation[] Cities = Core.EconmoyManager.Find(DateTime.Now.Year, CID);
+            Situation[] Cities = Core.EconmoyManager.Find(Year, CID);
             if (Cities == null || Cities.Count() != 2)
             {
                 throw new ArgumentException("未读取到上一级数据");
@@ -117,7 +117,7 @@ namespace IntensiveUse.Form
             foreach (var item in Division)
             {
                 int ID = Core.ExcelManager.GetID(item);
-                List<double> values = Core.EconmoyManager.Gain(DateTime.Now.Year, ID, Cities);
+                List<double> values = Core.EconmoyManager.Gain(Year, ID, Cities);
                 if (!DictData.ContainsKey(item))
                 {
                     DictData.Add(item, values);

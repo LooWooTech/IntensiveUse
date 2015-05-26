@@ -14,7 +14,7 @@ namespace IntensiveUse.Manager
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public string SaveFile(HttpContextBase context)
+        public string SaveFile(HttpContextBase context,string Name)
         {
             var file = UploadHelper.GetPostedFile(context);
             var ext = Path.GetExtension(file.FileName).ToLower();
@@ -28,6 +28,7 @@ namespace IntensiveUse.Manager
                 FileName = file.FileName,
                 CreateTime = DateTime.Now,
                 SavePath = filePath,
+                FileTypeName=Name
             });
 
             return UploadHelper.GetAbsolutePath(filePath); 

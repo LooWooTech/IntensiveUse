@@ -30,13 +30,73 @@
 <table class="table table-bordered">
     <tr>
         <th>输出表单名称</th>
-        <th style="width:200px;">表单生成状态</th>
-        <th>备注</th>
+        <th>数据导入</th>
+        <th style="width:200px;">下载</th>
+        
     </tr>
     @foreach (OutputExcel item in Enum.GetValues(typeof(OutputExcel)))
     {
-        <tr>
+        var Year=DateTime.Now.Year;
+        if ((int)item < 14)
+        {
+            <tr>
             <td>@(item.ToString())-@(item.GetDescription())</td>
+            <td>
+                @if (item == OutputExcel.附表1A6)
+                {
+                    var year=DateTime.Now.Year;
+                    <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#@(item.ToString())-upload">上传</button>
+                    <div class="modal fade" id="@(item.ToString())-upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title">请选择上传地级市之后上传文件</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="" class="form-horizontal" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <label for="City" class="control-label col-lg-3">地级市</label>
+                                            <div class="col-lg-6">
+                                                <select name="City" class="form-control">
+                                                    @foreach (var city in list)
+                                                    {
+                                                        <option value="@city">@city</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Year" class="control-label col-lg-3">年份</label>
+                                            <div class="col-lg-6">
+                                                <select name="Year" class="form-control">
+                                                    @while (year>=2010)
+                                                    {
+                                                        <option value="@year">@year</option>
+                                                        year--;
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="file" class="control-label col-lg-3">文件选择</label>
+                                            <div class="col-lg-6">
+                                                <input type="file" name="file" class="form-control input-sm" style="width:100px;" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-9 col-lg-offset-3">
+                                                <button type="submit" class="btn btn-sm btn-success">上传</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                }
+            </td>
             <td>
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#@(item.ToString())">下载</button>
                 <div class="modal fade" id="@(item.ToString())" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -70,6 +130,18 @@
                                             </div>
                                         </div>
                                     }
+                                    <div class="form-group">
+                                        <label for="Year" class="control-label col-lg-3">年份</label>
+                                        <div class="col-lg-6">
+                                            <select name="Year" class="form-control">
+                                                @while ((Year-5) >= 2000)
+                                                {
+                                                    <option value="@Year">@(Year)-@(Year-5)</option>
+                                                    Year--;
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
                                     <input type="text" value="@(item)" style="display:none" name="Excel" />
                                     <div class="form-group">
                                         <div class="col-lg-9 col-lg-offset-3">
@@ -83,8 +155,10 @@
                     </div>
                 </div>
             </td>
-            <td></td>
+            
         </tr>
+        }
+        
     }
 </table>
 

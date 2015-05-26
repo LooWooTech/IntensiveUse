@@ -163,7 +163,7 @@
     <Compile Include="Form\ScheduleASix.cs" />
     <Compile Include="Form\ScheduleAThree.cs" />
     <Compile Include="Form\ScheduleBTwo.cs" />
-    <Compile Include="Form\ScheduleAOne.cs" />
+    <Compile Include="Form\ScheduleATwo.cs" />
     <Compile Include="Form\TableBase.cs" />
     <Compile Include="Form\TableOne.cs" />
     <Compile Include="Form\TableThree.cs" />
@@ -185,6 +185,7 @@
     <Compile Include="Models\AgricultureLand.cs" />
     <Compile Include="Models\ConstructionLand.cs" />
     <Compile Include="Models\Economy.cs" />
+    <Compile Include="Models\Exponent.cs" />
     <Compile Include="Models\IUDbContext.cs" />
     <Compile Include="Models\LandSupply.cs" />
     <Compile Include="Models\NewConstruction.cs" />

@@ -20,7 +20,7 @@ namespace IntensiveUse.Form
                 DictData = new Dictionary<string, List<string>>();
             }
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core, string City)
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City)
         {
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
@@ -28,7 +28,7 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("打开模板失败,服务器缺失文件");
             }
-            Message(Core, City);
+            Message(Core,Year, City);
             int StartRow = 0;
             int StartLine=Begin;
             int SerialNumber = 0;
@@ -54,13 +54,13 @@ namespace IntensiveUse.Form
             return workbook;
         }
 
-        public void Message(ManagerCore Core,string City)
+        public void Message(ManagerCore Core,int Year,string City)
         {
             List<string> Division = Core.ExcelManager.GetDistrict(City);
             foreach (var item in Division)
             {
                 int ID = Core.ExcelManager.GetID(item);
-                List<string> values = Core.PeopleManager.Statistics(ID);
+                List<string> values = Core.PeopleManager.Statistics(ID,Year);
                 if (!DictData.ContainsKey(item))
                 {
                     DictData.Add(item, values);

@@ -20,5 +20,6 @@ namespace IntensiveUse.Models
         public DbSet<NewConstruction> NewConstructions { get; set; }
         public DbSet<LandSupply> LandSupplys { get; set; }
         public DbSet<Ratify> Ratifys { get; set; }
+        public DbSet<Exponent> Exponents { get; set; }
     }
 }

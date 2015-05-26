@@ -26,7 +26,7 @@ namespace IntensiveUse.Manager
             configXml.Load(ConfigurationManager.AppSettings["TABLE_FILE_PATH"]);
             CityConfigXml.Load(ConfigurationManager.AppSettings["CITY_FILE_PATH"]);
         }
-        public IWorkbook DownLoad(OutputExcel Type,string City)
+        public IWorkbook DownLoad(OutputExcel Type,int Year,string City)
         {
             string TempFile = GetExcelPath(Type.ToString()).GetAbsolutePath();
             ISchedule load = null;
@@ -35,7 +35,7 @@ namespace IntensiveUse.Manager
                 case OutputExcel.附表1A1:
                     break;
                 case OutputExcel.附表1A2:
-                    load = new ScheduleAOne();
+                    load = new ScheduleATwo();
                     break;
                 case OutputExcel.附表1A3:
                     load = new ScheduleAThree();
@@ -51,7 +51,7 @@ namespace IntensiveUse.Manager
                     break;
                 default: break;
             }
-            IWorkbook workbook = load.Write(TempFile, Core, City);
+            IWorkbook workbook = load.Write(TempFile, Core,Year, City);
             return workbook;
         }
         public string GetExcelPath(string excelName)

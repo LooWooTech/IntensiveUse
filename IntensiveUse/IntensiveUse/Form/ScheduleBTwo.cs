@@ -11,7 +11,7 @@ namespace IntensiveUse.Form
     public class ScheduleBTwo:ISchedule
     {
 
-        public IWorkbook Write(string FilePath, ManagerCore Core, string City)
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City)
         {
             int ID = Core.ExcelManager.GetID(City);
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);

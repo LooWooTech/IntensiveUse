@@ -9,6 +9,6 @@ namespace IntensiveUse.Form
 {
     interface ISchedule
     {
-        IWorkbook Write(string FilePath, ManagerCore Core, string City);
+        IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City);
     }
 }

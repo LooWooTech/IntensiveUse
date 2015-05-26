@@ -9,12 +9,12 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleAOne:ISchedule
+    public class ScheduleATwo:ISchedule
     {
         public Dictionary<string, List<double>> DictData { get; set; }
         public int Start = 1;
         public int Begin = 5;
-        public ScheduleAOne()
+        public ScheduleATwo()
         {
             if (DictData == null)
             {
@@ -22,11 +22,11 @@ namespace IntensiveUse.Form
             }
         }
 
-        public IWorkbook Write(string FilePath,ManagerCore Core,string City)
+        public IWorkbook Write(string FilePath,ManagerCore Core,int Year,string City)
         {
             int ID = Core.ExcelManager.GetID(City);
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
-            Message(Core, ID);
+            Message(Core, Year,ID);
             ISheet sheet = workbook.GetSheetAt(0);
             IRow row = sheet.GetRow(Start);
             ICell cell = row.GetCell(2, MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -59,12 +59,11 @@ namespace IntensiveUse.Form
             return workbook;
         }
 
-        public void Message(ManagerCore Core,int ID)
+        public void Message(ManagerCore Core,int Year,int ID)
         {
-            int year = DateTime.Now.Year;
             for (var i = 4; i >= 0; i--)
             {
-                string em = (year - i).ToString();
+                string em = (Year - i).ToString();
                 List<double> Data = new List<double>();
                 double[] peoples = Core.PeopleManager.Get(em, ID);
                 foreach (var entity in peoples)

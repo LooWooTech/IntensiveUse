@@ -42,6 +42,10 @@ namespace IntensiveUse.Models
         /// </summary>
         [MaxLength(1023)]
         public string ProcessMessage { get; set; }
+        /// <summary>
+        /// 上传文件表格类型名称
+        /// </summary>
+        public string FileTypeName { get; set; }
     }
 
 

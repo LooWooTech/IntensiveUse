@@ -35,10 +35,10 @@ namespace IntensiveUse.Controllers
             return View();
         }
 
-
+        [HttpPost]
         public ActionResult UploadFile(UploadFileExcel Type)
         {
-            var FilePath = Core.FileManager.SaveFile(HttpContext);
+            var FilePath = Core.FileManager.SaveFile(HttpContext,Type.ToString());
             IForm engine = null;
             switch (Type)
             {
@@ -58,13 +58,20 @@ namespace IntensiveUse.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult UploadOutExcel()
+        {
+
+            return View("UploadFile");
+        }
+
 
         [HttpPost]
-        public ActionResult DownLoad(OutputExcel Excel,string City,string County)
+        public ActionResult DownLoad(OutputExcel Excel,int Year,string City,string County)
         {
             IWorkbook workbook=null;
             MemoryStream ms = new MemoryStream();
-            workbook = Core.ExcelManager.DownLoad(Excel,City);
+            workbook = Core.ExcelManager.DownLoad(Excel,Year,City);
             workbook.Write(ms);
             ms.Flush();
             byte[] fileContents = ms.ToArray();
@@ -76,5 +83,7 @@ namespace IntensiveUse.Controllers
             List<string> html = Core.ExcelManager.GetDistrict(City);
             return HtmlResult(html);
         }
+
+        
     }
 }

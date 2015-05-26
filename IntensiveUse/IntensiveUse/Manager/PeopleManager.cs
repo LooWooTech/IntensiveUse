@@ -37,9 +37,8 @@ namespace IntensiveUse.Manager
             return new double[] { people.PermanentSum, people.Town, people.County, people.HouseHold, people.Agriculture, people.NonFram };   
         }
     
-        public List<string> Statistics(int ID)
+        public List<string> Statistics(int ID,int Year)
         {
-            int Year = DateTime.Now.Year;
             List<string> list = new List<string>();
             foreach (Division item in Enum.GetValues(typeof(Division)))
             {
