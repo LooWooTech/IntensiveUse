@@ -272,6 +272,15 @@
   <ItemGroup>
     <Content Include="EXCEL\附表1A4.xls" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A5.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A6.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A7.xls" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

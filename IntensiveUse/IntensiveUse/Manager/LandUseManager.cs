@@ -71,5 +71,50 @@ namespace IntensiveUse.Manager
             }
             return 0.00;
         }
+
+        public double[] GetUII(int Year, int ID)
+        {
+            double[] values=Core.EconmoyManager.GetEUII(Year,ID);
+            if (values.Count() != 2)
+            {
+                throw new ArgumentException("获取EUII数据的时候，发生数据错误");
+            }
+            return new double[]{
+                Core.PeopleManager.GetPUII(Year.ToString(),ID),
+                values[0],
+                values[1]
+            };
+        }
+
+        public double[] GetGCI(int Year,int ID)
+        {
+            double[] values=Core.EconmoyManager.GetEGCI(Year,ID);
+            if (values.Count() != 3)
+            {
+                throw new ArgumentException("在获取EGCI的时候，获取数据失败");
+            }
+            return new double[]{
+                GetPGCI(Year,ID),
+                values[0],
+                values[1],
+                values[2]
+            };
+        }
+
+        public double[] GetEI(int Year, int ID)
+        {
+            return new double[]{
+                Core.PeopleManager.GetPEI(Year,ID),
+                Core.PeopleManager.GetEEI(Year,ID)
+            };
+        }
+
+        public double[] GetULAPI(int Year, int ID)
+        {
+            return new double[]{
+                Core.LandSupplyManager.ULAPI1(Year,ID),
+                Core.LandSupplyManager.ULAPI2(Year,ID)
+            };
+        }
     }
 }

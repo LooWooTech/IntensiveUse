@@ -96,5 +96,55 @@ namespace IntensiveUse.Manager
             }
             return values;
         }
+
+        public double[] GetEGCI(int Year, int ID)
+        {
+            double[] values = new double[3];
+            Economy economy1 = SearchForEconomy((Year - 1).ToString(), ID);//13年
+            Economy economy2 = SearchForEconomy(Year.ToString(), ID);//14年
+            ConstructionLand construction1=SearchForConstruction((Year-1).ToString(),ID);
+            ConstructionLand construction2=SearchForConstruction(Year.ToString(),ID);
+            if (Math.Abs(economy1.Compare - 0) > 0.001 && Math.Abs(economy2.Compare - 0) > 0.001)
+            {
+                values[0] = (construction1.SubTotal / economy1.Compare - construction2.SubTotal / economy2.Compare) * economy1.Compare / construction1.SubTotal / 100;
+            }
+            NewConstruction newconstruction = SearchForNewConstruction(Year.ToString(), ID);
+            if (Math.Abs(economy2.Compare - economy1.Compare) > 0.001)
+            {
+                values[1] = newconstruction.Construction * 10000 / (economy2.Compare - economy1.Compare);
+            }
+            if (Math.Abs(economy2.Aggregate - 0) > 0.001)
+            {
+                values[2] = newconstruction.Construction * 10000 / economy2.Aggregate;
+            }
+            return values;
+        }
+
+
+        public Situation[] EEI(int Year, int ID)
+        {
+            Situation[] situation=new Situation[2];
+            Economy economy1 = SearchForEconomy(Year.ToString(), ID);
+            Economy economy2 = SearchForEconomy((Year - 3).ToString(), ID);
+            ConstructionLand construction1 = SearchForConstruction(Year.ToString(),ID);
+            ConstructionLand construction2 = SearchForConstruction((Year - 3).ToString(), ID);
+            situation[0] = new Situation()
+            {
+                Increment = economy1.Compare - economy2.Compare
+            };
+            situation[1] = new Situation()
+            {
+                Increment = construction1.SubTotal - construction2.SubTotal
+            };
+            if (Math.Abs(economy2.Compare - 0) > 0.001)
+            {
+                situation[0].Extent = situation[0].Increment / economy2.Compare*100;
+            }
+            if (Math.Abs(construction2.SubTotal - 0) > 0.001)
+            {
+                situation[1].Extent = situation[0].Increment / construction2.SubTotal * 100;
+            }
+            return situation;
+        }
     }
 }

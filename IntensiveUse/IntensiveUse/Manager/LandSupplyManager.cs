@@ -34,5 +34,40 @@ namespace IntensiveUse.Manager
             Ratify ratify = SearchForRatify(Year, ID);
             return new double[] { ratify.Area, ratify.Already };
         }
+
+        public double ULAPI1(int Year, int ID)
+        {
+            double constructionSum = 0.0;
+            double landsupplySum = 0.0;
+            for (var i = 2; i >= 0; i--)
+            {
+                LandSupply landsupply=SearchForLandSupply((Year-i).ToString(),ID);
+                constructionSum += landsupply.Stock;
+                landsupplySum += landsupply.Sum;
+            }
+            if (Math.Abs(landsupplySum - 0) > 0.001)
+            {
+                return constructionSum / landsupplySum * 100;
+            }
+                
+            return 0.00;
+        }
+
+        public double ULAPI2(int Year, int ID)
+        {
+            double alreadySum = 0.0;
+            double AreaSum = 0.0;
+            for (var i = 3; i > 0; i--)
+            {
+                Ratify ratify = SearchForRatify((Year - i).ToString(), ID);
+                alreadySum += ratify.Already;
+                AreaSum += ratify.Area;
+            }
+            if (Math.Abs(AreaSum - 0) > 0.001)
+            {
+                return alreadySum / AreaSum * 100;
+            }
+            return 0.00;
+        }
     }
 }
