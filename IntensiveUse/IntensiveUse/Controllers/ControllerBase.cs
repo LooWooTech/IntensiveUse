@@ -30,5 +30,15 @@ namespace IntensiveUse.Controllers
             filterContext.Result = View("Error");
         }
 
+        protected ActionResult HtmlResult(List<string> html)
+        {
+            string str = string.Empty;
+            foreach (var item in html)
+            {
+                str += "<option value='" + item + "'>" + item + "</option>";
+            }
+            return Content(str);
+        }
+
     }
 }

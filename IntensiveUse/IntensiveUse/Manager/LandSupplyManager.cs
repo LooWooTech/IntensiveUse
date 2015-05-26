@@ -25,28 +25,14 @@ namespace IntensiveUse.Manager
         }
         public double[] GetSupply(string Year, int ID)
         {
-            using (var db = GetIntensiveUseContext())
-            {
-                LandSupply landsupply = db.LandSupplys.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
-                if (landsupply == null)
-                {
-                    landsupply = new LandSupply();
-                }
-                return new double[] { landsupply.Sum, landsupply.Append, landsupply.Stock };
-            }
+            LandSupply landsupply = SearchForLandSupply(Year, ID);
+            return new double[] { landsupply.Sum, landsupply.Append, landsupply.Stock };
         }
 
         public double[] GetRatify(string Year, int ID)
         {
-            using (var db = GetIntensiveUseContext())
-            {
-                Ratify ratify = db.Ratifys.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
-                if (ratify == null)
-                {
-                    ratify = new Ratify();
-                }
-                return new double[] { ratify.Area, ratify.Already };
-            }
+            Ratify ratify = SearchForRatify(Year, ID);
+            return new double[] { ratify.Area, ratify.Already };
         }
     }
 }

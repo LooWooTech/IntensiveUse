@@ -33,26 +33,13 @@ namespace IntensiveUse.Manager
 
         public double[] GetAgriculture(string Year, int ID)
         {
-            using (var db = GetIntensiveUseContext())
-            {
-                AgricultureLand agricultureland = db.Agricultures.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
-                if (agricultureland == null)
-                {
-                    agricultureland = new AgricultureLand();
-                }
-                return new double[] { agricultureland.Subtotal, agricultureland.Arable, agricultureland.Garden, agricultureland.Forest, agricultureland.Meadow, agricultureland.Other };
-            }
+            AgricultureLand agricultureland = SearchForAgriculture(Year, ID);
+            return new double[] { agricultureland.Subtotal, agricultureland.Arable, agricultureland.Garden, agricultureland.Forest, agricultureland.Meadow, agricultureland.Other };
         }
         public double[] GetConstruction(string Year, int ID)
         {
-            using (var db = GetIntensiveUseContext())
-            {
-                ConstructionLand constructionland = db.Constructions.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
-                if (constructionland == null)
-                {
-                    constructionland = new ConstructionLand();
-                }
-                return new double[]
+            ConstructionLand constructionland = SearchForConstruction(Year, ID);
+            return new double[]
                 {
                     constructionland.SubTotal,
                     constructionland.County+constructionland.Town+constructionland.MiningLease,
@@ -65,20 +52,24 @@ namespace IntensiveUse.Manager
                     constructionland.Other,
                     constructionland.Sum
                 };
-            }
         }
 
         public double[] GetNewConstruction(string Year, int ID)
         {
-            using (var db = GetIntensiveUseContext())
+            NewConstruction newconstruction = SearchForNewConstruction(Year, ID);
+            return new double[] { newconstruction.Construction, newconstruction.Town };
+        }
+
+        public double GetPGCI(int Year, int ID)
+        {
+            People people1 = SearchForPeople(Year.ToString(),ID);
+            People people2 = SearchForPeople((Year - 1).ToString(), ID);
+            NewConstruction newConstruction = SearchForNewConstruction(Year.ToString(), ID);
+            if (Math.Abs(people1.PermanentSum - people2.PermanentSum) > 0.001)
             {
-                NewConstruction newconstruction = db.NewConstructions.FirstOrDefault(e => e.CID == ID && e.Year.ToLower() == Year.ToLower());
-                if (newconstruction == null)
-                {
-                    newconstruction = new NewConstruction();
-                }
-                return new double[] { newconstruction.Construction, newconstruction.Town };
+                return newConstruction.Town / (people1.PermanentSum - people2.PermanentSum);
             }
+            return 0.00;
         }
     }
 }

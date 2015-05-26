@@ -60,7 +60,7 @@ namespace IntensiveUse.Controllers
 
 
         [HttpPost]
-        public ActionResult DownLoad(OutputExcel Excel,string City)
+        public ActionResult DownLoad(OutputExcel Excel,string City,string County)
         {
             IWorkbook workbook=null;
             MemoryStream ms = new MemoryStream();
@@ -71,6 +71,10 @@ namespace IntensiveUse.Controllers
             return File(fileContents, "application/ms-excel", Excel.GetDescription()+".xls");
         }
 
-        
+        public ActionResult GetForDivision(string City)
+        {
+            List<string> html = Core.ExcelManager.GetDistrict(City);
+            return HtmlResult(html);
+        }
     }
 }
