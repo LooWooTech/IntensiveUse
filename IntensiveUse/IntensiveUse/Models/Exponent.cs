@@ -96,8 +96,6 @@ namespace IntensiveUse.Models
     {
         [Description("指标理想值")]
         Value=0,
-        [Description("理想值确定依据")]
-        Foundation=1,
         [Description("指标权重")]
         Weight=2,
         [Description("指标现状值")]

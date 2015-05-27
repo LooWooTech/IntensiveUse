@@ -146,5 +146,59 @@ namespace IntensiveUse.Manager
             }
             return situation;
         }
+
+
+        public EUII Acquire(int Year, int ID)
+        {
+            EUII entity = new EUII();
+            entity.EUII1 = EUII1(Year, ID);
+            entity.EUII2 = EUII2(Year, ID);
+            Exponent exponent = SearchForExponent(Year.ToString(), ID, IdealType.Weight);
+            entity.Economy = entity.EUII1.TargetStandard * exponent.EUII1 + entity.EUII2.TargetStandard * exponent.EUII2;
+            return entity;
+        }
+
+
+        public IIBase EUII1(int Year, int ID)
+        {
+            IIBase baseValue = new IIBase();
+            double sum = 0.0;
+            for (var i = 2; i >= 0; i--)
+            {
+                Economy economy = SearchForEconomy((Year - i).ToString(), ID);
+                sum += economy.Aggregate;
+            }
+            sum = sum / 3;
+            ConstructionLand construction = SearchForConstruction(Year.ToString(),ID);
+            if (Math.Abs(construction.SubTotal - 0) > 0.001)
+            {
+                baseValue.Status = sum * 100 / construction.SubTotal;
+            }
+            Exponent exponent = SearchForExponent(Year.ToString(),ID,IdealType.Value);
+            if (Math.Abs(exponent.EUII1 - 0) > 0.001)
+            {
+                baseValue.StandardInit = baseValue.Status / exponent.EUII1;
+            }
+            baseValue.TargetStandard = baseValue.StandardInit;
+            return baseValue;
+        }
+
+        public IIBase EUII2(int Year, int ID)
+        {
+            IIBase baseValue = new IIBase();
+            Economy economy = SearchForEconomy(Year.ToString(), ID);
+            ConstructionLand construction = SearchForConstruction(Year.ToString(),ID);
+            if (Math.Abs(construction.SubTotal - 0) > 0.001)
+            {
+                baseValue.Status = economy.Current * 100 / construction.SubTotal;
+            }
+            Exponent exponent = SearchForExponent(Year.ToString(), ID, IdealType.Value);
+            if (Math.Abs(exponent.EUII2 - 0) > 0.001)
+            {
+                baseValue.StandardInit = baseValue.Status / exponent.EUII2;
+            }
+            baseValue.TargetStandard = baseValue.StandardInit;
+            return baseValue;
+        }
     }
 }

@@ -159,6 +159,7 @@
     <Compile Include="Form\IForm.cs" />
     <Compile Include="Form\IRead.cs" />
     <Compile Include="Form\ISchedule.cs" />
+    <Compile Include="Form\ScheduleAEight.cs" />
     <Compile Include="Form\ScheduleAFive.cs" />
     <Compile Include="Form\ScheduleAFour.cs" />
     <Compile Include="Form\ScheduleAOne.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Models\NewConstruction.cs" />
     <Compile Include="Models\OutPutList.cs" />
     <Compile Include="Models\People.cs" />
+    <Compile Include="Models\IIBase.cs" />
     <Compile Include="Models\Ratify.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\SubIndex.cs" />
@@ -288,6 +290,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EXCEL\附表1A7.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A8.xls" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
