@@ -26,13 +26,14 @@ namespace IntensiveUse.Manager
             configXml.Load(ConfigurationManager.AppSettings["TABLE_FILE_PATH"]);
             CityConfigXml.Load(ConfigurationManager.AppSettings["CITY_FILE_PATH"]);
         }
-        public IWorkbook DownLoad(OutputExcel Type,int Year,string City)
+        public IWorkbook DownLoad(OutputExcel Type,int Year,string City,string Distict)
         {
             string TempFile = GetExcelPath(Type.ToString()).GetAbsolutePath();
             ISchedule load = null;
             switch (Type)
             {
                 case OutputExcel.附表1A1:
+                    load = new ScheduleAOne();
                     break;
                 case OutputExcel.附表1A2:
                     load = new ScheduleATwo();
@@ -54,7 +55,7 @@ namespace IntensiveUse.Manager
                     break;
                 default: break;
             }
-            IWorkbook workbook = load.Write(TempFile, Core,Year, City);
+            IWorkbook workbook = load.Write(TempFile, Core,Year, City,Distict);
             return workbook;
         }
         public string GetExcelPath(string excelName)
@@ -99,6 +100,24 @@ namespace IntensiveUse.Manager
                 Disticts.Add(n.Attributes["Name"].Value);
             }
             return Disticts;
+        }
+
+        public string GetStrDistict(string City)
+        {
+            List<string> Distict = GetDistrict(City);
+            string str = string.Empty;
+            foreach (var item in Distict)
+            {
+                if (string.IsNullOrEmpty(str))
+                {
+                    str += item;
+                }
+                else
+                {
+                    str += "、" + item;
+                }
+            }
+            return str;
         }
 
         public Region Find(string Name)

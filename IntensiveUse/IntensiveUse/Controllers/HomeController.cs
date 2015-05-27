@@ -91,7 +91,7 @@ namespace IntensiveUse.Controllers
         {
             IWorkbook workbook=null;
             MemoryStream ms = new MemoryStream();
-            workbook = Core.ExcelManager.DownLoad(Excel,Year,City);
+            workbook = Core.ExcelManager.DownLoad(Excel,Year,City,County);
             workbook.Write(ms);
             ms.Flush();
             byte[] fileContents = ms.ToArray();

@@ -10,7 +10,7 @@ namespace IntensiveUse.Form
 {
     public class ScheduleASeven:ISchedule
     {
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City)
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City,string Distict)
         {
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             return workbook;

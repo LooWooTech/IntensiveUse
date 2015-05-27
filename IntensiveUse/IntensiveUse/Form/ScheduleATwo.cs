@@ -22,8 +22,9 @@ namespace IntensiveUse.Form
             }
         }
 
-        public IWorkbook Write(string FilePath,ManagerCore Core,int Year,string City)
+        public IWorkbook Write(string FilePath,ManagerCore Core,int Year,string City,string Distict)
         {
+            
             int ID = Core.ExcelManager.GetID(City);
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             Message(Core, Year,ID);
@@ -35,7 +36,15 @@ namespace IntensiveUse.Form
                 cell = row.CreateCell(2);
             }
             cell.SetCellValue(City);
-            
+            if (string.IsNullOrEmpty(Distict))
+            {
+                cell = row.GetCell(7, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                if (cell != null)
+                {
+                    cell.SetCellValue(Core.ExcelManager.GetStrDistict(City));
+                }
+            }
+
             foreach (var item in DictData.Keys)
             {
                 int line = Start + 1;

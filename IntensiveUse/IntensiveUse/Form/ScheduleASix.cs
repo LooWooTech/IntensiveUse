@@ -36,7 +36,7 @@ namespace IntensiveUse.Form
             exponent.Type = IdealType.Value;
             Core.ExponentManager.Save(exponent);
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City)
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City,string Distict)
         {
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);

@@ -20,7 +20,7 @@ namespace IntensiveUse.Form
             Gain(workbook, Core, Year.ToString(), ID);
         }
 
-        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City)
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
         {
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             

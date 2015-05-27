@@ -20,7 +20,7 @@ namespace IntensiveUse.Form
                 DictData = new Dictionary<string, List<string>>();
             }
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City)
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
         {
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);

@@ -30,7 +30,7 @@ namespace IntensiveUse.Manager
             }
         }
 
-        protected ConstructionLand SearchForConstruction(string Year, int ID)
+        public ConstructionLand SearchForConstruction(string Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
@@ -43,7 +43,7 @@ namespace IntensiveUse.Manager
             }
         }
 
-        protected Economy SearchForEconomy(string Year, int ID)
+        public Economy SearchForEconomy(string Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
