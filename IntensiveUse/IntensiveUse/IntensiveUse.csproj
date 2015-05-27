@@ -157,9 +157,11 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Form\IForm.cs" />
+    <Compile Include="Form\IRead.cs" />
     <Compile Include="Form\ISchedule.cs" />
     <Compile Include="Form\ScheduleAFive.cs" />
     <Compile Include="Form\ScheduleAFour.cs" />
+    <Compile Include="Form\ScheduleASeven.cs" />
     <Compile Include="Form\ScheduleASix.cs" />
     <Compile Include="Form\ScheduleAThree.cs" />
     <Compile Include="Form\ScheduleBTwo.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Manager\ExcelManager.cs" />
     <Compile Include="Manager\ExponentManager.cs" />
     <Compile Include="Manager\FileManager.cs" />
+    <Compile Include="Manager\IndexWeightManager.cs" />
     <Compile Include="Manager\LandSupplyManager.cs" />
     <Compile Include="Manager\LandUseManager.cs" />
     <Compile Include="Manager\ManagerBase.cs" />
@@ -187,6 +190,7 @@
     <Compile Include="Models\ConstructionLand.cs" />
     <Compile Include="Models\Economy.cs" />
     <Compile Include="Models\Exponent.cs" />
+    <Compile Include="Models\IndexWeight.cs" />
     <Compile Include="Models\IUDbContext.cs" />
     <Compile Include="Models\LandSupply.cs" />
     <Compile Include="Models\NewConstruction.cs" />

@@ -48,5 +48,11 @@ namespace IntensiveUse.Manager
         {
             get { return _exponentManager == null ? _exponentManager = new ExponentManager() : _exponentManager; }
         }
+
+        private IndexManager _indexweightManager;
+        public IndexManager IndexWeightManager
+        {
+            get { return _indexweightManager == null ? _indexweightManager = new IndexManager() : _indexweightManager; }
+        }
     }
 }

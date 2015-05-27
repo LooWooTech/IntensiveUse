@@ -30,7 +30,7 @@ namespace IntensiveUse.Form
             while (Flag)
             {
                 cell = row.GetCell(Count, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                value = GetValue(cell).Replace("年", "");
+                value = ExcelHelper.GetValue(cell).Replace("年", "");
                 if (string.IsNullOrEmpty(value))
                 {
                     break;
@@ -68,7 +68,7 @@ namespace IntensiveUse.Form
             {
                 IRow row = RowGet(sheet, i + Start + 2);
                 ICell cell = row.GetCell(SerialNumber, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                double.TryParse(GetValue(cell),out Data[i]);
+                double.TryParse(ExcelHelper.GetValue(cell),out Data[i]);
             }
             if (DictNewConstruction == null)
             {
@@ -121,9 +121,9 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("未获取城市名相关信息，无法进行数据录入工作");
             }
-            this.Name = GetValue(cell);
+            this.Name = ExcelHelper.GetValue(cell);
             cell = Row.GetCell(5, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-            this.Regimentatio = GetValue(cell);
+            this.Regimentatio = ExcelHelper.GetValue(cell);
         }
 
         public void Update(int ID)

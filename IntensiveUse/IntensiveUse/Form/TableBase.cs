@@ -19,47 +19,7 @@ namespace IntensiveUse.Form
             return _yearRe.IsMatch(value);
         }
 
-        /// <summary>
-        /// 获取cell值
-        /// </summary>
-        /// <param name="cell"></param>
-        /// <returns></returns>
-        public string GetValue(ICell cell)
-        {
-            if (cell == null)
-            {
-                return null;
-            }
-            switch (cell.CellType)
-            {
-                case CellType.Boolean:
-                    return cell.BooleanCellValue.ToString().Trim();
-                case CellType.Numeric:
-                    return cell.NumericCellValue.ToString().Trim();
-                case CellType.String:
-                    return cell.StringCellValue.Trim();
-                case CellType.Formula:
-                    try
-                    {
-                        double data;
-                        double.TryParse(cell.StringCellValue.Trim(), out data);
-                        return data.ToString();
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                default:
-                    try
-                    {
-                        return cell.StringCellValue.Trim();
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-            }
-        }
+        
 
         public IRow RowGet(ISheet sheet,int ID)
         {

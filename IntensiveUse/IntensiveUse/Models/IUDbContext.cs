@@ -21,5 +21,7 @@ namespace IntensiveUse.Models
         public DbSet<LandSupply> LandSupplys { get; set; }
         public DbSet<Ratify> Ratifys { get; set; }
         public DbSet<Exponent> Exponents { get; set; }
+        public DbSet<IndexWeight> IndexWeights { get; set; }
+        public DbSet<SubIndex> SubIndexs { get; set; }
     }
 }

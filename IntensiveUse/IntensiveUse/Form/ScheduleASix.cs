@@ -9,7 +9,7 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleASix:ISchedule
+    public class ScheduleASix:ISchedule,IRead
     {
         public const int Start = 2;
         public const int Begin = 4;
@@ -22,43 +22,22 @@ namespace IntensiveUse.Form
             }
         }
 
-        public Exponent Read(string FilePath)
+        public void Read(string FilePath,ManagerCore Core,string City,int Year)
         {
-            Queue<double> queue = new Queue<double>();
+            
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
-            ISheet sheet = workbook.GetSheetAt(0);
-            if (sheet == null)
+            Exponent exponent = Gain(workbook);
+            if (exponent == null)
             {
-                throw new ArgumentException("表格中没有sheet，请核对表格");
+                throw new ArgumentException("未获取到相关理想数据");
             }
-            IRow row = null;
-            ICell cell = null;
-            string value =string.Empty;
-            int Count = sheet.LastRowNum;
-            for (var i = Start; i <=Count; i++)
+            exponent.Year = Year.ToString();
+            exponent.RID = Core.ExcelManager.GetID(City);
+            int ID = Core.ExponentManager.Add(exponent);
+            if (ID <= 0)
             {
-                row = sheet.GetRow(i);
-                if (row == null)
-                {
-                    break;
-                }
-                cell = row.GetCell(Begin + 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                double m = 0.0;
-                value = cell.ToString().Replace("%", "").Trim();
-                double.TryParse(value, out m);
-                queue.Enqueue(m);
+                throw new ArgumentException("保存理想值失败");
             }
-            Exponent exponent = new Exponent();
-            System.Reflection.PropertyInfo[] propList = typeof(Exponent).GetProperties();
-            foreach (var item in propList)
-            {
-                if (item.PropertyType.Equals(typeof(double)))
-                {
-                    item.SetValue(exponent, queue.Dequeue(), null);
-                }
-            }
-
-            return exponent;
         }
         public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City)
         {
@@ -102,6 +81,44 @@ namespace IntensiveUse.Form
             {
                 Data.Add(item);
             }
+        }
+
+
+        public Exponent Gain(IWorkbook workbook)
+        {
+            Queue<double> queue = new Queue<double>();
+            ISheet sheet = workbook.GetSheetAt(0);
+            if (sheet == null)
+            {
+                throw new ArgumentException("表格中没有sheet，请核对表格");
+            }
+            IRow row = null;
+            ICell cell = null;
+            string value = string.Empty;
+            int Count = sheet.LastRowNum;
+            for (var i = Start; i <= Count; i++)
+            {
+                row = sheet.GetRow(i);
+                if (row == null)
+                {
+                    break;
+                }
+                cell = row.GetCell(Begin + 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                double m = 0.0;
+                value = cell.ToString().Replace("%", "").Trim();
+                double.TryParse(value, out m);
+                queue.Enqueue(m);
+            }
+            Exponent exponent = new Exponent();
+            System.Reflection.PropertyInfo[] propList = typeof(Exponent).GetProperties();
+            foreach (var item in propList)
+            {
+                if (item.PropertyType.Equals(typeof(double)))
+                {
+                    item.SetValue(exponent, queue.Dequeue(), null);
+                }
+            }
+            return exponent;
         }
 
 

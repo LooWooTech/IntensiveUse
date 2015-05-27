@@ -42,7 +42,7 @@
             <tr>
             <td>@(item.ToString())-@(item.GetDescription())</td>
             <td>
-                @if (item == OutputExcel.附表1A6)
+                @if (item == OutputExcel.附表1A6||item==OutputExcel.附表1A5)
                 {
                     var year=DateTime.Now.Year;
                     <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#@(item.ToString())-upload">上传</button>

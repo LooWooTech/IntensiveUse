@@ -35,7 +35,7 @@ namespace IntensiveUse.Form
                     break;
                 }
                 cell = row.GetCell(Begin, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                value = GetValue(cell).Replace("年","");
+                value = ExcelHelper.GetValue(cell).Replace("年","");
                 if (string.IsNullOrEmpty(value))
                 {
                     break;
@@ -77,7 +77,7 @@ namespace IntensiveUse.Form
             foreach (var i in AgSerial)
             {
                 cell = row.GetCell(i, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                double.TryParse(GetValue(cell), out Data[k]);
+                double.TryParse(ExcelHelper.GetValue(cell), out Data[k]);
                 k++;
             }
             if (DictAgriculture == null)
@@ -147,13 +147,13 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("当检索表2的时候，初次读取行政区划名称数据失败");
             }
-            this.Name = GetValue(cell);
+            this.Name = ExcelHelper.GetValue(cell);
             cell = row.GetCell(Begin + 2, MissingCellPolicy.CREATE_NULL_AS_BLANK);
             if (cell == null)
             {
                 throw new ArgumentException("当检索表2的时候，初次读取行政区划代码数据失败");
             }
-            this.Code = GetValue(cell);
+            this.Code = ExcelHelper.GetValue(cell);
         }
 
         public void Update(int ID)
