@@ -37,5 +37,22 @@ namespace IntensiveUse.Models
         /// 行政区ID
         /// </summary>
         public int RID { get; set; }
+
+
+        public static IndexWeight operator *(SubIndex c1, IndexWeight c2)
+        {
+            return new IndexWeight()
+            {
+                UII = (c1.PUII + c1.EUII) * c2.UII,
+                GCI = (c1.PGCI + c1.EGCI) * c2.GCI,
+                EI = (c1.PEI + c1.EEI) * c2.EI,
+                API = c1.ULAPI * c2.API
+            };
+        }
+
+        public static double operator *(IndexWeight c1, IndexWeight c2)
+        {
+            return c1.UII * c2.UII + c1.GCI * c2.GCI + c1.EI * c2.EI + c1.API * c2.API;
+        }
     }
 }

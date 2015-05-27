@@ -50,5 +50,24 @@ namespace IntensiveUse.Manager
             return file.ID;
         }
 
+        public Dictionary<int, double> Transformation<T>(List<int> Index, T exponent)
+        {
+            Queue<double> queue = Core.ExponentManager.Create(exponent);
+            return Change(queue, Index);
+        }
+
+        public Dictionary<int, double> Change(Queue<double> queue, List<int> Index)
+        {
+            Dictionary<int, double> Dict = new Dictionary<int, double>();
+            foreach (var item in Index)
+            {
+                if (!Dict.ContainsKey(item))
+                {
+                    Dict.Add(item, queue.Dequeue());
+                }
+            }
+            return Dict;
+        }
+
     }
 }

@@ -13,12 +13,12 @@ namespace IntensiveUse.Form
     {
         public const int Start = 2;
         public const int Begin = 4;
-        public List<double> Data { get; set; }
+        public Queue<double> Data { get; set; }
         public ScheduleASix()
         {
             if (Data == null)
             {
-                Data = new List<double>();
+                Data = new Queue<double>();
             }
         }
 
@@ -58,26 +58,8 @@ namespace IntensiveUse.Form
 
         public void Message(ManagerCore Core,int Year,int ID)
         {
-            double[] UII= Core.LandUseManager.GetUII(Year, ID);
-            foreach (var item in UII)
-            {
-                Data.Add(item);
-            }
-            double[] GCI=Core.LandUseManager.GetGCI(Year,ID);
-            foreach (var item in GCI)
-            {
-                Data.Add(item);
-            }
-            double[] EI = Core.LandUseManager.GetEI(Year, ID);
-            foreach (var item in EI)
-            {
-                Data.Add(item);
-            }
-            double[] API = Core.LandUseManager.GetULAPI(Year, ID);
-            foreach (var item in API)
-            {
-                Data.Add(item);
-            }
+            Exponent exponent =Core.ExponentManager.GetTurthExponent(Year,ID);
+            Data = Core.ExponentManager.Create(exponent); 
         }
 
 

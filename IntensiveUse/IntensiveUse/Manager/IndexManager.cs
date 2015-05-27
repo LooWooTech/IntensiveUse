@@ -161,5 +161,6 @@ namespace IntensiveUse.Manager
             }
             return exponent;
         }
+
     }
 }

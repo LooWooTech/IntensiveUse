@@ -49,5 +49,19 @@ namespace IntensiveUse.Models
         /// 行政区ID
         /// </summary>
         public int RID { get; set; }
+
+        public static SubIndex operator *(Exponent c1, SubIndex c2)
+        {
+            return new SubIndex()
+            {
+                PUII = c1.PUII1 * c2.PUII,
+                EUII = (c1.EUII1 + c1.EUII2) * c2.EUII,
+                PGCI = c1.PGCI * c2.PGCI,
+                EGCI = (c1.EGCI1 + c1.EGCI2 + c1.EGCI3) * c2.EGCI,
+                PEI = c1.PEI1 * c2.PEI,
+                EEI = c1.EEI * c2.EEI,
+                ULAPI = (c1.ULAPI1 + c1.ULAPI2) * c2.ULAPI
+            };
+        }
     }
 }

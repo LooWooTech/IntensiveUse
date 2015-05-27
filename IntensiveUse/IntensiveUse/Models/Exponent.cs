@@ -71,9 +71,27 @@ namespace IntensiveUse.Models
         /// 行政区ID
         /// </summary>
         public int RID { get; set; }
+
+        public static Exponent operator /(Exponent c1, Exponent c2)
+        {
+            return new Exponent()
+            {
+                PUII1 = c1.PUII1 / c2.PUII1,
+                EUII1 = c1.EUII1 / c2.EUII1,
+                EUII2 = c1.EUII2 / c2.EUII2,
+                PGCI = c1.PGCI / c2.PGCI,
+                EGCI1 = c1.EGCI1 / c2.EGCI1,
+                EGCI2 = c1.EGCI2 / c2.EGCI2,
+                EGCI3 = c1.EGCI3 / c2.EGCI3,
+                PEI1 = c1.PEI1 / c2.PEI1,
+                EEI = c1.EEI / c2.EEI,
+                ULAPI1 = c1.ULAPI1 / c2.ULAPI1,
+                ULAPI2 = c1.ULAPI2 / c2.ULAPI2
+            };
+        }
     }
 
-
+    
     public enum IdealType
     {
         [Description("指标理想值")]
@@ -81,6 +99,10 @@ namespace IntensiveUse.Models
         [Description("理想值确定依据")]
         Foundation=1,
         [Description("指标权重")]
-        Weight=2
+        Weight=2,
+        [Description("指标现状值")]
+        Truth=3
     }
+
+   
 }

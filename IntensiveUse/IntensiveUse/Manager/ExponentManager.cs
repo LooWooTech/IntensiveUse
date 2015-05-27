@@ -12,7 +12,7 @@ namespace IntensiveUse.Manager
         {
             using (var db = GetIntensiveUseContext())
             {
-                Exponent entity = db.Exponents.FirstOrDefault(e => e.RID == exponent.RID && e.Year.ToLower() == exponent.Year.ToLower());
+                Exponent entity = db.Exponents.FirstOrDefault(e => e.RID == exponent.RID && e.Year.ToLower() == exponent.Year.ToLower()&&e.Type==exponent.Type);
                 if (entity == null)
                 {
                     db.Exponents.Add(exponent);
@@ -24,6 +24,78 @@ namespace IntensiveUse.Manager
                 }
                 db.SaveChanges();
             }
+        }
+
+        public Exponent Create(Queue<double> queue)
+        {
+            Exponent exponent = new Exponent();
+            System.Reflection.PropertyInfo[] propList = typeof(Exponent).GetProperties();
+            foreach (var item in propList)
+            {
+                if (item.PropertyType.Equals(typeof(double)))
+                {
+                    item.SetValue(exponent, queue.Dequeue(), null);
+                }
+            }
+            return exponent;
+        }
+
+        public Exponent Find(string Year, int ID, IdealType Type)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                return db.Exponents.FirstOrDefault(e => e.Type == Type && e.Year.ToLower() == Year.ToLower() && e.RID == ID);
+                
+            }
+        }
+
+        public Queue<double> Create<T>(T entity)
+        {
+            Queue<double> queue = new Queue<double>();
+            System.Reflection.PropertyInfo[] propList = typeof(T).GetProperties();
+            foreach (var item in propList)
+            {
+                if (item.PropertyType.Equals(typeof(double)))
+                {
+                    double val = 0.0;
+                    double.TryParse(item.GetValue(entity, null).ToString(), out val);
+                    queue.Enqueue(val);
+                }
+            }
+            return queue;
+        }
+
+        //public Queue<double> Create(Exponent exponent)
+        //{
+        //    Queue<double> queue = new Queue<double>();
+        //    System.Reflection.PropertyInfo[] propList = typeof(Exponent).GetProperties();
+        //    foreach (var item in propList)
+        //    {
+        //        if (item.PropertyType.Equals(typeof(double)))
+        //        {
+        //            double val = 0.0;
+        //            double.TryParse(item.GetValue(exponent, null).ToString(), out val);
+        //            queue.Enqueue(val);
+        //        }
+        //    }
+        //    return queue;
+        //}
+
+
+        public Exponent GetTurthExponent(int Year, int ID)
+        {
+            Exponent exponent = Find(Year.ToString(),ID,IdealType.Truth);
+            if (exponent == null)
+            {
+                Queue<double> Data = Core.LandUseManager.CreateExponentQueue(Year, ID);
+                exponent = Create(Data);
+                exponent.Type = IdealType.Truth;
+                exponent.Year = Year.ToString();
+                exponent.RID = ID;
+                Save(exponent);
+            }
+
+            return exponent;
         }
     }
 }

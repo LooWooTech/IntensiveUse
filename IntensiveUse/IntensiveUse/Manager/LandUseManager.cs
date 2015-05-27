@@ -116,5 +116,32 @@ namespace IntensiveUse.Manager
                 Core.LandSupplyManager.ULAPI2(Year,ID)
             };
         }
+
+
+        public Queue<double> CreateExponentQueue(int Year, int ID)
+        {
+            Queue<double> Data = new Queue<double>();
+            double[] UII = GetUII(Year, ID);
+            foreach (var item in UII)
+            {
+                Data.Enqueue(item);
+            }
+            double[] GCI = GetGCI(Year, ID);
+            foreach (var item in GCI)
+            {
+                Data.Enqueue(item);
+            }
+            double[] EI = GetEI(Year, ID);
+            foreach (var item in EI)
+            {
+                Data.Enqueue(item);
+            }
+            double[] API = GetULAPI(Year, ID);
+            foreach (var item in API)
+            {
+                Data.Enqueue(item);
+            }
+            return Data;
+        }
     }
 }

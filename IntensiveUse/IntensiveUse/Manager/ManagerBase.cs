@@ -107,5 +107,45 @@ namespace IntensiveUse.Manager
                 return ratify;
             }
         }
+
+        public Exponent SearchForExponent(string Year, int ID, IdealType Type)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                Exponent entity = db.Exponents.FirstOrDefault(e => e.Year.ToLower() == Year.ToLower() && e.RID == ID && e.Type == Type);
+                if (entity == null)
+                {
+                    entity = new Exponent();
+                }
+                return entity;
+            }
+        }
+
+
+        public SubIndex SearchForSubIndex(string Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                SubIndex entity = db.SubIndexs.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                if (entity == null)
+                {
+                    entity = new SubIndex();
+                }
+                return entity;
+            }
+        }
+
+        public IndexWeight SearchForIndexWeight(string Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                IndexWeight entity = db.IndexWeights.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                if (entity == null)
+                {
+                    entity = new IndexWeight();
+                }
+                return entity;
+            }
+        }
     }
 }
