@@ -49,10 +49,10 @@ namespace IntensiveUse.Manager
             get { return _exponentManager == null ? _exponentManager = new ExponentManager() : _exponentManager; }
         }
 
-        private IndexManager _indexweightManager;
-        public IndexManager IndexWeightManager
+        private IndexManager _indexManager;
+        public IndexManager IndexManager
         {
-            get { return _indexweightManager == null ? _indexweightManager = new IndexManager() : _indexweightManager; }
+            get { return _indexManager == null ? _indexManager = new IndexManager() : _indexManager; }
         }
     }
 }

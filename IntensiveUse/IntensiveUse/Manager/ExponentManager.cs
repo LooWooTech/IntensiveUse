@@ -8,13 +8,21 @@ namespace IntensiveUse.Manager
 {
     public class ExponentManager:ManagerBase
     {
-        public int Add(Exponent exponent)
+        public void Save(Exponent exponent)
         {
             using (var db = GetIntensiveUseContext())
             {
-                db.Exponents.Add(exponent);
+                Exponent entity = db.Exponents.FirstOrDefault(e => e.RID == exponent.RID && e.Year.ToLower() == exponent.Year.ToLower());
+                if (entity == null)
+                {
+                    db.Exponents.Add(exponent);
+                }
+                else
+                {
+                    exponent.ID = entity.ID;
+                    db.Entry(entity).CurrentValues.SetValues(exponent);
+                }
                 db.SaveChanges();
-                return exponent.ID;
             }
         }
     }

@@ -22,6 +22,44 @@ namespace IntensiveUse.Manager
             }
         }
 
+        public void Save(IndexWeight indexWeight)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                IndexWeight entity = db.IndexWeights.FirstOrDefault(e => e.RID == indexWeight.RID && e.Year.ToLower() == indexWeight.Year.ToLower());
+                if (entity == null)
+                {
+                    db.IndexWeights.Add(indexWeight);
+                }
+                else
+                {
+                    indexWeight.ID = entity.ID;
+                    db.Entry(entity).CurrentValues.SetValues(indexWeight);
+                }
+                db.SaveChanges();
+            }
+        }
+
+
+        public void Save(SubIndex SubIndex)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                SubIndex entity = db.SubIndexs.FirstOrDefault(e => e.RID == SubIndex.RID && e.Year.ToLower() == SubIndex.Year.ToLower());
+                if (entity == null)
+                {
+                    db.SubIndexs.Add(SubIndex);
+                }
+                else
+                {
+                    SubIndex.ID = entity.ID;
+                    db.Entry(entity).CurrentValues.SetValues(SubIndex);
+                }
+                db.SaveChanges();
+            }
+        }
+
+       
 
         public IndexWeight GainIndexWeight(ISheet Sheet,int Line)
         {
@@ -85,10 +123,43 @@ namespace IntensiveUse.Manager
             }
             return subindex; 
         }
-
-        public Exponent GainExponent(ISheet Sheet, int Line)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Sheet"></param>
+        /// <param name="Line">获取数据所在的列</param>
+        /// <param name="Begin">获取数据开始的行</param>
+        /// <returns></returns>
+        public  Exponent GainExponent(ISheet Sheet, int Line,int Begin)
         {
-            return new Exponent();
+            Queue<double> queue = new Queue<double>();
+            IRow row = null;
+            ICell cell = null;
+            string value = string.Empty;
+            int Count = Sheet.LastRowNum;
+            for (var i = Begin; i <= Count; i++)
+            {
+                row = Sheet.GetRow(i);
+                if (row == null)
+                {
+                    break;
+                }
+                cell = row.GetCell(Line, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                double m = 0.0;
+                value = cell.ToString().Replace("%", "").Trim();
+                double.TryParse(value, out m);
+                queue.Enqueue(m);
+            }
+            Exponent exponent = new Exponent();
+            System.Reflection.PropertyInfo[] propList = typeof(Exponent).GetProperties();
+            foreach (var item in propList)
+            {
+                if (item.PropertyType.Equals(typeof(double)))
+                {
+                    item.SetValue(exponent, queue.Dequeue(), null);
+                }
+            }
+            return exponent;
         }
     }
 }

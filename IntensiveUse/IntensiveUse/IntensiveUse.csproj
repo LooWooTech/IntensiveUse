@@ -180,7 +180,7 @@
     <Compile Include="Manager\ExcelManager.cs" />
     <Compile Include="Manager\ExponentManager.cs" />
     <Compile Include="Manager\FileManager.cs" />
-    <Compile Include="Manager\IndexWeightManager.cs" />
+    <Compile Include="Manager\IndexManager.cs" />
     <Compile Include="Manager\LandSupplyManager.cs" />
     <Compile Include="Manager\LandUseManager.cs" />
     <Compile Include="Manager\ManagerBase.cs" />
@@ -198,6 +198,7 @@
     <Compile Include="Models\People.cs" />
     <Compile Include="Models\Ratify.cs" />
     <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\SubIndex.cs" />
     <Compile Include="Models\UploadFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

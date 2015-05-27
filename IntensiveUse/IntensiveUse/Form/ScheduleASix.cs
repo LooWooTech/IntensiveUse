@@ -26,18 +26,15 @@ namespace IntensiveUse.Form
         {
             
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
-            Exponent exponent = Gain(workbook);
+            Exponent exponent = Gain(workbook,Core);
             if (exponent == null)
             {
                 throw new ArgumentException("未获取到相关理想数据");
             }
             exponent.Year = Year.ToString();
             exponent.RID = Core.ExcelManager.GetID(City);
-            int ID = Core.ExponentManager.Add(exponent);
-            if (ID <= 0)
-            {
-                throw new ArgumentException("保存理想值失败");
-            }
+            exponent.Type = IdealType.Value;
+            Core.ExponentManager.Save(exponent);
         }
         public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City)
         {
@@ -84,7 +81,7 @@ namespace IntensiveUse.Form
         }
 
 
-        public Exponent Gain(IWorkbook workbook)
+        public Exponent Gain(IWorkbook workbook,ManagerCore Core)
         {
             Queue<double> queue = new Queue<double>();
             ISheet sheet = workbook.GetSheetAt(0);
@@ -92,33 +89,7 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("表格中没有sheet，请核对表格");
             }
-            IRow row = null;
-            ICell cell = null;
-            string value = string.Empty;
-            int Count = sheet.LastRowNum;
-            for (var i = Start; i <= Count; i++)
-            {
-                row = sheet.GetRow(i);
-                if (row == null)
-                {
-                    break;
-                }
-                cell = row.GetCell(Begin + 1, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                double m = 0.0;
-                value = cell.ToString().Replace("%", "").Trim();
-                double.TryParse(value, out m);
-                queue.Enqueue(m);
-            }
-            Exponent exponent = new Exponent();
-            System.Reflection.PropertyInfo[] propList = typeof(Exponent).GetProperties();
-            foreach (var item in propList)
-            {
-                if (item.PropertyType.Equals(typeof(double)))
-                {
-                    item.SetValue(exponent, queue.Dequeue(), null);
-                }
-            }
-            return exponent;
+            return Core.IndexManager.GainExponent(sheet,Begin+1,Start);
         }
 
 
