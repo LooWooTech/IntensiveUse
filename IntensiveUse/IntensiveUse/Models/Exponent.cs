@@ -59,6 +59,11 @@ namespace IntensiveUse.Models
         /// </summary>
         public double ULAPI2 { get; set; }
         /// <summary>
+        /// 区分是附表1A5中的指标权重还是附表1A6中理想值
+        /// </summary>
+        [Column(TypeName="int")]
+        public IdealType Type { get; set; }
+        /// <summary>
         /// 年份
         /// </summary>
         public string Year { get; set; }
@@ -74,6 +79,8 @@ namespace IntensiveUse.Models
         [Description("指标理想值")]
         Value=0,
         [Description("理想值确定依据")]
-        Foundation=1
+        Foundation=1,
+        [Description("指标权重")]
+        Weight=2
     }
 }

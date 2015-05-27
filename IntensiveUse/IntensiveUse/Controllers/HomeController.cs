@@ -81,21 +81,7 @@ namespace IntensiveUse.Controllers
             {
                 throw new ArgumentException("在读取表格中的数据的时候，发生错误："+ex.ToString());
             }
-            
 
-            //ScheduleASix engine = new ScheduleASix();
-            //Exponent exponent=engine.Read(FilePath);
-            //if (exponent == null)
-            //{
-            //    throw new ArgumentException("未读取到相关理想数据");
-            //}
-            //exponent.Year = Year.ToString();
-            //exponent.RID = Core.ExcelManager.GetID(City);
-            //int ID = Core.ExponentManager.Add(exponent);
-            //if (ID <= 0)
-            //{
-            //    throw new ArgumentException("保存理想值失败");
-            //}
             return View("UploadFile");
         }
 
