@@ -182,5 +182,85 @@ namespace IntensiveUse.Models
         /// 增长耗地指数值
         /// </summary>
         public double GCI { get; set; }
+
+        public static PEGCI operator +(PEGCI c1, PEGCI c2)
+        {
+            return new PEGCI()
+            {
+                PGCI = new PGCI()
+                {
+                    PGCI1 = new IIBase()
+                    {
+                        Status = c1.PGCI.PGCI1.Status + c2.PGCI.PGCI1.Status,
+                        StandardInit = c1.PGCI.PGCI1.StandardInit + c2.PGCI.PGCI1.StandardInit,
+                        TargetStandard = c1.PGCI.PGCI1.TargetStandard + c2.PGCI.PGCI1.TargetStandard
+                    },
+                    PopulationGrowth = c1.PGCI.PopulationGrowth + c2.PGCI.PopulationGrowth
+                },
+                EGCI = new EGCI()
+                {
+                    EGCI1 = new IIBase()
+                    {
+                        Status = c1.EGCI.EGCI1.Status + c2.EGCI.EGCI1.Status,
+                        StandardInit = c1.EGCI.EGCI1.StandardInit + c2.EGCI.EGCI1.StandardInit,
+                        TargetStandard = c1.EGCI.EGCI1.TargetStandard + c2.EGCI.EGCI1.TargetStandard
+                    },
+                    EGCI2 = new IIBase()
+                    {
+                        Status = c1.EGCI.EGCI2.Status + c2.EGCI.EGCI2.Status,
+                        StandardInit = c1.EGCI.EGCI2.StandardInit + c2.EGCI.EGCI2.StandardInit,
+                        TargetStandard = c1.EGCI.EGCI2.TargetStandard + c2.EGCI.EGCI2.TargetStandard
+                    },
+                    EGCI3 = new IIBase()
+                    {
+                        Status = c1.EGCI.EGCI3.Status + c2.EGCI.EGCI3.Status,
+                        StandardInit = c1.EGCI.EGCI3.StandardInit + c2.EGCI.EGCI3.StandardInit,
+                        TargetStandard = c1.EGCI.EGCI3.TargetStandard + c2.EGCI.EGCI3.TargetStandard
+                    },
+                    Economy = c1.EGCI.Economy + c2.EGCI.Economy
+                },
+                GCI = c1.GCI + c2.GCI
+            };
+        }
+
+        public static PEGCI operator /(PEGCI c1, int c2)
+        {
+            return new PEGCI()
+            {
+                PGCI = new PGCI()
+                {
+                    PGCI1 = new IIBase()
+                    {
+                        Status = c1.PGCI.PGCI1.Status / c2,
+                        StandardInit = c1.PGCI.PGCI1.StandardInit / c2,
+                        TargetStandard = c1.PGCI.PGCI1.TargetStandard / c2
+                    },
+                    PopulationGrowth = c1.PGCI.PopulationGrowth / c2
+                },
+                EGCI = new EGCI()
+                {
+                    EGCI1 = new IIBase()
+                    {
+                        Status = c1.EGCI.EGCI1.Status / c2,
+                        StandardInit = c1.EGCI.EGCI1.StandardInit / c2,
+                        TargetStandard = c1.EGCI.EGCI1.TargetStandard / c2
+                    },
+                    EGCI2 = new IIBase()
+                    {
+                        Status = c1.EGCI.EGCI2.Status / c2,
+                        StandardInit = c1.EGCI.EGCI2.StandardInit / c2,
+                        TargetStandard = c1.EGCI.EGCI2.TargetStandard / c2
+                    },
+                    EGCI3 = new IIBase()
+                    {
+                        Status = c1.EGCI.EGCI3.Status / c2,
+                        StandardInit = c1.EGCI.EGCI3.StandardInit / c2,
+                        TargetStandard = c1.EGCI.EGCI3.TargetStandard / c2
+                    },
+                    Economy = c1.EGCI.Economy / c2
+                },
+                GCI = c1.GCI / c2
+            };
+        }
     }
 }

@@ -9,16 +9,11 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleAEight:ISchedule
+    public class ScheduleAEight:ScheduleBase,ISchedule
     {
         public const int Start = 4;
         public const int Begin = 2;
-        public IRow TempRow { get; set; }
-        public int Year { get; set; }
-        public int CID { get; set; }
         public PEUII Sum { get; set; }
-        public List<string> Disticts { get; set; }
-        public Dictionary<string, Queue<double>> DictData { get; set; }
         public ScheduleAEight()
         {
             if (DictData == null)
@@ -60,7 +55,7 @@ namespace IntensiveUse.Form
             this.CID = Core.ExcelManager.GetID(City);
             Message(Core);
 
-            Queue<double> all = Core.ConstructionLandManager.Translate(Sum);
+            Queue<double> all = Core.ConstructionLandManager.TranslateOfPEUII(Sum);
             row = sheet.GetRow(Start + 1);
             ICell cell = null;
             for (var i = Begin; i < 14; i++)
@@ -95,16 +90,7 @@ namespace IntensiveUse.Form
         }
 
 
-        public ICell OpneCell(ref IRow row, int ID)
-        {
-            ICell cell = row.GetCell(ID, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-            if (cell == null)
-            {
-                cell = row.CreateCell(ID, TempRow.GetCell(ID).CellType);
-            }
-            cell.CellStyle = TempRow.GetCell(ID).CellStyle;
-            return cell;
-        }
+        
 
         public void Message(ManagerCore Core)
         {
@@ -114,7 +100,7 @@ namespace IntensiveUse.Form
                 PEUII peuii = Core.ConstructionLandManager.AcquireOfPEUII(Year, ID,CID);
                 if (!DictData.ContainsKey(item))
                 {
-                    DictData.Add(item, Core.ConstructionLandManager.Translate(peuii));
+                    DictData.Add(item, Core.ConstructionLandManager.TranslateOfPEUII(peuii));
                     Sum += peuii;
                 }
             }

@@ -24,4 +24,7 @@
   <Table Title="附表1A8" Name="">
     <File Title="模板" Path="EXCEL/附表1A8.xls"></File>
   </Table>
+  <Table Title="附表1A9" Name="">
+    <File Title="模板" Path="EXCEL/附表1A9.xls"></File>
+  </Table>
 </Tables>
