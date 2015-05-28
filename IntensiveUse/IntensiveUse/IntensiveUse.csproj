@@ -178,6 +178,7 @@
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Helper\UploadHelper.cs" />
+    <Compile Include="Manager\ConstructionLandManager.cs" />
     <Compile Include="Manager\EconomyManager.cs" />
     <Compile Include="Manager\ExcelManager.cs" />
     <Compile Include="Manager\ExponentManager.cs" />

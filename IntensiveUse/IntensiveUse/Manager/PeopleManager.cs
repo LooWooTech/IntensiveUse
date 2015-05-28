@@ -246,37 +246,7 @@ namespace IntensiveUse.Manager
             return 0.00;
         }
 
-        public PUII AcquireOfPUII(int Year, int ID)
-        {
-            PUII entity = new PUII();
-            IIBase baseValue=PUII1(Year,ID);
-            entity.II = baseValue;
-            Exponent exponent = SearchForExponent(Year.ToString(), ID, IdealType.Weight);
-            entity.PopulationDensity = baseValue.TargetStandard * exponent.PGCI;
-            return entity;
-
-        }
-
-        public IIBase PUII1(int Year, int ID)
-        {
-            People People = SearchForPeople(Year.ToString(), ID);
-            ConstructionLand construction = SearchForConstruction(Year.ToString(),ID);
-            Exponent IExponent = SearchForExponent(Year.ToString(), ID, IdealType.Value);
-            IIBase baseValue = new IIBase();
-            if (Math.Abs(construction.Town + construction.MiningLease + construction.County) > 0.001)
-            {
-                baseValue.Status = People.PermanentSum * 100 * 100 / (construction.Town + construction.MiningLease + construction.County);
-            }
-            if (Math.Abs(IExponent.PGCI - 0) > 0.001)
-            {
-                baseValue.StandardInit = baseValue.Status / IExponent.PGCI;
-            }
-            if (Math.Abs(baseValue.StandardInit - 0) > 0.001)
-            {
-                baseValue.TargetStandard = 1 / baseValue.StandardInit;
-            }
-            return baseValue;
-        }
+     
 
 
 

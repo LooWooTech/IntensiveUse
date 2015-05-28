@@ -54,5 +54,10 @@ namespace IntensiveUse.Manager
         {
             get { return _indexManager == null ? _indexManager = new IndexManager() : _indexManager; }
         }
+        private ConstructionLandManager _constructionlandManager;
+        public ConstructionLandManager ConstructionLandManager
+        {
+            get { return _constructionlandManager == null ? _constructionlandManager = new ConstructionLandManager() : _constructionlandManager; }
+        }
     }
 }
