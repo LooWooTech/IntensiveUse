@@ -32,6 +32,17 @@ namespace IntensiveUse.Manager
             return queue;
         }
 
+        public Queue<double> TranslateOfPEEI(PEEI PEEI)
+        {
+            Queue<double> queue = new Queue<double>();
+            Gain(PEEI.PEI.PEI1, ref queue);
+            queue.Enqueue(PEEI.PEI.PopulationSite);
+            Gain(PEEI.EEI.EEI1, ref queue);
+            queue.Enqueue(PEEI.EEI.Economy);
+            queue.Enqueue(PEEI.EI);
+            return queue;
+        }
+
 
         public void Gain(IIBase Complex,ref Queue<double> queue)
         {
@@ -259,6 +270,74 @@ namespace IntensiveUse.Manager
             {
                 basevalue.TargetStandard = 1 / basevalue.StandardInit;
             }
+            return basevalue;
+        }
+
+        public PEEI AcquireOfPEEI(int Year, int ID, int CID)
+        {
+            PEEI entity = new PEEI();
+            entity.PEI = AcquireOfPEI(Year, ID, CID);
+            entity.EEI = AcquireOfEEI(Year, ID, CID);
+            SubIndex subindex = SearchForSubIndex(Year.ToString(), CID);
+            entity.EI = entity.PEI.PopulationSite * subindex.PEI + entity.EEI.Economy * subindex.EEI;
+            return entity;
+        }
+
+        public PEI AcquireOfPEI(int Year, int ID, int CID)
+        {
+            PEI entity = new PEI();
+            entity.PEI1 = PEII1(Year, ID, CID);
+            Exponent exponent = SearchForExponent(Year.ToString(), CID, IdealType.Weight);
+            entity.PopulationSite = entity.PEI1.TargetStandard * exponent.PEI1;
+            return entity;
+        }
+
+        public IIBase PEII1(int Year, int ID, int CID)
+        {
+            IIBase basevalue = new IIBase();
+            People people1 = SearchForPeople(Year.ToString(), ID);//14
+            People people2 = SearchForPeople((Year-3).ToString(),ID);//11
+            ConstructionLand construction1 = SearchForConstruction(Year.ToString(),ID);//14
+            ConstructionLand construction2 = SearchForConstruction((Year-3).ToString(),ID);//11
+            if (Math.Abs(people2.PermanentSum - 0) > 0.001&&Math.Abs(construction1.Town+construction1.MiningLease-construction1.County-construction2.Town-construction2.MiningLease-construction2.County)>0.001)
+            {
+                basevalue.Status = (people1.PermanentSum - people2.PermanentSum) * (construction2.Town + construction2.MiningLease + construction2.County) / people2.PermanentSum / (construction1.Town + construction1.MiningLease + construction1.County - construction2.Town - construction2.MiningLease - construction2.County);
+            }
+            Exponent exponent = SearchForExponent(Year.ToString(), CID,IdealType.Value);
+            if (Math.Abs(exponent.PEI1 - 0) > 0.001)
+            {
+                basevalue.StandardInit = basevalue.Status / exponent.PEI1;
+            }
+            basevalue.TargetStandard = basevalue.StandardInit;
+            return basevalue;
+        }
+
+        public EEI AcquireOfEEI(int Year, int ID, int CID)
+        {
+            EEI entity = new EEI();
+            entity.EEI1 = EEI1(Year,ID,CID);
+            Exponent exponent = SearchForExponent(Year.ToString(), CID, IdealType.Weight);
+            entity.Economy = entity.EEI1.TargetStandard * exponent.EEI;
+            return entity;
+        }
+
+        public IIBase EEI1(int Year, int ID, int CID)
+        {
+            IIBase basevalue = new IIBase();
+            Economy economy1 = SearchForEconomy(Year.ToString(), ID);
+            Economy economy2 = SearchForEconomy((Year - 3).ToString(), ID);
+            ConstructionLand construction1 = SearchForConstruction(Year.ToString(),ID);
+            ConstructionLand construction2 = SearchForConstruction((Year - 3).ToString(), ID);
+            if (Math.Abs(economy2.Compare - 0) > 0.001&&Math.Abs(construction1.SubTotal-construction2.SubTotal)>0.001)
+            {
+                basevalue.Status = (economy1.Compare - economy2.Compare) * construction2.SubTotal / economy2.Compare / (construction1.SubTotal - construction2.SubTotal);
+            }
+            Exponent exponent = SearchForExponent(Year.ToString(), CID, IdealType.Value);
+            if (Math.Abs(exponent.EEI - 0) > 0.001)
+            {
+                basevalue.StandardInit = basevalue.Status / exponent.EEI;
+            }
+            basevalue.TargetStandard = basevalue.StandardInit;
             return basevalue;
         }
     }

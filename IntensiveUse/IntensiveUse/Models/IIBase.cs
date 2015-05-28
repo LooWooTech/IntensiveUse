@@ -263,4 +263,100 @@ namespace IntensiveUse.Models
             };
         }
     }
+
+    public class PEI
+    {
+        /// <summary>
+        /// 人口与城乡建设用地增长弹性系数
+        /// </summary>
+        public IIBase PEI1 { get; set; }
+        /// <summary>
+        /// 人口用地弹性分指数值
+        /// </summary>
+        public double PopulationSite { get; set; }
+    }
+
+    public class EEI
+    {
+        /// <summary>
+        /// 地区生产总值与建设用地增长弹性系数
+        /// </summary>
+        public IIBase EEI1 { get; set; }
+        /// <summary>
+        /// 经济用地弹性分指数值
+        /// </summary>
+        public double Economy { get; set; }
+    }
+
+    public class PEEI
+    {
+        /// <summary>
+        /// 人口用地弹性分指数
+        /// </summary>
+        public PEI PEI { get; set; }
+        /// <summary>
+        /// 经济用地弹性分指数
+        /// </summary>
+        public EEI EEI { get; set; }
+        /// <summary>
+        /// 用地弹性指数值
+        /// </summary>
+        public double EI { get; set; }
+
+        public static PEEI operator +(PEEI c1, PEEI c2)
+        {
+            return new PEEI()
+            {
+                PEI = new PEI()
+                {
+                    PEI1 = new IIBase()
+                    {
+                        Status = c1.PEI.PEI1.Status + c2.PEI.PEI1.Status,
+                        StandardInit = c1.PEI.PEI1.StandardInit + c2.PEI.PEI1.StandardInit,
+                        TargetStandard = c1.PEI.PEI1.TargetStandard + c2.PEI.PEI1.TargetStandard
+                    },
+                    PopulationSite = c1.PEI.PopulationSite + c2.PEI.PopulationSite
+                },
+                EEI = new EEI()
+                {
+                    EEI1 = new IIBase()
+                    {
+                        Status = c1.EEI.EEI1.Status + c2.EEI.EEI1.Status,
+                        StandardInit = c1.EEI.EEI1.StandardInit + c2.EEI.EEI1.StandardInit,
+                        TargetStandard = c1.EEI.EEI1.TargetStandard + c2.EEI.EEI1.TargetStandard
+                    },
+                    Economy = c1.EEI.Economy + c2.EEI.Economy
+                },
+                EI = c1.EI + c2.EI
+            };
+        }
+
+        public static PEEI operator /(PEEI c1, int c2)
+        {
+            return new PEEI()
+            {
+                PEI = new PEI()
+                {
+                    PEI1 = new IIBase()
+                    {
+                        Status = c1.PEI.PEI1.Status / c2,
+                        StandardInit = c1.PEI.PEI1.StandardInit / c2,
+                        TargetStandard = c1.PEI.PEI1.TargetStandard / c2
+                    },
+                    PopulationSite = c1.PEI.PopulationSite / c2
+                },
+                EEI = new EEI()
+                {
+                    EEI1 = new IIBase()
+                    {
+                        Status = c1.EEI.EEI1.Status / c2,
+                        StandardInit = c1.EEI.EEI1.StandardInit / c2,
+                        TargetStandard = c1.EEI.EEI1.TargetStandard / c2
+                    },
+                    Economy = c1.EEI.Economy / c2
+                },
+                EI = c1.EI / c2
+            };
+        }
+    }
 }

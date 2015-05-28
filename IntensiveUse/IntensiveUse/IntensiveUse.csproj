@@ -166,6 +166,7 @@
     <Compile Include="Form\ScheduleAOne.cs" />
     <Compile Include="Form\ScheduleASeven.cs" />
     <Compile Include="Form\ScheduleASix.cs" />
+    <Compile Include="Form\ScheduleATen.cs" />
     <Compile Include="Form\ScheduleAThree.cs" />
     <Compile Include="Form\ScheduleBase.cs" />
     <Compile Include="Form\ScheduleBTwo.cs" />
@@ -299,6 +300,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EXCEL\附表1A9.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A10.xls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EXCEL\附表1A11.xls" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
