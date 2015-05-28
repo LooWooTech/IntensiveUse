@@ -12,13 +12,10 @@ namespace IntensiveUse.Form
     public class ScheduleANine:ScheduleBase,ISchedule
     {
         public const int Start = 4;
+        public const int Line = 17;
         public PEGCI PEGCI { get; set; }
         public ScheduleANine()
         {
-            if (DictData == null)
-            {
-                DictData = new Dictionary<string, Queue<double>>();
-            }
             if (PEGCI == null)
             {
                 PEGCI = new PEGCI()
@@ -51,38 +48,7 @@ namespace IntensiveUse.Form
             this.Year = Year;
             Message(Core);
             Queue<double> queue = Core.ConstructionLandManager.TranslateOfPEGCI(PEGCI);
-            IRow row = sheet.GetRow(5);
-            ICell cell = null;
-            for (var i = 2; i < 17; i++)
-            {
-                cell = row.GetCell(i, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                cell.SetCellValue(Math.Round(queue.Dequeue(), 2));
-            }
-            sheet.ShiftRows(5, sheet.LastRowNum, DictData.Count - 1);
-            int Serial = 0;
-            foreach (var item in DictData.Keys)
-            {
-                row = sheet.GetRow(Serial + Start);
-                if (row == null)
-                {
-                    row = sheet.CreateRow(Serial + Start);
-                    if (TempRow.RowStyle != null)
-                    {
-                        row.RowStyle = TempRow.RowStyle;
-                    }
-                }
-                cell = OpneCell(ref row, 0);
-                cell.SetCellValue(++Serial);
-                cell = OpneCell(ref row, 1);
-                cell.SetCellValue(item);
-                for (var i = 2; i < 17; i++)
-                {
-                    cell = OpneCell(ref row, i);
-                    cell.SetCellValue(Math.Round(DictData[item].Dequeue(), 2));
-                }
-
-            }
-                
+            WriteBase(ref sheet, Line, Start, queue);
             return workbook;
         }
 

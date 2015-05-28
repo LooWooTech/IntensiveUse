@@ -160,6 +160,7 @@
     <Compile Include="Form\IRead.cs" />
     <Compile Include="Form\ISchedule.cs" />
     <Compile Include="Form\ScheduleAEight.cs" />
+    <Compile Include="Form\ScheduleAEleven.cs" />
     <Compile Include="Form\ScheduleAFive.cs" />
     <Compile Include="Form\ScheduleAFour.cs" />
     <Compile Include="Form\ScheduleANine.cs" />

@@ -9,24 +9,21 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleATen:ScheduleBase,ISchedule
+    public class ScheduleAEleven:ScheduleBase,ISchedule
     {
         public const int Start = 4;
-        public const int Line = 11;
-        public PEEI Sum { get; set; }
-        public ScheduleATen()
+        public const int Line = 10;
+        public APIUL sum { get; set; }
+        public ScheduleAEleven()
         {
-            if (Sum == null)
+            if (sum == null)
             {
-                Sum = new PEEI()
+                sum = new APIUL()
                 {
-                    PEI = new PEI()
+                    ULAPI = new ULAPI()
                     {
-                        PEI1 = new IIBase()
-                    },
-                    EEI = new EEI()
-                    {
-                        EEI1 = new IIBase()
+                        ULAPI1 = new IIBase(),
+                        ULAPI2 = new IIBase()
                     }
                 };
             }
@@ -37,21 +34,15 @@ namespace IntensiveUse.Form
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
             {
-                throw new ArgumentException("服务器上的模板文件存在问题");
+                throw new ArgumentException("打开服务器上的模板文件失败");
             }
-            IRow row = sheet.GetRow(Start);
-            if (row != null)
-            {
-                TempRow = row;
-            }
-            this.Year = Year;
-            this.CID = Core.ExcelManager.GetID(City);
+            TempRow = sheet.GetRow(Start);
             Disticts = Core.ExcelManager.GetDistrict(City);
-
+            CID = Core.ExcelManager.GetID(City);
+            this.Year = Year;
             Message(Core);
-            Queue<double> queue = Core.ConstructionLandManager.TranslateOfPEEI(Sum);
+            Queue<double> queue = Core.ConstructionLandManager.TranslateOfAPIUL(sum);
             WriteBase(ref sheet, Line, Start, queue);
-                
             return workbook;
         }
 
@@ -60,16 +51,16 @@ namespace IntensiveUse.Form
             foreach (var item in Disticts)
             {
                 int ID = Core.ExcelManager.GetID(item);
-                PEEI peei = Core.ConstructionLandManager.AcquireOfPEEI(Year, ID, CID);
+                APIUL apiul = Core.ConstructionLandManager.AcquireOfAPIUL(Year, ID, CID);
                 if (!DictData.ContainsKey(item))
                 {
-                    DictData.Add(item, Core.ConstructionLandManager.TranslateOfPEEI(peei));
-                    Sum += peei;
+                    DictData.Add(item, Core.ConstructionLandManager.TranslateOfAPIUL(apiul));
+                    sum += apiul;
                 }
             }
             if (DictData.Count > 0)
             {
-                Sum = Sum / DictData.Count;
+                sum = sum / DictData.Count;
             }
         }
     }

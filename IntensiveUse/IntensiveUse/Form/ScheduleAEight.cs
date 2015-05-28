@@ -13,6 +13,7 @@ namespace IntensiveUse.Form
     {
         public const int Start = 4;
         public const int Begin = 2;
+        public const int Line = 14;
         public PEUII Sum { get; set; }
         public ScheduleAEight()
         {
@@ -56,36 +57,7 @@ namespace IntensiveUse.Form
             Message(Core);
 
             Queue<double> all = Core.ConstructionLandManager.TranslateOfPEUII(Sum);
-            row = sheet.GetRow(Start + 1);
-            ICell cell = null;
-            for (var i = Begin; i < 14; i++)
-            {
-                cell = row.GetCell(i, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                cell.SetCellValue(Math.Round(all.Dequeue(),2));
-            }
-            sheet.ShiftRows(5, sheet.LastRowNum, DictData.Count-1);
-            int Serial = 0;
-            foreach (var item in DictData.Keys)
-            {
-                row = sheet.GetRow(Serial+Start);
-                if (row == null)
-                {
-                    row = sheet.CreateRow(Serial + Start);
-                    if (TempRow.RowStyle != null)
-                    {
-                        row.RowStyle = TempRow.RowStyle;
-                    }
-                }
-                cell = OpneCell(ref row, 0);
-                cell.SetCellValue(++Serial);
-                cell = OpneCell(ref row, 1);
-                cell.SetCellValue(item);
-                for (var i = 2; i < 14; i++)
-                {
-                    cell = OpneCell(ref row, i);
-                    cell.SetCellValue(Math.Round(DictData[item].Dequeue(), 2));
-                }
-            }
+            WriteBase(ref sheet, Line, Start, all);
             return workbook;
         }
 

@@ -359,4 +359,80 @@ namespace IntensiveUse.Models
             };
         }
     }
+
+    public class ULAPI
+    {
+        /// <summary>
+        /// 城市存量土地供应比率
+        /// </summary>
+        public IIBase ULAPI1 { get; set; }
+        /// <summary>
+        /// 城市批次土地供应比率
+        /// </summary>
+        public IIBase ULAPI2 { get; set; }
+        /// <summary>
+        /// 城市用地管理绩效分指数
+        /// </summary>
+        public double Performance { get; set; }
+    }
+
+    public class APIUL
+    {
+        /// <summary>
+        /// 城市用地管理绩效分指数
+        /// </summary>
+        public ULAPI ULAPI { get; set; }
+        /// <summary>
+        /// 管理绩效指数值
+        /// </summary>
+        public double API { get; set; }
+
+        public static APIUL operator +(APIUL c1, APIUL c2)
+        {
+            return new APIUL()
+            {
+                ULAPI = new ULAPI()
+                {
+                    ULAPI1 = new IIBase()
+                    {
+                        Status = c1.ULAPI.ULAPI1.Status + c2.ULAPI.ULAPI1.Status,
+                        StandardInit = c1.ULAPI.ULAPI1.StandardInit + c2.ULAPI.ULAPI1.StandardInit,
+                        TargetStandard = c1.ULAPI.ULAPI1.TargetStandard + c2.ULAPI.ULAPI1.TargetStandard
+                    },
+                    ULAPI2 = new IIBase()
+                    {
+                        Status = c1.ULAPI.ULAPI2.Status + c2.ULAPI.ULAPI2.Status,
+                        StandardInit = c1.ULAPI.ULAPI2.StandardInit + c2.ULAPI.ULAPI2.StandardInit,
+                        TargetStandard = c1.ULAPI.ULAPI2.TargetStandard + c2.ULAPI.ULAPI2.TargetStandard
+                    },
+                    Performance = c1.ULAPI.Performance + c2.ULAPI.Performance
+                },
+                API = c1.API + c2.API
+            };
+        }
+
+        public static APIUL operator /(APIUL c1, int c2)
+        {
+            return new APIUL()
+            {
+                ULAPI = new ULAPI()
+                {
+                    ULAPI1 = new IIBase()
+                    {
+                        Status = c1.ULAPI.ULAPI1.Status / c2,
+                        StandardInit = c1.ULAPI.ULAPI1.StandardInit / c2,
+                        TargetStandard = c1.ULAPI.ULAPI1.TargetStandard / c2
+                    },
+                    ULAPI2 = new IIBase()
+                    {
+                        Status = c1.ULAPI.ULAPI2.Status / c2,
+                        StandardInit = c1.ULAPI.ULAPI2.StandardInit / c2,
+                        TargetStandard = c1.ULAPI.ULAPI2.TargetStandard / c2
+                    },
+                    Performance = c1.ULAPI.Performance / c2
+                },
+                API = c1.API / c2
+            };
+        }
+    }
 }

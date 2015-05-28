@@ -43,6 +43,15 @@ namespace IntensiveUse.Manager
             return queue;
         }
 
+        public Queue<double> TranslateOfAPIUL(APIUL APIUL)
+        {
+            Queue<double> queue = new Queue<double>();
+            Gain(APIUL.ULAPI.ULAPI1, ref queue);
+            Gain(APIUL.ULAPI.ULAPI2, ref queue);
+            queue.Enqueue(APIUL.ULAPI.Performance);
+            queue.Enqueue(APIUL.API);
+            return queue;
+        }
 
         public void Gain(IIBase Complex,ref Queue<double> queue)
         {
@@ -336,6 +345,70 @@ namespace IntensiveUse.Manager
             if (Math.Abs(exponent.EEI - 0) > 0.001)
             {
                 basevalue.StandardInit = basevalue.Status / exponent.EEI;
+            }
+            basevalue.TargetStandard = basevalue.StandardInit;
+            return basevalue;
+        }
+
+        public APIUL AcquireOfAPIUL(int Year, int ID, int CID)
+        {
+            APIUL entity = new APIUL();
+            entity.ULAPI = AcquireOfULAPI(Year, ID, CID);
+            SubIndex subindex = SearchForSubIndex(Year.ToString(), CID);
+            entity.API = entity.ULAPI.Performance * subindex.ULAPI;
+            return entity;
+        }
+
+        public ULAPI AcquireOfULAPI(int Year, int ID, int CID)
+        {
+            ULAPI entity = new ULAPI();
+            entity.ULAPI1 = ULAPI1(Year,ID,CID);
+            entity.ULAPI2 = ULAPI2(Year, ID, CID);
+            Exponent exponent = SearchForExponent(Year.ToString(), CID, IdealType.Weight);
+            entity.Performance = entity.ULAPI1.TargetStandard * exponent.ULAPI1 + entity.ULAPI2.TargetStandard * exponent.ULAPI2;
+            return entity;
+        }
+
+        public IIBase ULAPI1(int Year, int ID, int CID)
+        {
+            IIBase baseValue = new IIBase();
+            double SumStock = 0.0;
+            double Sum = 0.0;
+            for (var i = 2; i >= 0; i--)
+            {
+                LandSupply landsupply = SearchForLandSupply((Year - i).ToString(), ID);
+                Sum += landsupply.Sum;
+                SumStock += landsupply.Stock;
+            }
+            if (Math.Abs(Sum - 0) > 0.001)
+            {
+                baseValue.Status = SumStock / Sum * 100;
+            }
+            Exponent exponent = SearchForExponent(Year.ToString(), CID, IdealType.Value);
+            if (Math.Abs(exponent.ULAPI1 - 0) > 0.001)
+            {
+                baseValue.StandardInit = baseValue.Status / exponent.ULAPI1;
+            }
+            baseValue.TargetStandard = baseValue.StandardInit;
+            return baseValue;
+        }
+
+        public IIBase ULAPI2(int Year, int ID, int CID)
+        {
+            IIBase basevalue = new IIBase();
+            double SumArea = 0.0;
+            double SumAlready = 0.0;
+            for (var i = 3; i > 0; i--)
+            {
+                Ratify ratify = SearchForRatify((Year - i).ToString(), ID);
+                SumArea += ratify.Area;
+                SumAlready += ratify.Already;
+            }
+            basevalue.Status = SumAlready / SumArea * 100;
+            Exponent exponent = SearchForExponent(Year.ToString(), CID, IdealType.Value);
+            if (Math.Abs(exponent.ULAPI2 - 0) > 0.001)
+            {
+                basevalue.StandardInit = basevalue.Status / exponent.ULAPI2;
             }
             basevalue.TargetStandard = basevalue.StandardInit;
             return basevalue;
