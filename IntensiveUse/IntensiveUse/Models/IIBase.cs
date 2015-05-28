@@ -24,6 +24,9 @@ namespace IntensiveUse.Models
 
     public class PUII
     {
+        /// <summary>
+        /// 城乡建设用地人口密度
+        /// </summary>
         public IIBase II { get; set; }
         /// <summary>
         /// 人口密度分指数值
@@ -34,15 +37,33 @@ namespace IntensiveUse.Models
 
     public class EUII
     {
+        /// <summary>
+        /// 建设用地地均固定资产投资
+        /// </summary>
         public IIBase EUII1 { get; set; }
+        /// <summary>
+        /// 建设用地地均地区生产总值
+        /// </summary>
         public IIBase EUII2 { get; set; }
+        /// <summary>
+        /// 经济强度分指数值
+        /// </summary>
         public double Economy { get; set; }
     }
 
     public class PEUII
     {
+        /// <summary>
+        /// 人口密度分指数
+        /// </summary>
         public PUII PUII { get; set; }
+        /// <summary>
+        /// 经济强度分指数
+        /// </summary>
         public EUII EUII { get; set; }
+        /// <summary>
+        /// 利用强度指数值
+        /// </summary>
         public double UII { get; set; }
 
         public static PEUII operator +(PEUII c1, PEUII c2)
@@ -112,5 +133,54 @@ namespace IntensiveUse.Models
                 UII = c1.UII / c2
             };
         }
+    }
+
+    public class PGCI
+    {
+        /// <summary>
+        /// 单位人口增长消耗新增城乡建设用地量
+        /// </summary>
+        public IIBase PGCI1 { get; set; }
+        /// <summary>
+        /// 人口增长耗地分指数值
+        /// </summary>
+        public double PopulationGrowth { get; set; }
+    }
+
+    public class EGCI
+    {
+        /// <summary>
+        /// 单位地区生产总值耗地下降率
+        /// </summary>
+        public IIBase EGCI1 { get; set; }
+        /// <summary>
+        /// 单位地区生产总值增长消耗新增建设用地量
+        /// </summary>
+        public IIBase EGCI2 { get; set; }
+        /// <summary>
+        /// 单位固定资产投资消耗新增建设用地量
+        /// </summary>
+        public IIBase EGCI3 { get; set; }
+        /// <summary>
+        /// 经济增长耗地分指数值
+        /// </summary>
+        public double Economy { get; set; }
+    }
+
+
+    public class PEGCI
+    {
+        /// <summary>
+        /// 人口增长耗地分指数值
+        /// </summary>
+        public PGCI PGCI { get; set; }
+        /// <summary>
+        /// 经济增长耗地分指数
+        /// </summary>
+        public EGCI EGCI { get; set; }
+        /// <summary>
+        /// 增长耗地指数值
+        /// </summary>
+        public double GCI { get; set; }
     }
 }

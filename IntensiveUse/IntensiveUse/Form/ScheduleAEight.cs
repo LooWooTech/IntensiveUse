@@ -15,6 +15,7 @@ namespace IntensiveUse.Form
         public const int Begin = 2;
         public IRow TempRow { get; set; }
         public int Year { get; set; }
+        public int CID { get; set; }
         public PEUII Sum { get; set; }
         public List<string> Disticts { get; set; }
         public Dictionary<string, Queue<double>> DictData { get; set; }
@@ -56,6 +57,7 @@ namespace IntensiveUse.Form
             }
             Disticts = Core.ExcelManager.GetDistrict(City);
             this.Year = Year;
+            this.CID = Core.ExcelManager.GetID(City);
             Message(Core);
 
             Queue<double> all = Core.ConstructionLandManager.Translate(Sum);
@@ -109,7 +111,7 @@ namespace IntensiveUse.Form
             foreach (var item in Disticts)
             {
                 int ID = Core.ExcelManager.GetID(item);
-                PEUII peuii = Core.ConstructionLandManager.AcquireOfPEUII(Year, ID);
+                PEUII peuii = Core.ConstructionLandManager.AcquireOfPEUII(Year, ID,CID);
                 if (!DictData.ContainsKey(item))
                 {
                     DictData.Add(item, Core.ConstructionLandManager.Translate(peuii));

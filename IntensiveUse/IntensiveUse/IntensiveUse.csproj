@@ -162,6 +162,7 @@
     <Compile Include="Form\ScheduleAEight.cs" />
     <Compile Include="Form\ScheduleAFive.cs" />
     <Compile Include="Form\ScheduleAFour.cs" />
+    <Compile Include="Form\ScheduleANine.cs" />
     <Compile Include="Form\ScheduleAOne.cs" />
     <Compile Include="Form\ScheduleASeven.cs" />
     <Compile Include="Form\ScheduleASix.cs" />
