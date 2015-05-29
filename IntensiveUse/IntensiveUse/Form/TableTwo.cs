@@ -17,6 +17,17 @@ namespace IntensiveUse.Form
         public string Code { get; set; }
         public Dictionary<string, AgricultureLand> DictAgriculture { get; set; }
         public Dictionary<string, ConstructionLand> DictConstruction { get; set; }
+        public TableTwo()
+        {
+            if (DictAgriculture == null)
+            {
+                DictAgriculture = new Dictionary<string, AgricultureLand>();
+            }
+            if (DictConstruction == null)
+            {
+                DictConstruction = new Dictionary<string, ConstructionLand>();
+            }
+        }
        
         public void Gain(string FilePath)
         {
@@ -80,14 +91,7 @@ namespace IntensiveUse.Form
                 double.TryParse(ExcelHelper.GetValue(cell), out Data[k]);
                 k++;
             }
-            if (DictAgriculture == null)
-            {
-                DictAgriculture = new Dictionary<string, AgricultureLand>();
-            }
-            if (DictConstruction == null)
-            {
-                DictConstruction = new Dictionary<string, ConstructionLand>();
-            }
+            
             double sub = 0.0;
             double sum = 0.0;
             for (var i = 0; i < 9; i++)

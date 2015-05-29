@@ -1,7 +1,7 @@
 ﻿@using IntensiveUse.Models
 @using IntensiveUse.Helper
 @{
-    ViewBag.Title = "地级市";
+    ViewBag.Title = ViewBag.City;
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<string> list=ViewBag.List;
 }
@@ -30,8 +30,8 @@
 <table class="table table-bordered">
     <tr>
         <th>输出表单名称</th>
-        <th>数据导入</th>
-        <th style="width:200px;">下载</th>
+        <th style="width:350px;">数据导入</th>
+        <th style="width:250px;">下载</th>
         
     </tr>
     @foreach (OutputExcel item in Enum.GetValues(typeof(OutputExcel)))
@@ -45,116 +45,46 @@
                 @if (item == OutputExcel.附表1A6||item==OutputExcel.附表1A5)
                 {
                     var year=DateTime.Now.Year;
-                    <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#@(item.ToString())-upload">上传</button>
-                    <div class="modal fade" id="@(item.ToString())-upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title">请选择上传地级市之后上传文件</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="post" action="/Home/UploadOutExcel" class="form-horizontal" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="City" class="control-label col-lg-3">地级市</label>
-                                            <div class="col-lg-6">
-                                                <select name="City" class="form-control">
-                                                    @foreach (var city in list)
-                                                    {
-                                                        <option value="@city">@city</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="Year" class="control-label col-lg-3">年份</label>
-                                            <div class="col-lg-6">
-                                                <select name="Year" class="form-control">
-                                                    @while (year>=2010)
-                                                    {
-                                                        <option value="@year">@year</option>
-                                                        year--;
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <input type="text" value="@(item.ToString())" name="Type" style="display:none;" />
-                                        <div class="form-group">
-                                            <label for="file" class="control-label col-lg-3">文件选择</label>
-                                            <div class="col-lg-6">
-                                                <input type="file" name="file" class="form-control input-sm" style="width:100px;" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-lg-9 col-lg-offset-3">
-                                                <button type="submit" class="btn btn-sm btn-success">上传</button>
-                                            </div>
-                                        </div>
-                                        
-                                    </form>
-                                </div>
-                            </div>
+                    <form class="form-inline" method="post" action="/Home/UploadOutExcel" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <input type="file" name="file" style="width:200px; height:30px;" class="form-control" />
+                            <select name="Year" class="input-sm">
+                                @while (year >= 2009)
+                                {
+                                    <option value="@year">@year</option>
+                                    year--;
+                                }
+                            </select>
+
+                            <input type="text" value="@(item.ToString())" name="Type" style="display:none;" />
+                            <input type="text" name="City" value="@ViewBag.City" style="display:none" />
+                            <button type="submit" class="btn btn-success btn-sm">上传</button>
                         </div>
-                    </div> 
+                    </form>
                 }
             </td>
             <td>
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#@(item.ToString())">下载</button>
-                <div class="modal fade" id="@(item.ToString())" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title">地级市选择</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form class="form-horizontal" method="post" action="/Home/DownLoad">
-                                    <div class="form-group">
-                                        <label for="City" class="control-label col-lg-3">地级市</label>
-                                        <div class="col-lg-6">
-                                            <select name="City" class="form-control">
-                                                @foreach (var city in list)
-                                                {
-                                                    <option value="@city">@city</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    @if (item == OutputExcel.附表1A1)
-                                    {
-                                        <div class="form-group">
-                                            <label for="County" class="control-label col-lg-3">区（县、市）</label>
-                                            <div class="col-lg-6">
-                                                <select name="County" class="form-control">
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="form-group">
-                                        <label for="Year" class="control-label col-lg-3">年份</label>
-                                        <div class="col-lg-6">
-                                            <select name="Year" class="form-control">
-                                                @while ((Year-5) >= 2000)
-                                                {
-                                                    <option value="@Year">@(Year)-@(Year-5)</option>
-                                                    Year--;
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <input type="text" value="@(item)" style="display:none" name="Excel" />
-                                    <div class="form-group">
-                                        <div class="col-lg-9 col-lg-offset-3">
-                                            <button type="submit" class="btn btn-primary">确定</button>
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <form class="form-inline" method="post" action="/Home/DownLoad" style="float:right">
+                    @if (item == OutputExcel.附表1A1)
+                    {
+                        <select name="County">
+                              @foreach (var city in list)
+                              {          
+                                  <option value="@city">@city</option>   
+                              }      
+                          </select>
+                    }
+                    <select name="Year">
+                        @while ((Year - 5) >= 2000)
+                        {
+                            <option value="@Year">@(Year)-@(Year - 5)</option>
+                            Year--;
+                        }
+                    </select>
+                    <input type="text" value="@(item)" style="display:none" name="Excel" />
+                    <button type="submit" class="btn btn-primary btn-xs">下载</button>
+                    
+                </form>
             </td>
             
         </tr>
@@ -162,26 +92,3 @@
         
     }
 </table>
-
-<script>
-    $(function () {
-        $("[name=City]").hover(function () {
-            var value = $(this).val();
-            var xmlhttp;
-            var node;
-            var txt;
-            if (window.XMLHttpRequest) {
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    $("[name=County]").empty().append(xmlhttp.responseText);
-                }
-            }
-            xmlhttp.open("GET", "/Home/GetForDivision?City="+value, true);
-            xmlhttp.send();
-        })
-    })
-</script>

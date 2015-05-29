@@ -1,0 +1,128 @@
+﻿@using IntensiveUse.Models
+@using IntensiveUse.Helper
+@{
+    ViewBag.Title = "区（县、市）";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<string> list = ViewBag.List;
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>输入表单名称</th>
+        <th style="width:200px;">上传验证</th>
+    </tr>
+    @foreach (UploadFileExcel item in Enum.GetValues(typeof(UploadFileExcel)))
+    {
+        <tr>
+            <td>@(item.ToString())</td>
+            <td>
+                <form method="post" action="/Home/UploadFile?Type=@(item)" class="form-inline" enctype="multipart/form-data">
+                    <input type="file" name="file" class="form-control input-sm" style="width:100px;" />
+                    <button type="submit" class="btn btn-sm btn-success">上传</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>输出表单名称</th>
+        <th>数据导入</th>
+        <th style="width:200px;">下载</th>
+
+    </tr>
+    @foreach (OutputExcel item in Enum.GetValues(typeof(OutputExcel)))
+    {
+        var Year = DateTime.Now.Year;
+        if ((int)item > 13)
+        {
+            <tr>
+                <td>@(item.ToString())-@(item.GetDescription())</td>
+                <td>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#@(item.ToString())">下载</button>
+                    <div class="modal fade" id="@(item.ToString())" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title">地级市选择</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="form-horizontal" method="post" action="/Home/DownLoad">
+                                        <div class="form-group">
+                                            <label for="City" class="control-label col-lg-3">地级市</label>
+                                            <div class="col-lg-6">
+                                                <select name="City" class="form-control">
+                                                    @foreach (var city in list)
+                                                    {
+                                                        <option value="@city">@city</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="County" class="control-label col-lg-3">区（县、市）</label>
+                                            <div class="col-lg-6">
+                                                <select name="County" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Year" class="control-label col-lg-3">年份</label>
+                                            <div class="col-lg-6">
+                                                <select name="Year" class="form-control">
+                                                    @while ((Year - 5) >= 2000)
+                                                    {
+                                                        <option value="@Year">@(Year)-@(Year - 5)</option>
+                                                        Year--;
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <input type="text" value="@(item)" style="display:none" name="Excel" />
+                                        <div class="form-group">
+                                            <div class="col-lg-9 col-lg-offset-3">
+                                                <button type="submit" class="btn btn-primary">确定</button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+        }
+
+    }
+</table>
+
+<script>
+    $(function () {
+        $("[name=City]").hover(function () {
+            var value = $(this).val();
+            var xmlhttp;
+            var node;
+            var txt;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    $("[name=County]").empty().append(xmlhttp.responseText);
+                }
+            }
+            xmlhttp.open("GET", "/Home/GetForDivision?City=" + value, true);
+            xmlhttp.send();
+        })
+    })
+</script>
+

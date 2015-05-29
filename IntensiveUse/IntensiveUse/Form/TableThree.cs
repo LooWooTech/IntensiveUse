@@ -17,6 +17,21 @@ namespace IntensiveUse.Form
         public Dictionary<string, NewConstruction> DictNewConstruction { get; set; }
         public Dictionary<string, LandSupply> DictLandSupply { get; set; }
         public Dictionary<string, Ratify> DictRatify { get; set; }
+        public TableThree()
+        {
+            if (DictNewConstruction == null)
+            {
+                DictNewConstruction = new Dictionary<string, NewConstruction>();
+            }
+            if (DictLandSupply == null)
+            {
+                DictLandSupply = new Dictionary<string, LandSupply>();
+            }
+            if (DictRatify == null)
+            {
+                DictRatify = new Dictionary<string, Ratify>();
+            }
+        }
         public void Gain(string FilePath)
         {
             ISheet sheet = ExcelHelper.Open(FilePath);
@@ -70,18 +85,7 @@ namespace IntensiveUse.Form
                 ICell cell = row.GetCell(SerialNumber, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 double.TryParse(ExcelHelper.GetValue(cell),out Data[i]);
             }
-            if (DictNewConstruction == null)
-            {
-                DictNewConstruction = new Dictionary<string, NewConstruction>();
-            }
-            if (DictLandSupply == null)
-            {
-                DictLandSupply = new Dictionary<string, LandSupply>();
-            }
-            if (DictRatify == null)
-            {
-                DictRatify = new Dictionary<string, Ratify>();
-            }
+           
 
             if (!DictNewConstruction.ContainsKey(Year))
             {

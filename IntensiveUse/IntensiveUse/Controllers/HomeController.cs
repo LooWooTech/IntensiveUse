@@ -19,19 +19,27 @@ namespace IntensiveUse.Controllers
 
         public ActionResult Index()
         {
-            return View();
-        }
-
-
-
-        public ActionResult City()
-        {
             ViewBag.List = Core.ExcelManager.GetCity();
             return View();
         }
 
-        public ActionResult County()
+        [HttpPost]
+        public ActionResult City(string City)
         {
+            ViewBag.City = City;
+            ViewBag.List = Core.ExcelManager.GetDistrict(City);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult County(string County)
+        {
+            if (string.IsNullOrEmpty(County))
+            {
+                throw new ArgumentException("请选择区（县、市）之后进入");
+            }
+            ViewBag.County = County;
+            ViewBag.List = Core.ExcelManager.GetCity();
             return View();
         }
 
@@ -54,6 +62,10 @@ namespace IntensiveUse.Controllers
                 default: break;
             }
             engine.Gain(FilePath);
+            if (!Core.ExcelManager.Exit(engine.GetName()))
+            {
+                throw new ArgumentException("未找到当前上传文件中获取到的行政区信息，或者上传当前的文件错误，请核对文件");
+            }
             engine.Save(Core);
             return View();
         }

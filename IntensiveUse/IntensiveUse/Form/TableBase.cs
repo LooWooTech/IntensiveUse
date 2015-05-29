@@ -11,6 +11,26 @@ namespace IntensiveUse.Form
     public class TableBase
     {
         public string Name { get; set; }
+
+        private Dictionary<string, Queue<double>> DictValues { get; set; }
+
+        public Dictionary<string, Queue<double>> GetDictValue()
+        {
+            return DictValues;
+        }
+
+        public string GetName()
+        {
+            return Name;
+        }
+
+        public TableBase()
+        {
+            if (DictValues == null)
+            {
+                DictValues = new Dictionary<string, Queue<double>>();
+            }
+        }
         
 
         private  Regex _yearRe = new Regex(@"^20[0-9]{2}", RegexOptions.Compiled);

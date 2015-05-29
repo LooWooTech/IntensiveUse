@@ -1,17 +1,113 @@
 ﻿@{
     ViewBag.Title = "首页";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<string> list = ViewBag.List;
 }
 
 <div class="row">
     <div class="col-lg-6">
         <blockquote>
-            <p><i class="glyphicon glyphicon-plane"></i>&nbsp;<a href="/Home/City">地级市入口</a></p>
+            <i class="glyphicon glyphicon-plane"></i>&nbsp;
+            <a href="#" data-toggle="modal" data-target="#City">地级市入口</a>
+            <div class="modal fade" id="City" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">请选择地级市</h4>
+                        </div>
+                        <div class="media-body">
+                            <form method="post"action="/Home/City" class="form-horizontal" >
+                                <div class="form-group">
+                                    <label for="City" class="control-label col-lg-3">地级市</label>
+                                    <div class="col-lg-6">
+                                        <select name="City" class="form-control">
+                                            @foreach (var city in list)
+                                            {
+                                                <option value="@city">@city</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-9 col-lg-offset-3">
+                                        <button type="submit" class="btn btn-primary">确定</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </blockquote>
     </div>
     <div class="col-lg-6">
         <blockquote>
-            <p><i class="glyphicon glyphicon-send"></i>&nbsp;<a href="#">区/县入口</a></p>
+            <i class="glyphicon glyphicon-send"></i>&nbsp;
+            <a href="#" data-toggle="modal" data-target="#County">区/县入口</a>
+            <div class="modal fade" id="County" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">请选择区（县、市）</h4>
+                        </div>
+                        <div class="media-body">
+                            <form method="post" action="/Home/County" class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="City" class="control-label col-lg-3">地级市</label>
+                                    <div class="col-lg-6">
+                                        <select name="City" class="form-control">
+                                            @foreach (var city in list)
+                                            {
+                                                <option value="@city">@city</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="County" class="control-label col-lg-3">区（县、市）</label>
+                                    <div class="col-lg-6">
+                                        <select name="County" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-9 col-lg-offset-3">
+                                        <button type="submit" class="btn btn-primary">确定</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </blockquote>
     </div>
 </div>
+
+
+<script>
+    $(function () {
+        $("[name=City]").click(function () {
+            var value = $(this).val();
+            var xmlhttp;
+            var node;
+            var txt;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    $("[name=County]").empty().append(xmlhttp.responseText);
+                }
+            }
+            xmlhttp.open("GET", "/Home/GetForDivision?City=" + value, true);
+            xmlhttp.send();
+        })
+    })
+</script>

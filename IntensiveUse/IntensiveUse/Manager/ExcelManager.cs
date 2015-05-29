@@ -90,6 +90,27 @@ namespace IntensiveUse.Manager
         }
 
 
+        public bool Exit(string Name)
+        {
+            var node = CityConfigXml.SelectSingleNode("/Citys/City[@Name='" + Name + "']");
+            if (node != null)
+            {
+                return true;
+            }
+            var nodes = CityConfigXml.SelectNodes("/Citys/City/Division");
+            string val = string.Empty;
+            for (var i = 0; i < nodes.Count; i++)
+            {
+                var n = nodes[i];
+                val = n.Attributes["Name"].Value;
+                if (val.ToLower() == Name.ToLower())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public List<string> GetCity()
         {
             List<string> Citys = new List<string>();

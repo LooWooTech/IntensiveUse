@@ -11,5 +11,8 @@ namespace IntensiveUse.Form
         void Gain(string FilePath);
         void Save(ManagerCore Core);
         void Update(int ID);
+        Dictionary<string, Queue<double>> GetDictValue();
+
+        string GetName();
     }
 }

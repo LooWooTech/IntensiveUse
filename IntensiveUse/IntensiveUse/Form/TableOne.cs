@@ -17,6 +17,17 @@ namespace IntensiveUse.Form
         public int Count{get;set;}
         public Dictionary<string, People> DictPeople { get; set; }
         public Dictionary<string, Economy> DictEconomy { get; set; }
+        public TableOne()
+        {
+            if (DictPeople == null)
+            {
+                DictPeople = new Dictionary<string, People>();
+            }
+            if (DictEconomy == null)
+            {
+                DictEconomy = new Dictionary<string, Economy>();
+            }
+        }
         
         public void Gain(string FilePath)
         {
@@ -58,8 +69,6 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("保存更新人口数据时发生错误："+ex.ToString());
             }
-            
-            //Console.ReadLine();
 
         }
         public void GainForValue(ISheet sheet,int SerialNumber,string Year)
@@ -73,14 +82,7 @@ namespace IntensiveUse.Form
                 double.TryParse(ExcelHelper.GetValue(cell), out data[x]);
                 x++;
             }
-            if (DictPeople == null)
-            {
-                DictPeople = new Dictionary<string, People>();
-            }
-            if (DictEconomy == null)
-            {
-                DictEconomy = new Dictionary<string, Economy>();
-            }
+            
             if (!DictPeople.ContainsKey(Year))
             {
                 DictPeople.Add(Year, new People
@@ -125,12 +127,14 @@ namespace IntensiveUse.Form
             {
                 item.RID = ID;
             }
-
             foreach (var item in DictEconomy.Values)
             {
                 item.RID = ID;
             }
+            
         }
+
+
 
 
         
