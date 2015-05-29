@@ -47,9 +47,17 @@ namespace IntensiveUse.Form
             this.CID = Core.ExcelManager.GetID(City);
             this.Year = Year;
             Message(Core);
-            Queue<double> queue = Core.ConstructionLandManager.TranslateOfPEGCI(PEGCI);
-            WriteBase(ref sheet, Line, Start, queue);
+            Ready();
+            this.Queue= Core.ConstructionLandManager.TranslateOfPEGCI(PEGCI);
+            WriteBase(ref sheet,Start);
             return workbook;
+        }
+        private void Ready()
+        {
+            for (var i = 2; i < Line; i++)
+            {
+                Columns.Add(i);
+            }
         }
 
         public void Message(ManagerCore Core)

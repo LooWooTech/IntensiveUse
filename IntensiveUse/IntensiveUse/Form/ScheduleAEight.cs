@@ -54,14 +54,20 @@ namespace IntensiveUse.Form
             Disticts = Core.ExcelManager.GetDistrict(City);
             this.Year = Year;
             this.CID = Core.ExcelManager.GetID(City);
+            Ready();
             Message(Core);
-
-            Queue<double> all = Core.ConstructionLandManager.TranslateOfPEUII(Sum);
-            WriteBase(ref sheet, Line, Start, all);
+            this.Queue= Core.ConstructionLandManager.TranslateOfPEUII(Sum);
+            WriteBase(ref sheet,Start);
             return workbook;
         }
 
-
+        private void Ready()
+        {
+            for (var i = 2; i < Line; i++)
+            {
+                Columns.Add(i);
+            }
+        }
         
 
         public void Message(ManagerCore Core)

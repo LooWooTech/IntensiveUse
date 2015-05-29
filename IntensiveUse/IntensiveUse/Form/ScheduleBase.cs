@@ -11,7 +11,10 @@ namespace IntensiveUse.Form
         protected int Year { get; set; }
         protected int CID { get; set; }
         protected List<string> Disticts { get; set; }
+        protected List<int> Columns { get; set; }
         protected Dictionary<string, Queue<double>> DictData { get; set; }
+
+        protected Queue<double> Queue { get; set; }
         protected IRow TempRow { get; set; }
 
         public ScheduleBase()
@@ -19,6 +22,10 @@ namespace IntensiveUse.Form
             if (DictData == null)
             {
                 DictData = new Dictionary<string, Queue<double>>();
+            }
+            if (Columns == null)
+            {
+                Columns = new List<int>();
             }
         }
 
@@ -47,14 +54,14 @@ namespace IntensiveUse.Form
             return cell;
         }
 
-        protected void WriteBase(ref ISheet sheet, int Line,int Number,Queue<double> queue)
+        protected void WriteBase(ref ISheet sheet,int Number)
         {
             IRow row = sheet.GetRow(Number);
             ICell cell = null;
-            for (var i = 2; i < Line; i++)
+            foreach (var m in Columns)
             {
-                cell = row.GetCell(i, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                cell.SetCellValue(Math.Round(queue.Dequeue(), 2));
+                cell = row.GetCell(m, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                cell.SetCellValue(Math.Round(Queue.Dequeue(), 2));
             }
             sheet.ShiftRows(Number+1, sheet.LastRowNum, DictData.Count - 1);
             int Serial = 0;
@@ -65,12 +72,11 @@ namespace IntensiveUse.Form
                 cell.SetCellValue(++Serial);
                 cell = OpneCell(ref row, 1);
                 cell.SetCellValue(item);
-                for (var i = 2; i < Line; i++)
+                foreach (var m in Columns)
                 {
-                    cell = OpneCell(ref row, i);
+                    cell = OpneCell(ref row, m);
                     cell.SetCellValue(Math.Round(DictData[item].Dequeue(), 2));
                 }
-
             }
         }
     }

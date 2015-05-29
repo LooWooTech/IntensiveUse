@@ -33,4 +33,7 @@
   <Table Title="附表1A11" Name="">
     <File Title="模板" Path="EXCEL/附表1A11.xls"></File>
   </Table>
+  <Table Title="附表1A12" Name="">
+    <File Title="模板" Path="EXCEL/附表1A12.xls"></File>
+  </Table>
 </Tables>

@@ -65,6 +65,9 @@ namespace IntensiveUse.Manager
                 case OutputExcel.附表1A11:
                     load = new ScheduleAEleven();
                     break;
+                case OutputExcel.附表1A12:
+                    load = new ScheduleATwelve();
+                    break;
                 default: break;
             }
             IWorkbook workbook = load.Write(TempFile, Core,Year, City,Distict);

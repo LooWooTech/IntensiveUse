@@ -435,4 +435,52 @@ namespace IntensiveUse.Models
             };
         }
     }
+
+    public class UGEAA
+    {
+        /// <summary>
+        /// 利用强度指数
+        /// </summary>
+        public double UII { get; set; }
+        /// <summary>
+        /// 增长耗地指数
+        /// </summary>
+        public double GCI { get; set; }
+        /// <summary>
+        /// 用地弹性指数
+        /// </summary>
+        public double EI { get; set; }
+        /// <summary>
+        /// 管理绩效指数
+        /// </summary>
+        public double API { get; set; }
+        /// <summary>
+        /// 总指数
+        /// </summary>
+        public double CombinedIndex { get; set; }
+
+        public static UGEAA operator +(UGEAA c1, UGEAA c2)
+        {
+            return new UGEAA()
+            {
+                UII = c1.UII + c2.UII,
+                GCI = c1.GCI = c2.GCI,
+                EI = c1.EI + c2.EI,
+                API = c1.API + c2.API,
+                CombinedIndex = c1.CombinedIndex + c2.CombinedIndex
+            };
+        }
+
+        public static UGEAA operator /(UGEAA c1, int c2)
+        {
+            return new UGEAA()
+            {
+                UII = c1.UII / c2,
+                GCI = c1.GCI / c2,
+                EI = c1.EI / c2,
+                API = c1.API / c2,
+                CombinedIndex = c1.CombinedIndex / c2
+            };
+        }
+    }
 }

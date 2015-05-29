@@ -52,10 +52,16 @@ namespace IntensiveUse.Manager
             queue.Enqueue(APIUL.API);
             return queue;
         }
-
-        public void Gain(IIBase Complex,ref Queue<double> queue)
+        public Queue<double> TranslateOfUGEAA(UGEAA UGEAA)
         {
-            System.Reflection.PropertyInfo[] propList = typeof(IIBase).GetProperties();
+            Queue<double> queue = new Queue<double>();
+            Gain(UGEAA, ref queue);
+            return queue;
+        }
+
+        public void Gain<T>(T Complex,ref Queue<double> queue)
+        {
+            System.Reflection.PropertyInfo[] propList = typeof(T).GetProperties();
             double val = 0.0;
             
             foreach (var item in propList)
@@ -412,6 +418,22 @@ namespace IntensiveUse.Manager
             }
             basevalue.TargetStandard = basevalue.StandardInit;
             return basevalue;
+        }
+
+        public UGEAA AcquireOfUGEAA(int Year, int ID, int CID)
+        {
+            UGEAA entity = new UGEAA();
+            PEUII PEUII = AcquireOfPEUII(Year, ID, CID);
+            PEGCI PEGCI = AcquireOfPEGCI(Year, ID, CID);
+            PEEI PEEI = AcquireOfPEEI(Year, ID, CID);
+            APIUL APIUL = AcquireOfAPIUL(Year, ID, CID);
+            entity.UII = PEUII.UII;
+            entity.GCI = PEGCI.GCI;
+            entity.EI = PEEI.EI;
+            entity.API = APIUL.API;
+            IndexWeight indexWeight = SearchForIndexWeight(Year.ToString(), CID);
+            entity.CombinedIndex = entity.UII * indexWeight.UII + entity.GCI * indexWeight.GCI + entity.EI * indexWeight.EI + entity.API * indexWeight.API;
+            return entity;
         }
     }
 }
