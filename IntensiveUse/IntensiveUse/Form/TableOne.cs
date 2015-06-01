@@ -17,8 +17,9 @@ namespace IntensiveUse.Form
         public int Count{get;set;}
         public Dictionary<int, People> DictPeople { get; set; }
         public Dictionary<int, Economy> DictEconomy { get; set; }
-        public TableOne()
+        public TableOne(string Name)
         {
+            this.Name = Name;
             if (DictPeople == null)
             {
                 DictPeople = new Dictionary<int, People>();
@@ -120,7 +121,7 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("在读取表格的时候，未获取城市名相关信息，无法进行下一步数据归档，请填写城市名");
             }
-            this.Name = ExcelHelper.GetValue(cell);
+            //this.Name = ExcelHelper.GetValue(cell);
             cell = row.GetCell(5, MissingCellPolicy.CREATE_NULL_AS_BLANK);
             this.Regimentatio = ExcelHelper.GetValue(cell);
         }

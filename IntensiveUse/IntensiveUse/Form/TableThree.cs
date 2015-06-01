@@ -17,8 +17,9 @@ namespace IntensiveUse.Form
         public Dictionary<int, NewConstruction> DictNewConstruction { get; set; }
         public Dictionary<int, LandSupply> DictLandSupply { get; set; }
         public Dictionary<int, Ratify> DictRatify { get; set; }
-        public TableThree()
+        public TableThree(string Name)
         {
+            this.Name = Name;
             if (DictNewConstruction == null)
             {
                 DictNewConstruction = new Dictionary<int, NewConstruction>();
@@ -133,7 +134,7 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("未获取城市名相关信息，无法进行数据录入工作");
             }
-            this.Name = ExcelHelper.GetValue(cell);
+            //this.Name = ExcelHelper.GetValue(cell);
             cell = Row.GetCell(5, MissingCellPolicy.CREATE_NULL_AS_BLANK);
             this.Regimentatio = ExcelHelper.GetValue(cell);
         }

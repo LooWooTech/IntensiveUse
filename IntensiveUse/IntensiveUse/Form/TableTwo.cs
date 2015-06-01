@@ -17,8 +17,9 @@ namespace IntensiveUse.Form
         public string Code { get; set; }
         public Dictionary<int, AgricultureLand> DictAgriculture { get; set; }
         public Dictionary<int, ConstructionLand> DictConstruction { get; set; }
-        public TableTwo()
+        public TableTwo(string Name)
         {
+            this.Name = Name;
             if (DictAgriculture == null)
             {
                 DictAgriculture = new Dictionary<int, AgricultureLand>();
@@ -155,7 +156,7 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("当检索表2的时候，初次读取行政区划名称数据失败");
             }
-            this.Name = ExcelHelper.GetValue(cell);
+            //this.Name = ExcelHelper.GetValue(cell);
             cell = row.GetCell(Begin + 2, MissingCellPolicy.CREATE_NULL_AS_BLANK);
             if (cell == null)
             {

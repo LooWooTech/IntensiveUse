@@ -46,20 +46,24 @@ namespace IntensiveUse.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(UploadFileExcel Type)
+        public ActionResult UploadFile(UploadFileExcel Type,string Name)
         {
+            if (string.IsNullOrEmpty(Name))
+            {
+                throw new ArgumentException("服务器内部错误");
+            }
             var FilePath = Core.FileManager.SaveFile(HttpContext,Type.ToString());
             IForm engine = null;
             switch (Type)
             {
                 case UploadFileExcel.表1:
-                    engine = new TableOne();
+                    engine = new TableOne(Name);
                     break;
                 case UploadFileExcel.表2:
-                    engine = new TableTwo();
+                    engine = new TableTwo(Name);
                     break;
                 case UploadFileExcel.表3:
-                    engine = new TableThree();
+                    engine = new TableThree(Name);
                     break;
                 default: break;
             }
