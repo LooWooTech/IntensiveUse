@@ -13,12 +13,12 @@ namespace IntensiveUse.Form
     {
         public const int Start = 35;
         public const int Begin = 5;
-        public Dictionary<string, List<double>> DictData { get; set; }
+        public Dictionary<int, List<double>> DictData { get; set; }
         public ScheduleAOne()
         {
             if (DictData == null)
             {
-                DictData = new Dictionary<string, List<double>>();
+                DictData = new Dictionary<int, List<double>>();
             }
         }
         public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City,string Distict)
@@ -68,7 +68,7 @@ namespace IntensiveUse.Form
         {
             for (var i = 4; i >= 0; i--)
             {
-                string em=(Year-i).ToString();
+                int em=(Year-i);
                 Economy economy = Core.EconmoyManager.SearchForEconomy(em, ID);
                 ConstructionLand construction = Core.EconmoyManager.SearchForConstruction(em, ID);
                 if (!DictData.ContainsKey(em))

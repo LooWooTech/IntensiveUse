@@ -13,7 +13,7 @@ namespace IntensiveUse.Models
         [Key]
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-        public string Year { get; set; }
+        public int Year { get; set; }
         /// <summary>
         /// 人口数据
         /// </summary>

@@ -11,14 +11,14 @@ namespace IntensiveUse.Form
 {
     public class ScheduleATwo:ISchedule
     {
-        public Dictionary<string, List<double>> DictData { get; set; }
+        public Dictionary<int, List<double>> DictData { get; set; }
         public int Start = 1;
         public int Begin = 5;
         public ScheduleATwo()
         {
             if (DictData == null)
             {
-                DictData = new Dictionary<string, List<double>>();
+                DictData = new Dictionary<int, List<double>>();
             }
         }
 
@@ -72,7 +72,7 @@ namespace IntensiveUse.Form
         {
             for (var i = 4; i >= 0; i--)
             {
-                string em = (Year - i).ToString();
+                int em = Year - i;
                 List<double> Data = new List<double>();
                 double[] peoples = Core.PeopleManager.Get(em, ID);
                 foreach (var entity in peoples)

@@ -12,7 +12,7 @@ namespace IntensiveUse.Manager
         {
             using (var db = GetIntensiveUseContext())
             {
-                Exponent entity = db.Exponents.FirstOrDefault(e => e.RID == exponent.RID && e.Year.ToLower() == exponent.Year.ToLower()&&e.Type==exponent.Type);
+                Exponent entity = db.Exponents.FirstOrDefault(e => e.RID == exponent.RID && e.Year == exponent.Year&&e.Type==exponent.Type);
                 if (entity == null)
                 {
                     db.Exponents.Add(exponent);
@@ -40,11 +40,11 @@ namespace IntensiveUse.Manager
             return exponent;
         }
 
-        public Exponent Find(string Year, int ID, IdealType Type)
+        public Exponent Find(int Year, int ID, IdealType Type)
         {
             using (var db = GetIntensiveUseContext())
             {
-                return db.Exponents.FirstOrDefault(e => e.Type == Type && e.Year.ToLower() == Year.ToLower() && e.RID == ID);
+                return db.Exponents.FirstOrDefault(e => e.Type == Type && e.Year == Year && e.RID == ID);
                 
             }
         }
@@ -84,13 +84,13 @@ namespace IntensiveUse.Manager
 
         public Exponent GetTurthExponent(int Year, int ID)
         {
-            Exponent exponent = Find(Year.ToString(),ID,IdealType.Truth);
+            Exponent exponent = Find(Year,ID,IdealType.Truth);
             if (exponent == null)
             {
                 Queue<double> Data = Core.LandUseManager.CreateExponentQueue(Year, ID);
                 exponent = Create(Data);
                 exponent.Type = IdealType.Truth;
-                exponent.Year = Year.ToString();
+                exponent.Year = Year;
                 exponent.RID = ID;
                 Save(exponent);
             }

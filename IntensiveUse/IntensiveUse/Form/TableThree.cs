@@ -14,22 +14,22 @@ namespace IntensiveUse.Form
         public const int Start = 1;
         public const int Begin = 3;
         public string Regimentatio { get; set; }
-        public Dictionary<string, NewConstruction> DictNewConstruction { get; set; }
-        public Dictionary<string, LandSupply> DictLandSupply { get; set; }
-        public Dictionary<string, Ratify> DictRatify { get; set; }
+        public Dictionary<int, NewConstruction> DictNewConstruction { get; set; }
+        public Dictionary<int, LandSupply> DictLandSupply { get; set; }
+        public Dictionary<int, Ratify> DictRatify { get; set; }
         public TableThree()
         {
             if (DictNewConstruction == null)
             {
-                DictNewConstruction = new Dictionary<string, NewConstruction>();
+                DictNewConstruction = new Dictionary<int, NewConstruction>();
             }
             if (DictLandSupply == null)
             {
-                DictLandSupply = new Dictionary<string, LandSupply>();
+                DictLandSupply = new Dictionary<int, LandSupply>();
             }
             if (DictRatify == null)
             {
-                DictRatify = new Dictionary<string, Ratify>();
+                DictRatify = new Dictionary<int, Ratify>();
             }
         }
         public void Gain(string FilePath)
@@ -46,6 +46,7 @@ namespace IntensiveUse.Form
             {
                 cell = row.GetCell(Count, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 value = ExcelHelper.GetValue(cell).Replace("年", "");
+                int m = 0;
                 if (string.IsNullOrEmpty(value))
                 {
                     break;
@@ -56,7 +57,11 @@ namespace IntensiveUse.Form
                 }
                 else
                 {
-                    GainForValue(sheet, Count, value);
+                    if (int.TryParse(value, out m))
+                    {
+                        GainForValue(sheet, Count, m);
+                    }
+                    
                     Count++;
                 }
             }
@@ -79,7 +84,7 @@ namespace IntensiveUse.Form
             }
         }
 
-        public void GainForValue(ISheet sheet, int SerialNumber, string Year)
+        public void GainForValue(ISheet sheet, int SerialNumber, int Year)
         {
             double[] Data=new double[8];
             for (var i = 0; i < 8; i++)

@@ -8,7 +8,7 @@ namespace IntensiveUse.Manager
 {
     public class LandSupplyManager:ManagerBase
     {
-        public List<double> Get(string Year, int ID)
+        public List<double> Get(int Year, int ID)
         {
             double[] data1 = GetSupply(Year,ID);
             double[] data2 = GetRatify(Year,ID);
@@ -23,13 +23,13 @@ namespace IntensiveUse.Manager
             }
             return Data;
         }
-        public double[] GetSupply(string Year, int ID)
+        public double[] GetSupply(int Year, int ID)
         {
             LandSupply landsupply = SearchForLandSupply(Year, ID);
             return new double[] { landsupply.Sum, landsupply.Append, landsupply.Stock };
         }
 
-        public double[] GetRatify(string Year, int ID)
+        public double[] GetRatify(int Year, int ID)
         {
             Ratify ratify = SearchForRatify(Year, ID);
             return new double[] { ratify.Area, ratify.Already };
@@ -41,7 +41,7 @@ namespace IntensiveUse.Manager
             double landsupplySum = 0.0;
             for (var i = 2; i >= 0; i--)
             {
-                LandSupply landsupply=SearchForLandSupply((Year-i).ToString(),ID);
+                LandSupply landsupply=SearchForLandSupply((Year-i),ID);
                 constructionSum += landsupply.Stock;
                 landsupplySum += landsupply.Sum;
             }
@@ -59,7 +59,7 @@ namespace IntensiveUse.Manager
             double AreaSum = 0.0;
             for (var i = 3; i > 0; i--)
             {
-                Ratify ratify = SearchForRatify((Year - i).ToString(), ID);
+                Ratify ratify = SearchForRatify((Year - i), ID);
                 alreadySum += ratify.Already;
                 AreaSum += ratify.Area;
             }

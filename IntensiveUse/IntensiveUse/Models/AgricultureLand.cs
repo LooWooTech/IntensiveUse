@@ -43,7 +43,7 @@ namespace IntensiveUse.Models
         /// <summary>
         /// 年份
         /// </summary>
-        public string Year { get; set; }
+        public int Year { get; set; }
         /// <summary>
         /// 行政区ID
         /// </summary>

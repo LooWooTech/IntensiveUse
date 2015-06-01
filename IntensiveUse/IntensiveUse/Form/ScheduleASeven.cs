@@ -76,17 +76,17 @@ namespace IntensiveUse.Form
             }
             Exponent[] exponent=new Exponent[4];
             exponent[0] = Core.ExponentManager.GetTurthExponent(Year,ID);
-            exponent[1] = Core.ExponentManager.SearchForExponent(Year.ToString(), ID, IdealType.Value);
+            exponent[1] = Core.ExponentManager.SearchForExponent(Year, ID, IdealType.Value);
             exponent[2] = exponent[0] / exponent[1];
             exponent[3] = exponent[0] / exponent[1];
             for (var i = 0; i < 4; i++)
             {
                 DictData.Add(Begin + i, Core.FileManager.Transformation(Indexs, exponent[i]));
             }
-            SubIndex subindex = Core.ExponentManager.SearchForSubIndex(Year.ToString(),ID);
+            SubIndex subindex = Core.ExponentManager.SearchForSubIndex(Year,ID);
             SubIndex subindexVal = exponent[3] * subindex;
             DictData.Add(7, Core.FileManager.Transformation(IndexScrore, subindexVal));
-            IndexWeight indexweight = Core.ExponentManager.SearchForIndexWeight(Year.ToString(), ID);
+            IndexWeight indexweight = Core.ExponentManager.SearchForIndexWeight(Year, ID);
             IndexWeight indexweightVal = subindexVal * indexweight;
             DictData.Add(8, Core.FileManager.Transformation(Index, indexweightVal));
             double Val = indexweightVal * indexweight;

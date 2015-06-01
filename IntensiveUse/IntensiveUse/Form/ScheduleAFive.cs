@@ -17,7 +17,7 @@ namespace IntensiveUse.Form
         {
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             int ID = Core.ExcelManager.GetID(City);
-            Gain(workbook, Core, Year.ToString(), ID);
+            Gain(workbook, Core, Year, ID);
         }
 
         public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
@@ -28,7 +28,7 @@ namespace IntensiveUse.Form
         }
 
 
-        public void Gain(IWorkbook workbook,ManagerCore Core,string Year,int ID)
+        public void Gain(IWorkbook workbook,ManagerCore Core,int Year,int ID)
         {
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
@@ -49,21 +49,21 @@ namespace IntensiveUse.Form
             {
                 Core.IndexManager.Save(IndexWeight);
                 Core.CommonManager.UpDate(
-                    new Dictionary<string, IndexWeight>(){
+                    new Dictionary<int, IndexWeight>(){
                         {Year,IndexWeight}
                     },
                     ID
                     );
                 Core.IndexManager.Save(subIndex);
                 Core.CommonManager.UpDate(
-                    new Dictionary<string, SubIndex>(){
+                    new Dictionary<int, SubIndex>(){
                         {Year,subIndex}
                     },
                     ID
                     );
                 Core.ExponentManager.Save(exponent);
                 Core.CommonManager.UpDate(
-                    new Dictionary<string, Exponent>(){
+                    new Dictionary<int, Exponent>(){
                         {Year,exponent}
                     },
                     ID

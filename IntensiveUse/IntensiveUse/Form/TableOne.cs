@@ -15,17 +15,17 @@ namespace IntensiveUse.Form
         
         public string Regimentatio { get; set; }
         public int Count{get;set;}
-        public Dictionary<string, People> DictPeople { get; set; }
-        public Dictionary<string, Economy> DictEconomy { get; set; }
+        public Dictionary<int, People> DictPeople { get; set; }
+        public Dictionary<int, Economy> DictEconomy { get; set; }
         public TableOne()
         {
             if (DictPeople == null)
             {
-                DictPeople = new Dictionary<string, People>();
+                DictPeople = new Dictionary<int, People>();
             }
             if (DictEconomy == null)
             {
-                DictEconomy = new Dictionary<string, Economy>();
+                DictEconomy = new Dictionary<int, Economy>();
             }
         }
         
@@ -43,6 +43,8 @@ namespace IntensiveUse.Form
             {
                 cell=row.GetCell(Count,MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 value=ExcelHelper.GetValue(cell).Replace("年","");
+                int m = 0;
+                int.TryParse(value, out m);
                 if (string.IsNullOrEmpty(value))
                 {
                     break;
@@ -50,7 +52,7 @@ namespace IntensiveUse.Form
                 if(!VerificationYear(value)){
                     Flag=false;
                 }else{
-                    GainForValue(sheet, Count, value);//
+                    GainForValue(sheet, Count, m);//
                     Count++;
                 }
             }  
@@ -73,7 +75,7 @@ namespace IntensiveUse.Form
             }
 
         }
-        public void GainForValue(ISheet sheet,int SerialNumber,string Year)
+        public void GainForValue(ISheet sheet,int SerialNumber,int Year)
         {
             double[] data = new double[9];
             int x = 0;

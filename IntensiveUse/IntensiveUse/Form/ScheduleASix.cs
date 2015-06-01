@@ -31,13 +31,13 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("未获取到相关理想数据");
             }
-            exponent.Year = Year.ToString();
+            exponent.Year = Year;
             exponent.RID = Core.ExcelManager.GetID(City);
             exponent.Type = IdealType.Value;
             Core.ExponentManager.Save(exponent);
             Core.CommonManager.UpDate(
-                new Dictionary<string, Exponent>(){
-                    {Year.ToString(),exponent}
+                new Dictionary<int, Exponent>(){
+                    {Year,exponent}
                 },
                 exponent.RID
                 );

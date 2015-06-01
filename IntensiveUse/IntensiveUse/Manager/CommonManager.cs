@@ -8,20 +8,20 @@ namespace IntensiveUse.Manager
 {
     public class CommonManager:ManagerBase
     {
-        public void UpDate<T>(Dictionary<string, T> DICT, int ID)
+        public void UpDate<T>(Dictionary<int, T> DICT, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
                 foreach (var item in DICT.Keys)
                 {
                     T m = DICT[item];
-                    Statistic temp = db.Statistics.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == item.ToLower());
+                    Statistic temp = db.Statistics.FirstOrDefault(e => e.RID == ID && e.Year == item);
                     if (temp == null)
                     {
                         temp = new Statistic()
                         {
                             RID = ID,
-                            Year = item.ToLower()
+                            Year = item
                         };
                         db.Statistics.Add(temp);
                     }

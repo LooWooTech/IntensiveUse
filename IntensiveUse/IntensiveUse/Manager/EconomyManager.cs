@@ -9,7 +9,7 @@ namespace IntensiveUse.Manager
 {
     public class EconomyManager:ManagerBase
     {
-        public double[] Get(string Year, int ID)
+        public double[] Get(int Year, int ID)
         {
             Economy economy = SearchForEconomy(Year, ID);
             return new double[] { economy.Current, economy.Compare, economy.Aggregate };
@@ -47,10 +47,10 @@ namespace IntensiveUse.Manager
 
         public Situation[] Find(int Year, int ID)
         {
-            string em = Year.ToString();
+            int em = Year;
             Economy economy1 = SearchForEconomy(em, ID);
             ConstructionLand construction1 = SearchForConstruction(em, ID);
-            em = (Year - 3).ToString();
+            em = (Year - 3);
             Economy economy2 = SearchForEconomy(em, ID);
             ConstructionLand construction2 = SearchForConstruction(em, ID);
             Situation[] situation = new Situation[2];
@@ -76,16 +76,16 @@ namespace IntensiveUse.Manager
         public double[] GetEUII(int Year, int ID)
         {
             double sum = 0.0;
-            string em=string.Empty;
+            int em = 0 ;
             Economy economy = null;
             for (var i = 2; i >= 0; i--)
             {
-                em = (Year - i).ToString();
+                em = Year - i;
                 economy = SearchForEconomy(em, ID);
                 sum += economy.Aggregate;
             }
             sum = sum / 3;
-            em=Year.ToString();
+            em=Year;
             ConstructionLand construction = SearchForConstruction(em,ID);
             economy = SearchForEconomy(em, ID);
             double[] values = new double[2];
@@ -100,15 +100,15 @@ namespace IntensiveUse.Manager
         public double[] GetEGCI(int Year, int ID)
         {
             double[] values = new double[3];
-            Economy economy1 = SearchForEconomy((Year - 1).ToString(), ID);//13年
-            Economy economy2 = SearchForEconomy(Year.ToString(), ID);//14年
-            ConstructionLand construction1=SearchForConstruction((Year-1).ToString(),ID);
-            ConstructionLand construction2=SearchForConstruction(Year.ToString(),ID);
+            Economy economy1 = SearchForEconomy((Year - 1), ID);//13年
+            Economy economy2 = SearchForEconomy(Year, ID);//14年
+            ConstructionLand construction1=SearchForConstruction((Year-1),ID);
+            ConstructionLand construction2=SearchForConstruction(Year,ID);
             if (Math.Abs(economy1.Compare - 0) > 0.001 && Math.Abs(economy2.Compare - 0) > 0.001)
             {
                 values[0] = (construction1.SubTotal / economy1.Compare - construction2.SubTotal / economy2.Compare) * economy1.Compare / construction1.SubTotal / 100;
             }
-            NewConstruction newconstruction = SearchForNewConstruction(Year.ToString(), ID);
+            NewConstruction newconstruction = SearchForNewConstruction(Year, ID);
             if (Math.Abs(economy2.Compare - economy1.Compare) > 0.001)
             {
                 values[1] = newconstruction.Construction * 10000 / (economy2.Compare - economy1.Compare);
@@ -124,10 +124,10 @@ namespace IntensiveUse.Manager
         public Situation[] EEI(int Year, int ID)
         {
             Situation[] situation=new Situation[2];
-            Economy economy1 = SearchForEconomy(Year.ToString(), ID);
-            Economy economy2 = SearchForEconomy((Year - 3).ToString(), ID);
-            ConstructionLand construction1 = SearchForConstruction(Year.ToString(),ID);
-            ConstructionLand construction2 = SearchForConstruction((Year - 3).ToString(), ID);
+            Economy economy1 = SearchForEconomy(Year, ID);
+            Economy economy2 = SearchForEconomy((Year - 3), ID);
+            ConstructionLand construction1 = SearchForConstruction(Year,ID);
+            ConstructionLand construction2 = SearchForConstruction((Year - 3), ID);
             situation[0] = new Situation()
             {
                 Increment = economy1.Compare - economy2.Compare

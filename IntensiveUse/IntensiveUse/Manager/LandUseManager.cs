@@ -9,7 +9,7 @@ namespace IntensiveUse.Manager
     public class LandUseManager:ManagerBase
     {
 
-        public List<double> Get(string Year, int ID)
+        public List<double> Get(int Year, int ID)
         {
             double[] data1 = GetAgriculture(Year,ID);
             double[] data2 = GetConstruction(Year, ID);
@@ -31,12 +31,12 @@ namespace IntensiveUse.Manager
             return Data;
         }
 
-        public double[] GetAgriculture(string Year, int ID)
+        public double[] GetAgriculture(int Year, int ID)
         {
             AgricultureLand agricultureland = SearchForAgriculture(Year, ID);
             return new double[] { agricultureland.Subtotal, agricultureland.Arable, agricultureland.Garden, agricultureland.Forest, agricultureland.Meadow, agricultureland.Other };
         }
-        public double[] GetConstruction(string Year, int ID)
+        public double[] GetConstruction(int Year, int ID)
         {
             ConstructionLand constructionland = SearchForConstruction(Year, ID);
             return new double[]
@@ -54,7 +54,7 @@ namespace IntensiveUse.Manager
                 };
         }
 
-        public double[] GetNewConstruction(string Year, int ID)
+        public double[] GetNewConstruction(int Year, int ID)
         {
             NewConstruction newconstruction = SearchForNewConstruction(Year, ID);
             return new double[] { newconstruction.Construction, newconstruction.Town };
@@ -62,9 +62,9 @@ namespace IntensiveUse.Manager
 
         public double GetPGCI(int Year, int ID)
         {
-            People people1 = SearchForPeople(Year.ToString(),ID);
-            People people2 = SearchForPeople((Year - 1).ToString(), ID);
-            NewConstruction newConstruction = SearchForNewConstruction(Year.ToString(), ID);
+            People people1 = SearchForPeople(Year,ID);
+            People people2 = SearchForPeople((Year - 1), ID);
+            NewConstruction newConstruction = SearchForNewConstruction(Year, ID);
             if (Math.Abs(people1.PermanentSum - people2.PermanentSum) > 0.001)
             {
                 return newConstruction.Town / (people1.PermanentSum - people2.PermanentSum);
@@ -80,7 +80,7 @@ namespace IntensiveUse.Manager
                 throw new ArgumentException("获取EUII数据的时候，发生数据错误");
             }
             return new double[]{
-                Core.PeopleManager.GetPUII(Year.ToString(),ID),
+                Core.PeopleManager.GetPUII(Year,ID),
                 values[0],
                 values[1]
             };

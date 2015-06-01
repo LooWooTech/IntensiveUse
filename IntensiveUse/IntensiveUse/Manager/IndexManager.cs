@@ -26,7 +26,7 @@ namespace IntensiveUse.Manager
         {
             using (var db = GetIntensiveUseContext())
             {
-                IndexWeight entity = db.IndexWeights.FirstOrDefault(e => e.RID == indexWeight.RID && e.Year.ToLower() == indexWeight.Year.ToLower());
+                IndexWeight entity = db.IndexWeights.FirstOrDefault(e => e.RID == indexWeight.RID && e.Year == indexWeight.Year);
                 if (entity == null)
                 {
                     db.IndexWeights.Add(indexWeight);
@@ -45,7 +45,7 @@ namespace IntensiveUse.Manager
         {
             using (var db = GetIntensiveUseContext())
             {
-                SubIndex entity = db.SubIndexs.FirstOrDefault(e => e.RID == SubIndex.RID && e.Year.ToLower() == SubIndex.Year.ToLower());
+                SubIndex entity = db.SubIndexs.FirstOrDefault(e => e.RID == SubIndex.RID && e.Year == SubIndex.Year);
                 if (entity == null)
                 {
                     db.SubIndexs.Add(SubIndex);

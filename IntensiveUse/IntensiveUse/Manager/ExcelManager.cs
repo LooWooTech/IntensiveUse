@@ -312,7 +312,7 @@ namespace IntensiveUse.Manager
         //    }
         //}
 
-        public void Save<T>(Dictionary<string, T> DICT, int ID)
+        public void Save<T>(Dictionary<int, T> DICT, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
@@ -322,7 +322,7 @@ namespace IntensiveUse.Manager
                     if (temp is Ratify)
                     {
                         Ratify m = temp as Ratify;
-                        Ratify entity = db.Ratifys.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == item.ToLower());
+                        Ratify entity = db.Ratifys.FirstOrDefault(e => e.RID == ID && e.Year == item);
                         if (entity == null)
                         {
                             entity = m;
@@ -337,7 +337,7 @@ namespace IntensiveUse.Manager
                     else if (temp is AgricultureLand)
                     {
                         AgricultureLand m = temp as AgricultureLand;
-                        AgricultureLand entity = db.Agricultures.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == item.ToLower());
+                        AgricultureLand entity = db.Agricultures.FirstOrDefault(e => e.RID == ID && e.Year == item);
                         if (entity == null)
                         {
                             entity = m;
@@ -352,7 +352,7 @@ namespace IntensiveUse.Manager
                     else if (temp is ConstructionLand)
                     {
                         ConstructionLand m = temp as ConstructionLand;
-                        ConstructionLand entity = db.Constructions.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == item.ToLower());
+                        ConstructionLand entity = db.Constructions.FirstOrDefault(e => e.RID == ID && e.Year == item);
                         if (entity == null)
                         {
                             entity = m;
@@ -367,7 +367,7 @@ namespace IntensiveUse.Manager
                     else if (temp is LandSupply)
                     {
                         LandSupply m = temp as LandSupply;
-                        LandSupply entity = db.LandSupplys.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == item.ToLower());
+                        LandSupply entity = db.LandSupplys.FirstOrDefault(e => e.RID == ID && e.Year == item);
                         if (entity == null)
                         {
                             entity = m;
@@ -380,7 +380,7 @@ namespace IntensiveUse.Manager
                         }
                     }else if(temp is NewConstruction){
                         NewConstruction m = temp as NewConstruction;
-                        NewConstruction entity = db.NewConstructions.FirstOrDefault(e => e.CID == ID && e.Year.ToLower() == item.ToLower());
+                        NewConstruction entity = db.NewConstructions.FirstOrDefault(e => e.CID == ID && e.Year == item);
                         if (entity == null)
                         {
                             entity = m;
@@ -395,7 +395,7 @@ namespace IntensiveUse.Manager
                     else if (temp is Economy)
                     {
                         Economy m = temp as Economy;
-                        Economy entity = db.Economys.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == item.ToLower());
+                        Economy entity = db.Economys.FirstOrDefault(e => e.RID == ID && e.Year == item);
                         if (entity == null)
                         {
                             entity = m;
@@ -410,7 +410,7 @@ namespace IntensiveUse.Manager
                     else if (temp is People)
                     {
                         People m = temp as People;
-                        People entity = db.Peoples.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == item.ToLower());
+                        People entity = db.Peoples.FirstOrDefault(e => e.RID == ID && e.Year== item);
                         if (entity == null)
                         {
                             entity = m;

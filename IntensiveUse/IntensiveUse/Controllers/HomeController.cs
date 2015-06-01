@@ -41,6 +41,7 @@ namespace IntensiveUse.Controllers
             }
             ViewBag.County = County;
             ViewBag.List = Core.ExcelManager.GetCity();
+            ViewBag.History = Core.StatisticsManager.Gain(County);
             return View();
         }
 

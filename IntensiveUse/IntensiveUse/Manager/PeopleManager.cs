@@ -9,13 +9,13 @@ namespace IntensiveUse.Manager
 {
     public class PeopleManager:ManagerBase
     {
-        public void Save(Dictionary<string, People> DICT, int ID)
+        public void Save(Dictionary<int, People> DICT, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
                 foreach (var item in DICT.Keys)
                 {
-                    People temp = db.Peoples.FirstOrDefault(e => e.Year.ToLower() == item.ToLower() && e.RID == ID);
+                    People temp = db.Peoples.FirstOrDefault(e => e.Year == item && e.RID == ID);
                     if (temp == null)
                     {
                         temp = DICT[item];
@@ -32,7 +32,7 @@ namespace IntensiveUse.Manager
         }
 
 
-        public double[] Get(string Year, int ID)
+        public double[] Get(int Year, int ID)
         {
             People people = SearchForPeople(Year, ID);
             return new double[] { people.PermanentSum, people.Town, people.County, people.HouseHold, people.Agriculture, people.NonFram };   
@@ -117,10 +117,10 @@ namespace IntensiveUse.Manager
         public Situation[] PEI1(int Year,int ID)
         {
             Situation[] situation=new Situation[2];
-            string em = Year.ToString();
+            int em = Year;
             People people1 = SearchForPeople(em, ID);
             ConstructionLand construction1 = SearchForConstruction(em, ID);
-            em = (Year - 3).ToString();
+            em = (Year - 3);
             People People2 = SearchForPeople(em, ID);
             ConstructionLand construction2 = SearchForConstruction(em, ID);
             
@@ -146,10 +146,10 @@ namespace IntensiveUse.Manager
         public Situation[] PEI2(int Year, int ID)
         {
             Situation[] situation=new Situation[2];
-            string em = Year.ToString();
+            int em = Year;
             People people1 = SearchForPeople(em, ID);
             ConstructionLand construction1 = SearchForConstruction(em, ID);
-            em = (Year - 3).ToString();
+            em = Year - 3;
             People People2 = SearchForPeople(em, ID);
             ConstructionLand construction2 = SearchForConstruction(em, ID);
             situation[0] = new Situation()
@@ -174,10 +174,10 @@ namespace IntensiveUse.Manager
         public Situation[] PEI3(int Year, int ID)
         {
             Situation[] situation=new Situation[3];
-            string em = Year.ToString();
+            int em = Year;
             People people1 = SearchForPeople(em, ID);
             ConstructionLand construction1 = SearchForConstruction(em, ID);
-            em = (Year - 3).ToString();
+            em = Year - 3;
             People People2 = SearchForPeople(em, ID);
             ConstructionLand construction2 = SearchForConstruction(em, ID);
             situation[0] = new Situation()
@@ -207,7 +207,7 @@ namespace IntensiveUse.Manager
             return situation;
         }
 
-        public double GetPUII(string Year, int ID)
+        public double GetPUII(int Year, int ID)
         {
             People people = SearchForPeople(Year,ID);
             ConstructionLand construction = SearchForConstruction(Year, ID);

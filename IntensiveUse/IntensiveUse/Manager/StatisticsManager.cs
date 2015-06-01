@@ -9,7 +9,7 @@ namespace IntensiveUse.Manager
     public class StatisticsManager:ManagerBase
     {
 
-        public Dictionary<string, Queue<bool>> Gain(string City)
+        public Dictionary<int, Queue<bool>> Gain(string City)
         {
             List<Statistic> List = Statistic(City);
             return TranlateOFStatistic(List);
@@ -27,9 +27,9 @@ namespace IntensiveUse.Manager
             }
         }
 
-        public Dictionary<string, Queue<bool>> TranlateOFStatistic(List<Statistic> List)
+        public Dictionary<int, Queue<bool>> TranlateOFStatistic(List<Statistic> List)
         {
-            Dictionary<string, Queue<bool>> Value = new Dictionary<string, Queue<bool>>();
+            Dictionary<int, Queue<bool>> Value = new Dictionary<int, Queue<bool>>();
             foreach (var item in List)
             {
                 Queue<bool> m = new Queue<bool>();

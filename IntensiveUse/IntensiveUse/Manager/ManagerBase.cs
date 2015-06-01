@@ -17,11 +17,11 @@ namespace IntensiveUse.Manager
             return db;
         }
 
-        protected People SearchForPeople(string Year, int ID)
+        protected People SearchForPeople(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                People people = db.Peoples.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                People people = db.Peoples.FirstOrDefault(e => e.RID == ID && e.Year == Year);
                 if (people == null)
                 {
                     people = new People();
@@ -30,11 +30,11 @@ namespace IntensiveUse.Manager
             }
         }
 
-        public ConstructionLand SearchForConstruction(string Year, int ID)
+        public ConstructionLand SearchForConstruction(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                ConstructionLand construction = db.Constructions.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                ConstructionLand construction = db.Constructions.FirstOrDefault(e => e.RID == ID && e.Year == Year);
                 if (construction == null)
                 {
                     construction = new ConstructionLand();
@@ -43,11 +43,11 @@ namespace IntensiveUse.Manager
             }
         }
 
-        public Economy SearchForEconomy(string Year, int ID)
+        public Economy SearchForEconomy(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                Economy economy = db.Economys.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                Economy economy = db.Economys.FirstOrDefault(e => e.RID == ID && e.Year == Year);
                 if (economy == null)
                 {
                     economy = new Economy();
@@ -56,11 +56,11 @@ namespace IntensiveUse.Manager
             }
         }
 
-        protected AgricultureLand SearchForAgriculture(string Year, int ID)
+        protected AgricultureLand SearchForAgriculture(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                AgricultureLand agriculture = db.Agricultures.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                AgricultureLand agriculture = db.Agricultures.FirstOrDefault(e => e.RID == ID && e.Year == Year);
                 if (agriculture == null)
                 {
                     agriculture = new AgricultureLand();
@@ -69,11 +69,11 @@ namespace IntensiveUse.Manager
             }
         }
 
-        protected NewConstruction SearchForNewConstruction(string Year, int ID)
+        protected NewConstruction SearchForNewConstruction(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                NewConstruction newConstruction = db.NewConstructions.FirstOrDefault(e => e.CID == ID && e.Year.ToLower() == Year.ToLower());
+                NewConstruction newConstruction = db.NewConstructions.FirstOrDefault(e => e.CID == ID && e.Year == Year);
                 if (newConstruction == null)
                 {
                     newConstruction = new NewConstruction();
@@ -82,11 +82,11 @@ namespace IntensiveUse.Manager
             }
         }
 
-        protected LandSupply SearchForLandSupply(string Year, int ID)
+        protected LandSupply SearchForLandSupply(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                LandSupply landsupply = db.LandSupplys.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                LandSupply landsupply = db.LandSupplys.FirstOrDefault(e => e.RID == ID && e.Year == Year);
                 if (landsupply == null)
                 {
                     landsupply = new LandSupply();
@@ -95,11 +95,11 @@ namespace IntensiveUse.Manager
             }
         }
 
-        protected Ratify SearchForRatify(string Year, int ID)
+        protected Ratify SearchForRatify(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                Ratify ratify = db.Ratifys.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                Ratify ratify = db.Ratifys.FirstOrDefault(e => e.RID == ID && e.Year == Year);
                 if (ratify == null)
                 {
                     ratify = new Ratify();
@@ -108,11 +108,11 @@ namespace IntensiveUse.Manager
             }
         }
 
-        public Exponent SearchForExponent(string Year, int ID, IdealType Type)
+        public Exponent SearchForExponent(int Year, int ID, IdealType Type)
         {
             using (var db = GetIntensiveUseContext())
             {
-                Exponent entity = db.Exponents.FirstOrDefault(e => e.Year.ToLower() == Year.ToLower() && e.RID == ID && e.Type == Type);
+                Exponent entity = db.Exponents.FirstOrDefault(e => e.Year == Year && e.RID == ID && e.Type == Type);
                 if (entity == null)
                 {
                     entity = new Exponent();
@@ -122,11 +122,11 @@ namespace IntensiveUse.Manager
         }
 
 
-        public SubIndex SearchForSubIndex(string Year, int ID)
+        public SubIndex SearchForSubIndex(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                SubIndex entity = db.SubIndexs.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                SubIndex entity = db.SubIndexs.FirstOrDefault(e => e.RID == ID && e.Year == Year);
                 if (entity == null)
                 {
                     entity = new SubIndex();
@@ -135,11 +135,11 @@ namespace IntensiveUse.Manager
             }
         }
 
-        public IndexWeight SearchForIndexWeight(string Year, int ID)
+        public IndexWeight SearchForIndexWeight(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
-                IndexWeight entity = db.IndexWeights.FirstOrDefault(e => e.RID == ID && e.Year.ToLower() == Year.ToLower());
+                IndexWeight entity = db.IndexWeights.FirstOrDefault(e => e.RID == ID && e.Year == Year);
                 if (entity == null)
                 {
                     entity = new IndexWeight();

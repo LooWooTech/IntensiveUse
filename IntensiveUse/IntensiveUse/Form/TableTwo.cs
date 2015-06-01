@@ -15,17 +15,17 @@ namespace IntensiveUse.Form
         private const int Begin = 1;
         private int[] AgSerial = { 4, 5, 6, 7, 17, 32, 25, 28, 33, 9, 10, 12, 11, 15, 16, 18, 19, 20, 24, 29, 13, 22, 23, 26, 27, 30, 34,35, 36, 37 };
         public string Code { get; set; }
-        public Dictionary<string, AgricultureLand> DictAgriculture { get; set; }
-        public Dictionary<string, ConstructionLand> DictConstruction { get; set; }
+        public Dictionary<int, AgricultureLand> DictAgriculture { get; set; }
+        public Dictionary<int, ConstructionLand> DictConstruction { get; set; }
         public TableTwo()
         {
             if (DictAgriculture == null)
             {
-                DictAgriculture = new Dictionary<string, AgricultureLand>();
+                DictAgriculture = new Dictionary<int, AgricultureLand>();
             }
             if (DictConstruction == null)
             {
-                DictConstruction = new Dictionary<string, ConstructionLand>();
+                DictConstruction = new Dictionary<int, ConstructionLand>();
             }
         }
        
@@ -47,6 +47,8 @@ namespace IntensiveUse.Form
                 }
                 cell = row.GetCell(Begin, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 value = ExcelHelper.GetValue(cell).Replace("年","");
+                int m = 0;
+                int.TryParse(value, out m);
                 if (string.IsNullOrEmpty(value))
                 {
                     break;
@@ -57,7 +59,7 @@ namespace IntensiveUse.Form
                 }
                 else
                 {
-                    GainForValue(row, value);
+                    GainForValue(row, m);
                     Line++;
                 }
             }
@@ -81,7 +83,7 @@ namespace IntensiveUse.Form
 
         }
 
-        public void GainForValue(IRow row, string Year)
+        public void GainForValue(IRow row, int Year)
         {
             int Number = AgSerial.Count();
             double[] Data = new double[Number];
