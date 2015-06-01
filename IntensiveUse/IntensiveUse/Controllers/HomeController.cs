@@ -28,6 +28,7 @@ namespace IntensiveUse.Controllers
         {
             ViewBag.City = City;
             ViewBag.List = Core.ExcelManager.GetDistrict(City);
+            ViewBag.History = Core.StatisticsManager.Gain(City);
             return View();
         }
 

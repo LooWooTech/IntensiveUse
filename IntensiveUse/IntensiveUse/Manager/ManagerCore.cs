@@ -59,5 +59,23 @@ namespace IntensiveUse.Manager
         {
             get { return _constructionlandManager == null ? _constructionlandManager = new ConstructionLandManager() : _constructionlandManager; }
         }
+
+        private AgricultureManager _agricultureManager;
+        public AgricultureManager AgricultureManager
+        {
+            get { return _agricultureManager == null ? _agricultureManager = new AgricultureManager() : _agricultureManager; }
+        }
+
+        private CommonManager _commonManager;
+        public CommonManager CommonManager
+        {
+            get { return _commonManager == null ? _commonManager = new CommonManager() : _commonManager; }
+        }
+
+        private StatisticsManager _statisticManager;
+        public StatisticsManager StatisticsManager
+        {
+            get { return _statisticManager == null ? _statisticManager = new StatisticsManager() : _statisticManager; }
+        }
     }
 }

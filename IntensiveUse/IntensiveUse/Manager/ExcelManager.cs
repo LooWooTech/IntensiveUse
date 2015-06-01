@@ -429,18 +429,12 @@ namespace IntensiveUse.Manager
         }
 
 
-        public List<string> GetFourYears()
-        {
-            List<string> Years = new List<string>();
-            for (var i = 0; i < 4; i++)
-            {
-                Years.Add((DateTime.Now.Year - i).ToString());
-            }
-            return Years;
-        }
-
         public int GetID(string Name)
         {
+            if (string.IsNullOrEmpty(Name))
+            {
+                return 0;
+            }
             Region region = Find(Name);
             if (region == null)
             {

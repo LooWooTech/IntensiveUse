@@ -63,7 +63,9 @@ namespace IntensiveUse.Form
             try
             {
                 Core.PeopleManager.Save(DictPeople,ID);
+                Core.CommonManager.UpDate(DictPeople, ID);
                 Core.ExcelManager.Save(DictEconomy, ID);
+                Core.CommonManager.UpDate(DictEconomy, ID);
             }
             catch (Exception ex)
             {

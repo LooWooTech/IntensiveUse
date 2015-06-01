@@ -31,6 +31,7 @@ namespace IntensiveUse.Manager
             }
         }
 
+
         public double[] Get(string Year, int ID)
         {
             People people = SearchForPeople(Year, ID);
@@ -245,6 +246,8 @@ namespace IntensiveUse.Manager
             }
             return 0.00;
         }
+
+
 
      
 

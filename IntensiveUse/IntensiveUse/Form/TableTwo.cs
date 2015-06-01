@@ -70,7 +70,9 @@ namespace IntensiveUse.Form
             try
             {
                 Core.ExcelManager.Save(DictAgriculture, ID);
+                Core.CommonManager.UpDate(DictAgriculture, ID);
                 Core.ExcelManager.Save(DictConstruction, ID);
+                Core.CommonManager.UpDate(DictConstruction, ID);
             }
             catch (Exception ex)
             {

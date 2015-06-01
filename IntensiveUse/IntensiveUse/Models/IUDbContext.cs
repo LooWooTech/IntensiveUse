@@ -23,5 +23,6 @@ namespace IntensiveUse.Models
         public DbSet<Exponent> Exponents { get; set; }
         public DbSet<IndexWeight> IndexWeights { get; set; }
         public DbSet<SubIndex> SubIndexs { get; set; }
+        public DbSet<Statistic> Statistics { get; set; }
     }
 }

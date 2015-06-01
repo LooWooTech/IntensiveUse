@@ -67,8 +67,11 @@ namespace IntensiveUse.Form
             Update(ID);
             try {
                 Core.ExcelManager.Save(DictNewConstruction,ID);
+                Core.CommonManager.UpDate(DictNewConstruction, ID);
                 Core.ExcelManager.Save(DictLandSupply, ID);
+                Core.CommonManager.UpDate(DictLandSupply, ID);
                 Core.ExcelManager.Save(DictRatify, ID);
+                Core.CommonManager.UpDate(DictRatify, ID);
             }
             catch (Exception ex)
             {

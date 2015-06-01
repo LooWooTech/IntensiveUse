@@ -35,6 +35,12 @@ namespace IntensiveUse.Form
             exponent.RID = Core.ExcelManager.GetID(City);
             exponent.Type = IdealType.Value;
             Core.ExponentManager.Save(exponent);
+            Core.CommonManager.UpDate(
+                new Dictionary<string, Exponent>(){
+                    {Year.ToString(),exponent}
+                },
+                exponent.RID
+                );
         }
         public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City,string Distict)
         {

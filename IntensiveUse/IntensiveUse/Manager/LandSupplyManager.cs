@@ -69,5 +69,6 @@ namespace IntensiveUse.Manager
             }
             return 0.00;
         }
+
     }
 }

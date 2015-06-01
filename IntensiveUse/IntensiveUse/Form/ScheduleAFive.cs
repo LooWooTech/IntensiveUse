@@ -48,8 +48,26 @@ namespace IntensiveUse.Form
             try
             {
                 Core.IndexManager.Save(IndexWeight);
+                Core.CommonManager.UpDate(
+                    new Dictionary<string, IndexWeight>(){
+                        {Year,IndexWeight}
+                    },
+                    ID
+                    );
                 Core.IndexManager.Save(subIndex);
+                Core.CommonManager.UpDate(
+                    new Dictionary<string, SubIndex>(){
+                        {Year,subIndex}
+                    },
+                    ID
+                    );
                 Core.ExponentManager.Save(exponent);
+                Core.CommonManager.UpDate(
+                    new Dictionary<string, Exponent>(){
+                        {Year,exponent}
+                    },
+                    ID
+                    );
             }
             catch (Exception ex)
             {

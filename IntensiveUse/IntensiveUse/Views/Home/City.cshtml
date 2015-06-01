@@ -1,94 +1,159 @@
 ﻿@using IntensiveUse.Models
 @using IntensiveUse.Helper
 @{
-    ViewBag.Title = ViewBag.City;
+    string City = ViewBag.City;
+    ViewBag.Title = City;
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<string> list=ViewBag.List;
+    Dictionary<string, Queue<bool>> History = ViewBag.History;
 }
 
-<table class="table table-bordered">
-    <tr>
-        <th>输入表单名称</th>
-        <th style="width:200px;">上传验证</th>
-    </tr>
-    @foreach (UploadFileExcel item in Enum.GetValues(typeof(UploadFileExcel)))
-    {
-        <tr>
-            <td>@(item.ToString())</td>
-            <td>
-                <form method="post" action="/Home/UploadFile?Type=@(item)" class="form-inline" enctype="multipart/form-data">
-                    <input type="file" name="file" class="form-control input-sm" style="width:100px;" />
-                    <button type="submit" class="btn btn-sm btn-success">上传</button>
-                </form>
-            </td>
-        </tr>
-    }
-</table>
 
+<div style="position:relative;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#Upload" data-toggle="tab"><i class="glyphicon glyphicon-upload"></i>&nbsp;初始数据上传</a></li>
+        <li class=""><a href="#Down" data-toggle="tab"><i class="glyphicon glyphicon-download"></i>&nbsp;下载</a></li>
+        <li class=""><a href="#History" data-toggle="tab"><i class="glyphicon glyphicon-hdd"></i>&nbsp;数据源</a></li>
+    </ul>
+</div>
 
-
-<table class="table table-bordered">
-    <tr>
-        <th>输出表单名称</th>
-        <th style="width:350px;">数据导入</th>
-        <th style="width:250px;">下载</th>
-        
-    </tr>
-    @foreach (OutputExcel item in Enum.GetValues(typeof(OutputExcel)))
-    {
-        var Year=DateTime.Now.Year;
-        if ((int)item < 14)
-        {
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="Upload">
+        <table class="table table-bordered">
             <tr>
-            <td>@(item.ToString())-@(item.GetDescription())</td>
-            <td>
-                @if (item == OutputExcel.附表1A6||item==OutputExcel.附表1A5)
-                {
-                    var year=DateTime.Now.Year;
-                    <form class="form-inline" method="post" action="/Home/UploadOutExcel" enctype="multipart/form-data">
-                        <div class="input-group">
-                            <input type="file" name="file" style="width:200px; height:30px;" class="form-control" />
-                            <select name="Year" class="input-sm">
-                                @while (year >= 2009)
-                                {
-                                    <option value="@year">@year</option>
-                                    year--;
-                                }
-                            </select>
+                <th>输入表单名称</th>
+                <th style="width:200px;">上传验证</th>
+            </tr>
+            @foreach (UploadFileExcel item in Enum.GetValues(typeof(UploadFileExcel)))
+            {
+                <tr>
+                    <td>@(item.ToString())</td>
+                    <td>
+                        <form method="post" action="/Home/UploadFile?Type=@(item)" class="form-inline" enctype="multipart/form-data">
+                            <input type="file" name="file" class="form-control input-sm" style="width:100px;" />
+                            <button type="submit" class="btn btn-sm btn-success">上传</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 
-                            <input type="text" value="@(item.ToString())" name="Type" style="display:none;" />
-                            <input type="text" name="City" value="@ViewBag.City" style="display:none" />
-                            <button type="submit" class="btn btn-success btn-sm">上传</button>
-                        </div>
-                    </form>
+    <div class="tab-pane fade" id="Down">
+        <table class="table table-bordered">
+            <tr>
+                <th>输出表单名称</th>
+                <th style="width:350px;">数据导入</th>
+                <th style="width:250px;">下载</th>
+
+            </tr>
+            @foreach (OutputExcel item in Enum.GetValues(typeof(OutputExcel)))
+            {
+                var Year = DateTime.Now.Year;
+                if ((int)item < 14)
+                {
+                    <tr>
+                        <td>@(item.ToString())-@(item.GetDescription())</td>
+                        <td>
+                            @if (item == OutputExcel.附表1A6 || item == OutputExcel.附表1A5)
+                            {
+                                var year = DateTime.Now.Year;
+                                <form class="form-inline" method="post" action="/Home/UploadOutExcel" enctype="multipart/form-data">
+                                    <div class="input-group">
+                                        <input type="file" name="file" style="width:200px; height:30px;" class="form-control" />
+                                        <select name="Year" class="input-sm">
+                                            @while (year >= 2009)
+                                            {
+                                                <option value="@year">@year</option>
+                                                year--;
+                                            }
+                                        </select>
+
+                                        <input type="text" value="@(item.ToString())" name="Type" style="display:none;" />
+                                        <input type="text" name="City" value="@City" style="display:none" />
+                                        <button type="submit" class="btn btn-success btn-sm">上传</button>
+                                    </div>
+                                </form>
+                            }
+                        </td>
+                        <td>
+                            <form class="form-inline" method="post" action="/Home/DownLoad" style="float:right">
+                                @if (item == OutputExcel.附表1A1)
+                                {
+                                    <select name="County">
+                                        @foreach (var city in list)
+                                        {
+                                            <option value="@city">@city</option>
+                                        }
+                                    </select>
+                                }
+                                <select name="Year">
+                                    @while ((Year - 5) >= 2000)
+                                    {
+                                        <option value="@Year">@(Year)-@(Year - 5)</option>
+                                        Year--;
+                                    }
+                                </select>
+                                <input type="text" value="@(item)" style="display:none" name="Excel" />
+                                <input type="text" value="@City" name="City" style="display:none" />
+                                <button type="submit" class="btn btn-primary btn-xs">下载</button>
+
+                            </form>
+                        </td>
+
+                    </tr>
                 }
-            </td>
-            <td>
-                <form class="form-inline" method="post" action="/Home/DownLoad" style="float:right">
-                    @if (item == OutputExcel.附表1A1)
+
+            }
+        </table>
+    </div>
+
+
+    <div class="tab-pane fade" id="History">
+        <table class="table table-bordered">
+            <tr>
+                <th rowspan="2">年份</th>
+                <th rowspan="2">人口数据</th>
+                <th rowspan="2">经济数据</th>
+                <th colspan="3">土地利用现状数据</th>
+                <th colspan="2">土地供应数据</th>
+                <th rowspan="2">指标理想值</th>
+                <th rowspan="2">指数权重</th>
+                <th rowspan="2">分指数权重</th>
+                <th rowspan="2">指标权重</th>
+            </tr>
+            <tr>
+                <th>农用地</th>
+                <th>建设用地</th>
+                <th>新增建设用地</th>
+                <th>土地供应量</th>
+                <th>批准批次土地供应</th>
+            </tr>
+            @foreach (var item in History.Keys)
+            {
+                var val = History[item];
+                <tr>
+                    <td>@item</td>
+                    @foreach (var entity in val)
                     {
-                        <select name="County">
-                              @foreach (var city in list)
-                              {          
-                                  <option value="@city">@city</option>   
-                              }      
-                          </select>
+                        <td>
+                            @if (entity)
+                            {
+                                <i class="glyphicon glyphicon-ok"></i>
+                            }
+                            else
+                            {
+                                <i class="glyphicon glyphicon-remove"></i>
+                            }
+                        </td>
                     }
-                    <select name="Year">
-                        @while ((Year - 5) >= 2000)
-                        {
-                            <option value="@Year">@(Year)-@(Year - 5)</option>
-                            Year--;
-                        }
-                    </select>
-                    <input type="text" value="@(item)" style="display:none" name="Excel" />
-                    <button type="submit" class="btn btn-primary btn-xs">下载</button>
-                    
-                </form>
-            </td>
-            
-        </tr>
-        }
-        
-    }
-</table>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+
+
+
+
