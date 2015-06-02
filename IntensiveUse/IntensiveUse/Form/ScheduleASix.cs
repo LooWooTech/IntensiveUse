@@ -26,15 +26,29 @@ namespace IntensiveUse.Form
         {
             
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
-            Exponent exponent = Gain(workbook,Core);
+            ISheet sheet = workbook.GetSheetAt(0);
+            if (sheet == null)
+            {
+                throw new ArgumentException("未获取上传文件的sheet");
+            }
+            Exponent exponent = Core.IndexManager.GainExponent(sheet, Begin + 1, Start);
             if (exponent == null)
             {
                 throw new ArgumentException("未获取到相关理想数据");
             }
+            Foundation foundation = Core.IndexManager.GainFoundation(sheet, Begin + 2, Start);
+            if (foundation == null)
+            {
+                throw new ArgumentException("未获取到相关理想值依据");
+            }
             exponent.Year = Year;
             exponent.RID = Core.ExcelManager.GetID(City);
             exponent.Type = IdealType.Value;
+            foundation.RID = Core.ExcelManager.GetID(City);
+            foundation.Year = Year;
+
             Core.ExponentManager.Save(exponent);
+            Core.FoundationManager.Save(foundation);
             Core.CommonManager.UpDate(
                 new Dictionary<int, Exponent>(){
                     {Year,exponent}
@@ -66,18 +80,6 @@ namespace IntensiveUse.Form
         {
             Exponent exponent =Core.ExponentManager.GetTurthExponent(Year,ID);
             Data = Core.ExponentManager.Create(exponent); 
-        }
-
-
-        public Exponent Gain(IWorkbook workbook,ManagerCore Core)
-        {
-            Queue<double> queue = new Queue<double>();
-            ISheet sheet = workbook.GetSheetAt(0);
-            if (sheet == null)
-            {
-                throw new ArgumentException("表格中没有sheet，请核对表格");
-            }
-            return Core.IndexManager.GainExponent(sheet,Begin+1,Start);
         }
 
 

@@ -77,5 +77,11 @@ namespace IntensiveUse.Manager
         {
             get { return _statisticManager == null ? _statisticManager = new StatisticsManager() : _statisticManager; }
         }
+
+        private FoundationManager _foundationManager;
+        public FoundationManager FoundationManager
+        {
+            get { return _foundationManager == null ? _foundationManager = new FoundationManager() : _foundationManager; }
+        }
     }
 }

@@ -204,6 +204,36 @@ namespace IntensiveUse.Manager
             return exponent;
         }
 
+
+        public Foundation GainFoundation(ISheet Sheet, int Line,int Begin)
+        {
+            Queue<string> queue = new Queue<string>();
+            for (var i = 0; i < 11; i++)
+            {
+                IRow row = Sheet.GetRow(Begin + i);
+                if (row == null)
+                {
+                    throw new ArgumentException("在读取理想值依据列的时候，未获取到相关的行，请告知相关人员");
+                }
+                ICell cell = row.GetCell(Line, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                if (cell == null)
+                {
+                    throw new ArgumentException("在读取理想值依据列的时候，未获取到相关的列，请告知相关人员");
+                }
+                queue.Enqueue(cell.ToString());
+            }
+            Foundation foundation = new Foundation();
+            System.Reflection.PropertyInfo[] propList = typeof(Foundation).GetProperties();
+            foreach (var item in propList)
+            {
+                if (item.PropertyType.Equals(typeof(string)))
+                {
+                    item.SetValue(foundation, queue.Dequeue(), null);
+                }
+            }
+            return foundation;
+        }
+
         public void WriteExponent(ref ISheet Sheet, int Line, int Begin, int Year, int ID)
         {
             Exponent exponent = SearchForExponent(Year, ID, IdealType.Weight);

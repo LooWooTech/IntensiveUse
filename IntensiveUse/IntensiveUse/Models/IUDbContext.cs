@@ -24,5 +24,6 @@ namespace IntensiveUse.Models
         public DbSet<IndexWeight> IndexWeights { get; set; }
         public DbSet<SubIndex> SubIndexs { get; set; }
         public DbSet<Statistic> Statistics { get; set; }
+        public DbSet<Foundation> Foundations { get; set; }
     }
 }
