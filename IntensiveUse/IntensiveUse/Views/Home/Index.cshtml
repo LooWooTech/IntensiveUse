@@ -2,6 +2,7 @@
     ViewBag.Title = "首页";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<string> list = ViewBag.List;
+    List<string> HtmlList = ViewBag.Html;
 }
 
 <div class="row">
@@ -70,7 +71,12 @@
                                 <div class="form-group">
                                     <label for="County" class="control-label col-lg-3">区（县、市）</label>
                                     <div class="col-lg-6">
-                                        <select name="County" class="form-control"></select>
+                                        <select name="County" class="form-control">
+                                            @foreach (var item in HtmlList)
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">

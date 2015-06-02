@@ -23,7 +23,21 @@ namespace IntensiveUse.Form
         public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
         {
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
-            
+            ISheet sheet = workbook.GetSheetAt(0);
+            if (sheet == null)
+            {
+                throw new ArgumentException("服务器模板文件存在问题，请告知相关人员");
+            }
+            string Name=string.Empty;
+            if(string.IsNullOrEmpty(City)){
+                Name=Distict;
+            }else{
+                Name=City;
+            }
+            int CID=Core.ExcelManager.GetID(Name);
+            Core.IndexManager.WriteIndexWeight(ref sheet, Index[0], Year, CID);
+            Core.IndexManager.WriteSubIndex(ref sheet, Index[1], Year, CID);
+            Core.IndexManager.WriteExponent(ref sheet, Index[2], Start, Year, CID);
             return workbook;
         }
 

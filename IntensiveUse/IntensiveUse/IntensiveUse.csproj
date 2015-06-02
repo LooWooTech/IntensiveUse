@@ -329,6 +329,7 @@
     <Content Include="Views\Home\County.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EXCEL\附表1B1.xls" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>

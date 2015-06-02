@@ -8,15 +8,14 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleAFour:ISchedule
+    public class ScheduleAFour:ScheduleBase,ISchedule
     {
-        public const int Start = 3;
-        public const int Begin = 2;
         public Dictionary<string, List<double>> DictData { get; set; }
         public List<double> CitiesValue { get; set; }
-        public IRow TempRow { get; set; }
         public ScheduleAFour()
         {
+            this.Start = 3;
+            this.Begin = 2;
             if (DictData == null)
             {
                 DictData = new Dictionary<string, List<double>>();

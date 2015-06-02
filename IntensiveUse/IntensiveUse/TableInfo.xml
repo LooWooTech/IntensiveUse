@@ -42,4 +42,13 @@
   <Table Title="附表1A14" Name="">
     <File Title="模板" Path="EXCEL/附表1A14.xls"></File>
   </Table>
+  <Table Title="附表1B1" Name="">
+    <File Title="模板" Path="EXCEL/附表1B1.xls"></File>
+  </Table>
+  <Table Title="附表1B2" Name="">
+    <File Title="模板" Path="EXCEL/附表1B2.xls"></File>
+  </Table>
+  <Table Title="附表1B4" Name="">
+    <File Title="模板" Path="EXCEL/附表1A5.xls"></File>
+  </Table>
 </Tables>

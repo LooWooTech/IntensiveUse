@@ -147,5 +147,21 @@ namespace IntensiveUse.Manager
                 return entity;
             }
         }
+
+        protected void Gain<T>(T Complex, ref Queue<double> queue)
+        {
+            System.Reflection.PropertyInfo[] propList = typeof(T).GetProperties();
+            double val = 0.0;
+
+            foreach (var item in propList)
+            {
+                if (item.PropertyType.Equals(typeof(double)))
+                {
+                    val = 0.0;
+                    double.TryParse(item.GetValue(Complex, null).ToString(), out val);
+                    queue.Enqueue(val);
+                }
+            }
+        }
     }
 }

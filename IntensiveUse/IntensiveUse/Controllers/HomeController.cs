@@ -20,6 +20,7 @@ namespace IntensiveUse.Controllers
         public ActionResult Index()
         {
             ViewBag.List = Core.ExcelManager.GetCity();
+            ViewBag.Html = Core.ExcelManager.GetDistrict("杭州市");
             return View();
         }
 
@@ -33,12 +34,13 @@ namespace IntensiveUse.Controllers
         }
 
         [HttpPost]
-        public ActionResult County(string County)
+        public ActionResult County(string City,string County)
         {
-            if (string.IsNullOrEmpty(County))
+            if (string.IsNullOrEmpty(County)||string.IsNullOrEmpty(City))
             {
-                throw new ArgumentException("请选择区（县、市）之后进入");
+                throw new ArgumentException("请选择区（县、市）之后进入,如有疑问咨询相关人员");
             }
+            ViewBag.City = City;
             ViewBag.County = County;
             ViewBag.List = Core.ExcelManager.GetCity();
             ViewBag.History = Core.StatisticsManager.Gain(County);
@@ -87,6 +89,12 @@ namespace IntensiveUse.Controllers
                     engine = new ScheduleAFive();
                     break;
                 case OutputExcel.附表1A6:
+                    engine = new ScheduleASix();
+                    break;
+                case OutputExcel.附表1B4:
+                    engine = new ScheduleAFive();
+                    break;
+                case OutputExcel.附表1B5:
                     engine = new ScheduleASix();
                     break;
                 default: break;

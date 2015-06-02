@@ -89,6 +89,27 @@ namespace IntensiveUse.Manager
             };
         }
 
+        public void WriteIndexWeight(ref ISheet Sheet, int line,int Year,int ID)
+        {
+            IndexWeight indexweight = SearchForIndexWeight(Year, ID);
+            Queue<double> queue = new Queue<double>();
+            Gain(indexweight, ref queue);
+            foreach (var item in Indexs)
+            {
+                IRow row = Sheet.GetRow(item);
+                if (row == null)
+                {
+                    throw new ArgumentException("在保存指数权重数据到表格附表1A5或者1B4的时候，未读取到相关的行，请告知相关人员");
+                }
+                ICell cell = row.GetCell(line, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                if (cell == null)
+                {
+                    throw new ArgumentException("在保存指数权重数据到表格附表1A5或者1B4的时候，未读取到相关的列，请告知相关人员");
+                }
+                cell.SetCellValue(Math.Round(queue.Dequeue(), 2));
+            }
+        }
+
         public SubIndex GainSubIndex(ISheet Sheet, int Line)
         {
             double[] values = new double[IndexSub.Count()];
@@ -122,6 +143,27 @@ namespace IntensiveUse.Manager
                 }
             }
             return subindex; 
+        }
+
+        public void WriteSubIndex(ref ISheet Sheet, int Line, int Year, int ID)
+        {
+            SubIndex subindex = SearchForSubIndex(Year, ID);
+            Queue<double> queue = new Queue<double>();
+            Gain(subindex, ref queue);
+            foreach (var item in IndexSub)
+            {
+                IRow row = Sheet.GetRow(item);
+                if (row == null)
+                {
+                    throw new ArgumentException("在保存分指数数据到表格附表1A5或者1B4的时候，未读取到相关的行，请告知相关人员");
+                }
+                ICell cell = row.GetCell(Line, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                if (cell == null)
+                {
+                    throw new ArgumentException("在保存分指数数据到表格附表1A5或者1B4的时候，未读取到相关的列，请告知相关人员");
+                }
+                cell.SetCellValue(Math.Round(queue.Dequeue(), 2));
+            }
         }
         /// <summary>
         /// 
@@ -160,6 +202,28 @@ namespace IntensiveUse.Manager
                 }
             }
             return exponent;
+        }
+
+        public void WriteExponent(ref ISheet Sheet, int Line, int Begin, int Year, int ID)
+        {
+            Exponent exponent = SearchForExponent(Year, ID, IdealType.Weight);
+            Queue<double> queue = new Queue<double>();
+            Gain(exponent, ref queue);
+            int Count = queue.Count;
+            for (var i = 0; i < Count; i++)
+            {
+                IRow row = Sheet.GetRow(Begin + i);
+                if (row == null)
+                {
+                    throw new ArgumentException("在保存指标权重数据到附表1A5或者附表1B4的时候，未读取到相关的行，请告知相关人员");
+                }
+                ICell cell = row.GetCell(Line, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                if (cell == null)
+                {
+                    throw new ArgumentException("在保存指标权重数据到附表1A5或者附表1B4的时候，未读取到相关的列，请告知相关人员");
+                }
+                cell.SetCellValue(Math.Round(queue.Dequeue(), 2));
+            }
         }
 
     }

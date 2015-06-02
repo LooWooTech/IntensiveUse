@@ -8,16 +8,17 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleAThree:ISchedule
+    public class ScheduleAThree:ScheduleBase,ISchedule
     {
-        public const int Start = 1;
-        public const int Begin = 2;
-        public Dictionary<string, List<string>> DictData { get; set; }
+        public Dictionary<string, List<string>> DictValue { get; set; }
+         
         public ScheduleAThree()
         {
-            if (DictData == null)
+            this.Start = 1;
+            this.Begin = 2;
+            if (DictValue == null)
             {
-                DictData = new Dictionary<string, List<string>>();
+                DictValue = new Dictionary<string, List<string>>();
             }
         }
         public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
@@ -28,21 +29,35 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("打开模板失败,服务器缺失文件");
             }
-            Message(Core,Year, City);
+            if (!string.IsNullOrEmpty(Distict))
+            {
+                Disticts.Add(Distict);
+            }
+            else
+            {
+                Disticts = Core.ExcelManager.GetDistrict(City);
+            }
+            this.Year = Year;
+            this.City = City;
+            Message(Core);
             int StartRow = 0;
             int StartLine=Begin;
             int SerialNumber = 0;
-            foreach (var item in DictData.Keys)
+            foreach (var item in DictValue.Keys)
             {
                 StartRow = Start;
                 IRow row = ExcelHelper.OpenRow(ref sheet, StartRow);
                 StartRow++;
                 ICell cell = ExcelHelper.OpenCell(ref row, StartLine);
-                cell.SetCellValue(++SerialNumber);
-                row = ExcelHelper.OpenRow(ref sheet, StartRow++);
-                cell = ExcelHelper.OpenCell(ref row, StartLine);
+                if (string.IsNullOrEmpty(Distict))
+                {
+                    cell.SetCellValue(++SerialNumber);
+                    row = ExcelHelper.OpenRow(ref sheet, StartRow++);
+                    cell = ExcelHelper.OpenCell(ref row, StartLine);
+                }
+                
                 cell.SetCellValue(item);
-                List<string> values = DictData[item];
+                var values = DictValue[item];
                 foreach (var entity in values)
                 {
                     row = ExcelHelper.OpenRow(ref sheet, StartRow++);
@@ -54,16 +69,15 @@ namespace IntensiveUse.Form
             return workbook;
         }
 
-        public void Message(ManagerCore Core,int Year,string City)
+        public void Message(ManagerCore Core)
         {
-            List<string> Division = Core.ExcelManager.GetDistrict(City);
-            foreach (var item in Division)
+            foreach (var item in Disticts)
             {
                 int ID = Core.ExcelManager.GetID(item);
                 List<string> values = Core.PeopleManager.Statistics(ID,Year);
-                if (!DictData.ContainsKey(item))
+                if (!DictValue.ContainsKey(item))
                 {
-                    DictData.Add(item, values);
+                    DictValue.Add(item, values);
                 }
             }
         }

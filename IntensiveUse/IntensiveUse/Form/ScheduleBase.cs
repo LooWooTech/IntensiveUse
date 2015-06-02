@@ -8,8 +8,11 @@ namespace IntensiveUse.Form
 {
     public class ScheduleBase
     {
+        protected int Start { get; set; }
+        protected int Begin { get; set; }
         protected int Year { get; set; }
         protected int CID { get; set; }
+        protected string City { get; set; }
         protected List<string> Disticts { get; set; }
         protected List<int> Columns { get; set; }
         protected Dictionary<string, Queue<double>> DictData { get; set; }
@@ -26,6 +29,10 @@ namespace IntensiveUse.Form
             if (Columns == null)
             {
                 Columns = new List<int>();
+            }
+            if (Disticts == null)
+            {
+                Disticts = new List<string>();
             }
         }
 
