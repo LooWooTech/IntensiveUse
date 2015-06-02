@@ -16,12 +16,14 @@ namespace IntensiveUse.Form
         protected List<string> Disticts { get; set; }
         protected List<int> Columns { get; set; }
         protected Dictionary<string, Queue<double>> DictData { get; set; }
+        
 
         protected Queue<double> Queue { get; set; }
         protected IRow TempRow { get; set; }
 
         public ScheduleBase()
         {
+            
             if (DictData == null)
             {
                 DictData = new Dictionary<string, Queue<double>>();
@@ -50,7 +52,7 @@ namespace IntensiveUse.Form
             }
             return row;
         }
-        protected ICell OpneCell(ref IRow row, int ID)
+        protected ICell OpenCell(ref IRow row, int ID)
         {
             ICell cell = row.GetCell(ID, MissingCellPolicy.CREATE_NULL_AS_BLANK);
             if (cell == null)
@@ -75,13 +77,13 @@ namespace IntensiveUse.Form
             foreach (var item in DictData.Keys)
             {
                 row = OpenRow(ref sheet, Serial + Number);
-                cell = OpneCell(ref row, 0);
+                cell = OpenCell(ref row, 0);
                 cell.SetCellValue(++Serial);
-                cell = OpneCell(ref row, 1);
+                cell = OpenCell(ref row, 1);
                 cell.SetCellValue(item);
                 foreach (var m in Columns)
                 {
-                    cell = OpneCell(ref row, m);
+                    cell = OpenCell(ref row, m);
                     cell.SetCellValue(Math.Round(DictData[item].Dequeue(), 2));
                 }
             }

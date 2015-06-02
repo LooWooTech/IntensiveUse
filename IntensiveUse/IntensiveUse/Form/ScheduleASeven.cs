@@ -41,7 +41,16 @@ namespace IntensiveUse.Form
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             Count = sheet.LastRowNum;
-            int ID=Core.ExcelManager.GetID(City);
+            int ID = 0;
+            if (string.IsNullOrEmpty(Distict))
+            {
+                ID = Core.ExcelManager.GetID(City);
+            }
+            else
+            {
+                ID = Core.ExcelManager.GetID(Distict);
+            }
+            
             Message(Core, Year, ID);
             IRow row = null;
             ICell cell = null;

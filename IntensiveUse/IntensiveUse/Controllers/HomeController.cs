@@ -23,8 +23,6 @@ namespace IntensiveUse.Controllers
             ViewBag.Html = Core.ExcelManager.GetDistrict("杭州市");
             return View();
         }
-
-        [HttpPost]
         public ActionResult City(string City)
         {
             ViewBag.City = City;
@@ -33,7 +31,6 @@ namespace IntensiveUse.Controllers
             return View();
         }
 
-        [HttpPost]
         public ActionResult County(string City,string County)
         {
             if (string.IsNullOrEmpty(County)||string.IsNullOrEmpty(City))
@@ -48,7 +45,7 @@ namespace IntensiveUse.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(UploadFileExcel Type,string Name)
+        public ActionResult UploadFile(UploadFileExcel Type,string Name,string City,bool Flag)
         {
             if (string.IsNullOrEmpty(Name))
             {
@@ -75,7 +72,15 @@ namespace IntensiveUse.Controllers
                 throw new ArgumentException("未找到当前上传文件中获取到的行政区信息，或者上传当前的文件错误，请核对文件");
             }
             engine.Save(Core);
-            return View();
+            if (Flag)
+            {
+                return RedirectToAction("City", new { City = Name });
+            }
+            else
+            {
+                return RedirectToAction("County", new { City = City, County = Name });
+            }
+            //return View();
         }
 
         [HttpPost]

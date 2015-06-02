@@ -148,7 +148,7 @@ namespace IntensiveUse.Manager
             }
         }
 
-        protected void Gain<T>(T Complex, ref Queue<double> queue)
+        public void Gain<T>(T Complex, ref Queue<double> queue)
         {
             System.Reflection.PropertyInfo[] propList = typeof(T).GetProperties();
             double val = 0.0;
@@ -161,6 +161,19 @@ namespace IntensiveUse.Manager
                     double.TryParse(item.GetValue(Complex, null).ToString(), out val);
                     queue.Enqueue(val);
                 }
+            }
+        }
+
+        public Foundation SearchForFoundation(int Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                Foundation entity = db.Foundations.FirstOrDefault(e => e.RID == ID && e.Year == Year);
+                if (entity == null)
+                {
+                    entity = new Foundation();
+                }
+                return entity;
             }
         }
     }

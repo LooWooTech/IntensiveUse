@@ -9,17 +9,12 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleAOne:ISchedule
+    public class ScheduleAOne:ScheduleBase,ISchedule
     {
-        public const int Start = 35;
-        public const int Begin = 5;
-        public Dictionary<int, List<double>> DictData { get; set; }
         public ScheduleAOne()
         {
-            if (DictData == null)
-            {
-                DictData = new Dictionary<int, List<double>>();
-            }
+            this.Start = 35;
+            this.Begin = 5;
         }
         public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City,string Distict)
         {
@@ -34,8 +29,9 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("未读取模板文件中的sheet");
             }
-            int RID=Core.ExcelManager.GetID(City);
-            Message(Core,RID,Year);
+            this.CID=Core.ExcelManager.GetID(City);
+            this.Year = Year;
+            Message(Core);
             IRow row = null;
             ICell cell = null;
             int m=Begin;
@@ -64,20 +60,20 @@ namespace IntensiveUse.Form
         }
 
 
-        public void Message(ManagerCore Core,int ID,int Year)
+        public void Message(ManagerCore Core)
         {
             for (var i = 4; i >= 0; i--)
             {
                 int em=(Year-i);
-                Economy economy = Core.EconmoyManager.SearchForEconomy(em, ID);
-                ConstructionLand construction = Core.EconmoyManager.SearchForConstruction(em, ID);
-                if (!DictData.ContainsKey(em))
+                Economy economy = Core.EconmoyManager.SearchForEconomy(em, CID);
+                ConstructionLand construction = Core.EconmoyManager.SearchForConstruction(em, CID);
+                Queue<double> queue=new Queue<double>();
+                queue.Enqueue(economy.Current);
+                queue.Enqueue(economy.Compare);
+                queue.Enqueue(construction.SubTotal);
+                if (!DictData.ContainsKey(em.ToString()))
                 {
-                    DictData.Add(em, new List<double>(){
-                        economy.Current,
-                        economy.Compare,
-                        construction.SubTotal
-                    });
+                    DictData.Add(em.ToString(), queue);
                 }
             }
         }

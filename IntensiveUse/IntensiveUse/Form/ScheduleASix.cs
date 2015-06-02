@@ -9,16 +9,16 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleASix:ISchedule,IRead
+    public class ScheduleASix:ScheduleBase,ISchedule,IRead
     {
-        public const int Start = 2;
-        public const int Begin = 4;
-        public Queue<double> Data { get; set; }
+        public Queue<string> Qfoundation { get; set; }
         public ScheduleASix()
         {
-            if (Data == null)
+            this.Start = 2;
+            this.Begin = 4;
+            if (Qfoundation == null)
             {
-                Data = new Queue<double>();
+                Qfoundation = new Queue<string>();
             }
         }
 
@@ -41,10 +41,12 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("未获取到相关理想值依据");
             }
+            this.Year = Year;
+            this.CID = Core.ExcelManager.GetID(City);
             exponent.Year = Year;
-            exponent.RID = Core.ExcelManager.GetID(City);
+            exponent.RID = CID;
             exponent.Type = IdealType.Value;
-            foundation.RID = Core.ExcelManager.GetID(City);
+            foundation.RID = CID;
             foundation.Year = Year;
 
             Core.ExponentManager.Save(exponent);
@@ -64,22 +66,66 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("服务器缺失相关模板");
             }
-            int ID=Core.ExcelManager.GetID(City);
-            Message(Core,Year, ID);
-            int line = Start;
-            foreach (var item in Data)
+            this.Year = Year;
+            if (string.IsNullOrEmpty(Distict))
             {
-                IRow row = ExcelHelper.OpenRow(ref sheet,line++);
-                ICell cell = ExcelHelper.OpenCell(ref row, Begin);
-                cell.SetCellValue(Math.Round(item, 2));
+                this.CID = Core.ExcelManager.GetID(City);
+            }
+            else
+            {
+                this.CID = Core.ExcelManager.GetID(Distict);
+            }
+            
+            Message(Core);
+            int line = 0;
+            foreach (var item in DictData.Keys)
+            {
+                line = Start;
+                var values = DictData[item];
+                int a = 0;
+                if (int.TryParse(item, out a))
+                {
+                    foreach (var entity in values)
+                    {
+                        IRow row = ExcelHelper.OpenRow(ref sheet, line++);
+                        ICell cell = ExcelHelper.OpenCell(ref row, a);
+                        cell.SetCellValue(Math.Round(entity, 2));
+                    }
+                }
+            }
+            line=Start;
+            foreach (var item in Qfoundation)
+            {
+                IRow row = ExcelHelper.OpenRow(ref sheet, line++);
+                ICell cell = ExcelHelper.OpenCell(ref row, Begin + 2);
+                cell.SetCellValue(item);
             }
             return workbook;
         }
 
-        public void Message(ManagerCore Core,int Year,int ID)
+        public void Message(ManagerCore Core)
         {
-            Exponent exponent =Core.ExponentManager.GetTurthExponent(Year,ID);
-            Data = Core.ExponentManager.Create(exponent); 
+            Exponent exponent =Core.ExponentManager.GetTurthExponent(Year,CID);
+            Queue<double> queue = new Queue<double>();
+            Core.ExcelManager.Gain(exponent, ref queue);
+            DictData.Add(Begin.ToString(), queue);
+            queue.Clear();
+            Exponent idealExponent = Core.ExponentManager.SearchForExponent(Year, CID, IdealType.Value);
+            Core.ExcelManager.Gain(idealExponent, ref queue);
+            DictData.Add((Begin + 1).ToString(), queue);
+            Foundation foundation = Core.FoundationManager.SearchForFoundation(Year, CID);
+            System.Reflection.PropertyInfo[] propList = typeof(Foundation).GetProperties();
+            foreach (var item in propList)
+            {
+                if (item.PropertyType.Equals(typeof(string)))
+                {
+                    string str="";
+                    if(item.GetValue(foundation,null)!=null){
+                        str=item.GetValue(foundation,null).ToString();
+                    }
+                    Qfoundation.Enqueue(str);
+                }
+            }
         }
 
 

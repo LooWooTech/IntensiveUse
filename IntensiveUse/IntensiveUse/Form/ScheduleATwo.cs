@@ -9,17 +9,12 @@ using System.Web;
 
 namespace IntensiveUse.Form
 {
-    public class ScheduleATwo:ISchedule
+    public class ScheduleATwo:ScheduleBase,ISchedule
     {
-        public Dictionary<int, List<double>> DictData { get; set; }
-        public int Start = 1;
-        public int Begin = 5;
         public ScheduleATwo()
         {
-            if (DictData == null)
-            {
-                DictData = new Dictionary<int, List<double>>();
-            }
+            this.Start = 1;
+            this.Begin = 5;
         }
 
         public IWorkbook Write(string FilePath,ManagerCore Core,int Year,string City,string Distict)
@@ -27,7 +22,9 @@ namespace IntensiveUse.Form
             
             int ID = Core.ExcelManager.GetID(City);
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
-            Message(Core, Year,ID);
+            this.Year = Year;
+            this.CID = Core.ExcelManager.GetID(City);
+            Message(Core);
             ISheet sheet = workbook.GetSheetAt(0);
             IRow row = sheet.GetRow(Start);
             ICell cell = row.GetCell(2, MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -56,7 +53,7 @@ namespace IntensiveUse.Form
                 }
                 cell.SetCellValue(item+"年");
                 
-                List<double> values = DictData[item];
+                var values = DictData[item];
                 foreach (var entity in values)
                 {
                     row = sheet.GetRow(line++);
@@ -68,33 +65,33 @@ namespace IntensiveUse.Form
             return workbook;
         }
 
-        public void Message(ManagerCore Core,int Year,int ID)
+        public void Message(ManagerCore Core)
         {
             for (var i = 4; i >= 0; i--)
             {
                 int em = Year - i;
-                List<double> Data = new List<double>();
-                double[] peoples = Core.PeopleManager.Get(em, ID);
+                Queue<double> Data = new Queue<double>();
+                double[] peoples = Core.PeopleManager.Get(em, CID);
                 foreach (var entity in peoples)
                 {
-                    Data.Add(entity);
+                    Data.Enqueue(entity);
                 }
-                double[] economys = Core.EconmoyManager.Get(em, ID);
+                double[] economys = Core.EconmoyManager.Get(em, CID);
                 foreach (var entity in economys)
                 {
-                    Data.Add(entity);
+                    Data.Enqueue(entity);
                 }
-                List<double> landuse = Core.LandUseManager.Get(em, ID);
+                List<double> landuse = Core.LandUseManager.Get(em, CID);
                 foreach (var entity in landuse)
                 {
-                    Data.Add(entity);
+                    Data.Enqueue(entity);
                 }
-                List<double> landsupply = Core.LandSupplyManager.Get(em, ID);
+                List<double> landsupply = Core.LandSupplyManager.Get(em, CID);
                 foreach (var entity in landsupply)
                 {
-                    Data.Add(entity);
+                    Data.Enqueue(entity);
                 }
-                DictData.Add(em,Data);
+                DictData.Add(em.ToString(),Data);
             }
         }
 

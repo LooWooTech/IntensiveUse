@@ -10,16 +10,11 @@ namespace IntensiveUse.Form
 {
     public class ScheduleAFour:ScheduleBase,ISchedule
     {
-        public Dictionary<string, List<double>> DictData { get; set; }
         public List<double> CitiesValue { get; set; }
         public ScheduleAFour()
         {
             this.Start = 3;
             this.Begin = 2;
-            if (DictData == null)
-            {
-                DictData = new Dictionary<string, List<double>>();
-            }
         }
         public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
         {
@@ -30,7 +25,10 @@ namespace IntensiveUse.Form
                 throw new ArgumentException("打开模板失败,服务器缺失文件");
             }
             TempRow = sheet.GetRow(Start);
-            Message(Core,Year, City);
+            this.Year = Year;
+            this.CID = Core.ExcelManager.GetID(City);
+            this.City = City;
+            Message(Core);
             int Count = DictData.Count;
             IRow row = ExcelHelper.OpenRow(ref sheet,Start+2);
             ICell cell = null;
@@ -50,7 +48,7 @@ namespace IntensiveUse.Form
                 cell.SetCellValue(++SerialNumber);
                 cell = OpenCell(ref row, line++);
                 cell.SetCellValue(item);
-                List<double> Values = DictData[item];
+                var Values = DictData[item];
                 foreach (var val in Values)
                 {
                     cell = OpenCell(ref row, line++);
@@ -62,41 +60,9 @@ namespace IntensiveUse.Form
             return workbook;
         }
 
-        private IRow OpenRow(ref ISheet Sheet, int ID)
-        {
-            IRow row = Sheet.GetRow(ID);
-            if (row == null)
-            {
-                row = Sheet.CreateRow(ID);
-                if (TempRow.RowStyle != null)
-                {
-                    row.RowStyle = TempRow.RowStyle;
-                }
-                
-            }
-            return row;
-        }
-
-        private ICell OpenCell(ref IRow Row, int ID)
-        {
-            ICell cell = Row.GetCell(ID, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-            if (cell == null)
-            {
-                cell = Row.CreateCell(ID, TempRow.GetCell(ID).CellType);
-            }
-            if (TempRow.GetCell(ID).CellStyle != null)
-            {
-                cell.CellStyle = TempRow.GetCell(ID).CellStyle;
-            }
-            
-            
-            return cell;
-        }
-
-        public void Message(ManagerCore Core,int Year,string City)
+        public void Message(ManagerCore Core)
         {
             List<string> Division = Core.ExcelManager.GetDistrict(City);
-            int CID=Core.ExcelManager.GetID(City);
             Situation[] Cities = Core.EconmoyManager.Find(Year, CID);
             if (Cities == null || Cities.Count() != 2)
             {
@@ -117,9 +83,14 @@ namespace IntensiveUse.Form
             {
                 int ID = Core.ExcelManager.GetID(item);
                 List<double> values = Core.EconmoyManager.Gain(Year, ID, Cities);
+                Queue<double> queue = new Queue<double>();
+                foreach (var entity in values)
+                {
+                    queue.Enqueue(entity);
+                }
                 if (!DictData.ContainsKey(item))
                 {
-                    DictData.Add(item, values);
+                    DictData.Add(item, queue);
                 }
             }
         }

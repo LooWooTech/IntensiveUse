@@ -49,39 +49,6 @@ namespace IntensiveUse.Manager
             }
         }
 
-        public Queue<double> Create<T>(T entity)
-        {
-            Queue<double> queue = new Queue<double>();
-            System.Reflection.PropertyInfo[] propList = typeof(T).GetProperties();
-            foreach (var item in propList)
-            {
-                if (item.PropertyType.Equals(typeof(double)))
-                {
-                    double val = 0.0;
-                    double.TryParse(item.GetValue(entity, null).ToString(), out val);
-                    queue.Enqueue(val);
-                }
-            }
-            return queue;
-        }
-
-        //public Queue<double> Create(Exponent exponent)
-        //{
-        //    Queue<double> queue = new Queue<double>();
-        //    System.Reflection.PropertyInfo[] propList = typeof(Exponent).GetProperties();
-        //    foreach (var item in propList)
-        //    {
-        //        if (item.PropertyType.Equals(typeof(double)))
-        //        {
-        //            double val = 0.0;
-        //            double.TryParse(item.GetValue(exponent, null).ToString(), out val);
-        //            queue.Enqueue(val);
-        //        }
-        //    }
-        //    return queue;
-        //}
-
-
         public Exponent GetTurthExponent(int Year, int ID)
         {
             Exponent exponent = Find(Year,ID,IdealType.Truth);

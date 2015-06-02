@@ -104,7 +104,7 @@ namespace IntensiveUse.Manager
             Economy economy2 = SearchForEconomy(Year, ID);//14年
             ConstructionLand construction1=SearchForConstruction((Year-1),ID);
             ConstructionLand construction2=SearchForConstruction(Year,ID);
-            if (Math.Abs(economy1.Compare - 0) > 0.001 && Math.Abs(economy2.Compare - 0) > 0.001)
+            if (Math.Abs(economy1.Compare - 0) > 0.001 && Math.Abs(economy2.Compare - 0) > 0.001&&Math.Abs(construction1.SubTotal-0)>0.001)
             {
                 values[0] = (construction1.SubTotal / economy1.Compare - construction2.SubTotal / economy2.Compare) * economy1.Compare / construction1.SubTotal / 100;
             }

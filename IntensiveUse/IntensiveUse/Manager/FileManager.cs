@@ -52,7 +52,8 @@ namespace IntensiveUse.Manager
 
         public Dictionary<int, double> Transformation<T>(List<int> Index, T exponent)
         {
-            Queue<double> queue = Core.ExponentManager.Create(exponent);
+            Queue<double> queue = new Queue<double>();
+            Gain(exponent, ref queue);
             return Change(queue, Index);
         }
 
