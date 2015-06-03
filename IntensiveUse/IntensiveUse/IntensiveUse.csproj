@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\ExcelHelper.cs" />
+    <Compile Include="Helper\JsonExtentsions.cs" />
     <Compile Include="Helper\UploadHelper.cs" />
     <Compile Include="Manager\AgricultureManager.cs" />
     <Compile Include="Manager\CommonManager.cs" />

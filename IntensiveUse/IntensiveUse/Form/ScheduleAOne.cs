@@ -18,12 +18,12 @@ namespace IntensiveUse.Form
         }
         public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City,string Distict)
         {
-            if (string.IsNullOrEmpty(Distict))
-            {
-                throw new ArgumentException("请选择地级市下面的所辖区");
-            }
+            //if (string.IsNullOrEmpty(Distict))
+            //{
+            //    throw new ArgumentException("请选择地级市下面的所辖区");
+            //}
             ScheduleATwo work = new ScheduleATwo();
-            IWorkbook workbook = work.Write(FilePath, Core, Year, Distict,Distict);
+            IWorkbook workbook = work.Write(FilePath, Core, Year, City,Distict);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
             {

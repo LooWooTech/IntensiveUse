@@ -1,8 +1,7 @@
 ﻿using IntensiveUse.Manager;
+using IntensiveUse.Helper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace IntensiveUse.Controllers
@@ -20,6 +19,10 @@ namespace IntensiveUse.Controllers
             return ex;
         }
 
+        protected ActionResult JsonFail(string Message)
+        {
+            return Content(new { result = false, Message }.ToJson());
+        }
 
         protected override void OnException(ExceptionContext filterContext)
         {

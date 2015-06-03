@@ -15,7 +15,7 @@ namespace IntensiveUse.Manager
             return new double[] { economy.Current, economy.Compare, economy.Aggregate };
         }
 
-        public List<double> Gain(int Year,int ID,Situation[] Citys)
+        public LandUseChange Gain(int Year,int ID,Situation[] Citys)
         {
             if (Citys.Count() != 2)
             {
@@ -35,14 +35,21 @@ namespace IntensiveUse.Manager
             {
                 n = values[0].Increment * Citys[1].Increment / Citys[0].Increment / values[1].Increment;
             }
-            return new List<double>(){
-                values[0].Increment,
-                values[0].Extent,
-                values[1].Increment,
-                values[1].Extent,
-                m,
-                n
+            return new LandUseChange()
+            {
+                ESituation = values[0],
+                CSituation = values[1],
+                EEI1 = m,
+                ECI1 = n
             };
+            //return new List<double>(){
+            //    values[0].Increment,
+            //    values[0].Extent,
+            //    values[1].Increment,
+            //    values[1].Extent,
+            //    m,
+            //    n
+            //};
         }
 
         public Situation[] Find(int Year, int ID)

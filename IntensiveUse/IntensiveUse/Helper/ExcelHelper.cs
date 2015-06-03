@@ -121,6 +121,52 @@ namespace IntensiveUse.Helper
         public double Extent { get; set; }
     }
 
+
+    public class LandUseChange
+    {
+        public Situation ESituation { get; set; }
+        public Situation CSituation { get; set; }
+        public double EEI1 { get; set; }
+        public double ECI1 { get; set; }
+
+        public static LandUseChange operator +(LandUseChange c1, LandUseChange c2)
+        {
+            return new LandUseChange()
+            {
+                ESituation = new Situation()
+                {
+                    Increment = c1.ESituation.Increment + c2.ESituation.Increment,
+                    Extent = c1.ESituation.Extent + c2.ESituation.Extent
+                },
+                CSituation=new Situation(){
+                    Increment=c1.CSituation.Increment+c2.CSituation.Increment,
+                    Extent=c1.CSituation.Extent+c2.CSituation.Extent
+                },
+                EEI1 = c1.EEI1 + c2.EEI1,
+                ECI1 = c1.ECI1 + c2.ECI1
+            };
+        }
+
+        public static LandUseChange operator /(LandUseChange c1, int c2)
+        {
+            return new LandUseChange()
+            {
+                ESituation = new Situation()
+                {
+                    Increment = c1.ESituation.Increment / c2,
+                    Extent = c1.ESituation.Extent / c2
+                },
+                CSituation = new Situation()
+                {
+                    Increment=c1.CSituation.Increment/c2,
+                    Extent=c1.CSituation.Extent/c2
+                },
+                EEI1 = c1.EEI1 / c2,
+                ECI1 = c1.ECI1 / c2
+            };
+        }
+    }
+
     public enum Division
     {
         Total=0,

@@ -19,11 +19,17 @@ namespace IntensiveUse.Form
 
         public IWorkbook Write(string FilePath,ManagerCore Core,int Year,string City,string Distict)
         {
-            
-            int ID = Core.ExcelManager.GetID(City);
+            if (string.IsNullOrEmpty(Distict))
+            {
+                this.CID = Core.ExcelManager.GetID(City);
+            }
+            else
+            {
+                this.CID = Core.ExcelManager.GetID(Distict);
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             this.Year = Year;
-            this.CID = Core.ExcelManager.GetID(City);
+            
             Message(Core);
             ISheet sheet = workbook.GetSheetAt(0);
             IRow row = sheet.GetRow(Start);
@@ -33,12 +39,12 @@ namespace IntensiveUse.Form
                 cell = row.CreateCell(2);
             }
             cell.SetCellValue(City);
-            if (string.IsNullOrEmpty(Distict))
+            if (!string.IsNullOrEmpty(Distict))
             {
                 cell = row.GetCell(7, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 if (cell != null)
                 {
-                    cell.SetCellValue(Core.ExcelManager.GetStrDistict(City));
+                    cell.SetCellValue(Distict);
                 }
             }
 

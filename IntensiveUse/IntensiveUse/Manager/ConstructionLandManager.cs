@@ -1,4 +1,5 @@
-﻿using IntensiveUse.Models;
+﻿using IntensiveUse.Helper;
+using IntensiveUse.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,16 @@ namespace IntensiveUse.Manager
         {
             Queue<double> queue = new Queue<double>();
             Gain(UGEAA, ref queue);
+            return queue;
+        }
+
+        public Queue<double> TranslateOfLandUseChange(LandUseChange LUC)
+        {
+            Queue<double> queue = new Queue<double>();
+            Gain(LUC.ESituation, ref queue);
+            Gain(LUC.CSituation, ref queue);
+            queue.Enqueue(LUC.EEI1);
+            queue.Enqueue(LUC.ECI1);
             return queue;
         }
 

@@ -11,6 +11,7 @@ namespace IntensiveUse.Form
     public class ScheduleAFour:ScheduleBase,ISchedule
     {
         public List<double> CitiesValue { get; set; }
+        public LandUseChange Landusechange { get; set; }
         public ScheduleAFour()
         {
             this.Start = 3;
@@ -34,6 +35,14 @@ namespace IntensiveUse.Form
             ICell cell = null;
             int line = Begin;
             foreach (var item in CitiesValue)
+            {
+                cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                cell.SetCellValue(Math.Round(item, 2));
+            }
+            row = ExcelHelper.OpenRow(ref sheet, Start + 1);
+            Queue<double> queue = Core.ConstructionLandManager.TranslateOfLandUseChange(Landusechange);
+            line = Begin;
+            foreach (var item in queue)
             {
                 cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 cell.SetCellValue(Math.Round(item, 2));
@@ -82,16 +91,18 @@ namespace IntensiveUse.Form
             foreach (var item in Division)
             {
                 int ID = Core.ExcelManager.GetID(item);
-                List<double> values = Core.EconmoyManager.Gain(Year, ID, Cities);
-                Queue<double> queue = new Queue<double>();
-                foreach (var entity in values)
-                {
-                    queue.Enqueue(entity);
-                }
+                var one= Core.EconmoyManager.Gain(Year, ID, Cities);
+                Landusechange += one;
+                Queue<double> queue = Core.ConstructionLandManager.TranslateOfLandUseChange(one);
                 if (!DictData.ContainsKey(item))
                 {
                     DictData.Add(item, queue);
                 }
+            }
+
+            if (DictData.Count > 0)
+            {
+                Landusechange = Landusechange / DictData.Count;
             }
         }
     }
