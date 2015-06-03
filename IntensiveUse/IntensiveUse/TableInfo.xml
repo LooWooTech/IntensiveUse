@@ -48,6 +48,9 @@
   <Table Title="附表1B2" Name="">
     <File Title="模板" Path="EXCEL/附表1B2.xls"></File>
   </Table>
+  <Table Title="附表1B3" Name="">
+    <File Title="模板" Path="EXCEL/附表1B3.xls"></File>
+  </Table>
   <Table Title="附表1B4" Name="">
     <File Title="模板" Path="EXCEL/附表1A5.xls"></File>
   </Table>

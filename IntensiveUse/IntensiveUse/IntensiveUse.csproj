@@ -173,6 +173,7 @@
     <Compile Include="Form\ScheduleAThree.cs" />
     <Compile Include="Form\ScheduleATwelve.cs" />
     <Compile Include="Form\ScheduleBase.cs" />
+    <Compile Include="Form\ScheduleBThree.cs" />
     <Compile Include="Form\ScheduleBTwo.cs" />
     <Compile Include="Form\ScheduleATwo.cs" />
     <Compile Include="Form\TableBase.cs" />
@@ -333,6 +334,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EXCEL\附表1B1.xls" />
+    <Content Include="EXCEL\附表1B3.xls" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>

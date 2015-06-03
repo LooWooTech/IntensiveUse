@@ -14,8 +14,16 @@ namespace IntensiveUse.Form
         public LandUseChange Landusechange { get; set; }
         public ScheduleAFour()
         {
-            this.Start = 3;
+            this.Start = 2;
             this.Begin = 2;
+            if (Landusechange == null)
+            {
+                Landusechange = new LandUseChange()
+                {
+                    ESituation = new Situation(),
+                    CSituation = new Situation(),
+                };
+            }
         }
         public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
         {
@@ -29,6 +37,7 @@ namespace IntensiveUse.Form
             this.Year = Year;
             this.CID = Core.ExcelManager.GetID(City);
             this.City = City;
+            this.Disticts = Core.ExcelManager.GetDistrict(City);
             Message(Core);
             int Count = DictData.Count;
             IRow row = ExcelHelper.OpenRow(ref sheet,Start+2);
@@ -71,7 +80,6 @@ namespace IntensiveUse.Form
 
         public void Message(ManagerCore Core)
         {
-            List<string> Division = Core.ExcelManager.GetDistrict(City);
             Situation[] Cities = Core.EconmoyManager.Find(Year, CID);
             if (Cities == null || Cities.Count() != 2)
             {
@@ -88,7 +96,7 @@ namespace IntensiveUse.Form
                 Cities[1].Extent,
                 m
             };
-            foreach (var item in Division)
+            foreach (var item in Disticts)
             {
                 int ID = Core.ExcelManager.GetID(item);
                 var one= Core.EconmoyManager.Gain(Year, ID, Cities);

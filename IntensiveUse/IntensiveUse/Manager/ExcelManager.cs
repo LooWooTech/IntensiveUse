@@ -80,6 +80,9 @@ namespace IntensiveUse.Manager
                 case OutputExcel.附表1B2:
                     load = new ScheduleAThree();
                     break;
+                case OutputExcel.附表1B3:
+                    load = new ScheduleBThree();
+                    break;
                 case OutputExcel.附表1B4:
                     load = new ScheduleAFive();
                     break;

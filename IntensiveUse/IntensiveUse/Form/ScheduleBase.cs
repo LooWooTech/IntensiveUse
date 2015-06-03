@@ -36,6 +36,10 @@ namespace IntensiveUse.Form
             {
                 Disticts = new List<string>();
             }
+            if (Queue == null)
+            {
+                Queue = new Queue<double>();
+            }
         }
 
         protected IRow OpenRow(ref ISheet Sheet, int ID)
