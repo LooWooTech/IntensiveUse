@@ -23,6 +23,7 @@
             <tr>
                 <th>输入表单名称</th>
                 <th style="width:200px;">上传验证</th>
+                <th style="width:100px;">模板文件</th>
             </tr>
             @foreach (UploadFileExcel item in Enum.GetValues(typeof(UploadFileExcel)))
             {
@@ -36,17 +37,35 @@
                             <button type="submit" class="btn btn-sm btn-success">上传</button>
                         </form>
                     </td>
+                    <td>
+                        <a href="/Home/DownLoadTemplet?Type=@(item)" class="btn btn-sm btn-primary">下载</a>
+                    </td>
                 </tr>
             }
         </table>
     </div>
 
     <div class="tab-pane fade" id="Down">
+        <div class="input-group" style="float:right;">
+            <label for="AYear" class="control-label">年份选择：</label>
+            <select name="AYear">
+                @{
+                    var Ayear = DateTime.Now.Year;
+                    while (Ayear > 2008)
+                    {
+                        <option value="@Ayear">@(Ayear)年</option>
+                        Ayear--;
+                    }
+                }
+            </select>
+        </div>
+        
+
         <table class="table table-bordered">
             <tr>
                 <th>输出表单名称</th>
                 <th style="width:350px;">数据导入</th>
-                <th style="width:250px;">下载</th>
+                <th style="width:200px;">下载</th>
 
             </tr>
             @foreach (OutputExcel item in Enum.GetValues(typeof(OutputExcel)))
@@ -60,17 +79,10 @@
                             @if (item == OutputExcel.附表1A6 || item == OutputExcel.附表1A5)
                             {
                                 var year = DateTime.Now.Year;
-                                <form class="form-inline" method="post" action="/Home/UploadOutExcel" enctype="multipart/form-data">
+                                <form class="form-inline" method="post" action="/Home/UploadOutExcel" enctype="multipart/form-data" style="float:right">
                                     <div class="input-group">
                                         <input type="file" name="file" style="width:200px; height:30px;" class="form-control" />
-                                        <select name="Year" class="input-sm">
-                                            @while (year >= 2009)
-                                            {
-                                                <option value="@year">@year</option>
-                                                year--;
-                                            }
-                                        </select>
-
+                                        <input type="text" name="Year" class="form-control" value="@(DateTime.Now.Year)" style="display:none;" />
                                         <input type="text" value="@(item.ToString())" name="Type" style="display:none;" />
                                         <input type="text" name="City" value="@City" style="display:none" />
                                         <button type="submit" class="btn btn-success btn-sm">上传</button>
@@ -89,13 +101,7 @@
                                         }
                                     </select>
                                 }
-                                <select name="Year">
-                                    @while ((Year - 5) >= 2000)
-                                    {
-                                        <option value="@Year">@(Year)-@(Year - 5)</option>
-                                        Year--;
-                                    }
-                                </select>
+                                <input type="text" name="Year" value="@(DateTime.Now.Year)" style="display:none" />
                                 <input type="text" value="@(item)" style="display:none" name="Excel" />
                                 <input type="text" value="@City" name="City" style="display:none" />
                                 <button type="submit" class="btn btn-primary btn-xs">下载</button>
@@ -155,6 +161,14 @@
     </div>
 </div>
 
+<script>
+    $(function () {
+        $("[name=AYear]").click(function () {
+            var value = $(this).val();
+            $("[name=Year]").val(value);
+        })
+    })
+</script>
 
 
 

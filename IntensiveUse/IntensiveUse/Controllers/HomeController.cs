@@ -77,11 +77,10 @@ namespace IntensiveUse.Controllers
             {
                 return RedirectToAction("County", new { City = City, County = Name });
             }
-            //return View();
         }
 
         [HttpPost]
-        public ActionResult UploadOutExcel(OutputExcel Type,string City,int Year)
+        public ActionResult UploadOutExcel(OutputExcel Type,string City,int Year,string County)
         {
             var FilePath = Core.FileManager.SaveFile(HttpContext, Type.ToString());
             IRead engine = null;
@@ -103,14 +102,28 @@ namespace IntensiveUse.Controllers
             }
             try
             {
-                engine.Read(FilePath, Core, City, Year);
+                if (string.IsNullOrEmpty(County))
+                {
+                    engine.Read(FilePath, Core, City, Year);
+                }
+                else
+                {
+                    engine.Read(FilePath, Core, County, Year);
+                }
+                
             }
             catch (Exception ex)
             {
                 throw new ArgumentException("在读取表格中的数据的时候，发生错误："+ex.ToString());
             }
-
-            return View("UploadFile");
+            if (string.IsNullOrEmpty(County))
+            {
+                return RedirectToAction("City", new { City = City });
+            }
+            else
+            {
+                return RedirectToAction("County", new { City = City, County = County });
+            }
         }
 
 
@@ -130,6 +143,28 @@ namespace IntensiveUse.Controllers
         {
             List<string> html = Core.ExcelManager.GetDistrict(City);
             return HtmlResult(html);
+        }
+
+        public ActionResult DownLoadTemplet(UploadFileExcel Type)
+        {
+            IWorkbook workbook = null;
+            MemoryStream ms = new MemoryStream();
+            string filePath = Core.ExcelManager.GetExcelPath(Type.ToString()).GetAbsolutePath();
+            try
+            {
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    workbook = WorkbookFactory.Create(fs);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("打开服务器模板文件失败，失败原因："+ex.ToString());
+            }
+            workbook.Write(ms);
+            ms.Flush();
+            byte[] fileContents = ms.ToArray();
+            return File(fileContents, "application/ms-excel", Type.ToString() + "模板.xls");
         }
 
         

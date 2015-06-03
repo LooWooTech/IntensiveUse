@@ -273,9 +273,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\UploadFile.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Content\bootstrap-theme.css.map" />
   </ItemGroup>
   <ItemGroup>
@@ -335,6 +332,9 @@
   <ItemGroup>
     <Content Include="EXCEL\附表1B1.xls" />
     <Content Include="EXCEL\附表1B3.xls" />
+    <Content Include="EXCEL\表1.xls" />
+    <Content Include="EXCEL\表2.xls" />
+    <Content Include="EXCEL\表3.xls" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
