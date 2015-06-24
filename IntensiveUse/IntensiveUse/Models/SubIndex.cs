@@ -7,6 +7,9 @@ using System.Web;
 
 namespace IntensiveUse.Models
 {
+    /// <summary>
+    /// 分指数权重
+    /// </summary>
     [Table("subindex")]
     public class SubIndex
     {

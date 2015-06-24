@@ -70,5 +70,18 @@ namespace IntensiveUse.Manager
             return 0.00;
         }
 
+        public void Delete(int Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                var entity = db.LandSupplys.FirstOrDefault(e => e.Year == Year && e.RID == ID);
+                if (entity != null)
+                {
+                    db.LandSupplys.Remove(entity);
+                    db.SaveChanges();
+                }
+            }
+        }
+
     }
 }

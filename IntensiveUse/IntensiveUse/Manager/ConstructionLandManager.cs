@@ -432,5 +432,19 @@ namespace IntensiveUse.Manager
             entity.CombinedIndex = entity.UII * indexWeight.UII + entity.GCI * indexWeight.GCI + entity.EI * indexWeight.EI + entity.API * indexWeight.API;
             return entity;
         }
+
+
+        public void  Delete(int Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                var entity = db.Constructions.FirstOrDefault(e => e.Year == Year && e.RID == ID);
+                if (entity != null)
+                {
+                    db.Constructions.Remove(entity);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }

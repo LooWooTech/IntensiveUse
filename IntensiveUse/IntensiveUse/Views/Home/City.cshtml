@@ -50,8 +50,8 @@
             <label for="AYear" class="control-label">年份选择：</label>
             <select name="AYear">
                 @{
-                    var Ayear = DateTime.Now.Year;
-                    while (Ayear > 2008)
+                    var Ayear = DateTime.Now.Year-1;
+                    while (Ayear > 2013)
                     {
                         <option value="@Ayear">@(Ayear)年</option>
                         Ayear--;
@@ -129,6 +129,7 @@
                 <th rowspan="2">指数权重</th>
                 <th rowspan="2">分指数权重</th>
                 <th rowspan="2">指标权重</th>
+                <td rowspan="2">操作</td>
             </tr>
             <tr>
                 <th>农用地</th>
@@ -154,7 +155,9 @@
                                 <i class="glyphicon glyphicon-remove text-danger"></i>
                             }
                         </td>
+                        
                     }
+                    <td><a href="/Home/Delete?City=@(City)&&Year=@(item)" class="btn btn-danger btn-xs" name="danger">删除</a></td>
                 </tr>
             }
         </table>
@@ -166,6 +169,14 @@
         $("[name=AYear]").click(function () {
             var value = $(this).val();
             $("[name=Year]").val(value);
+        })
+
+        $("[name=danger]").click(function () {
+            if (confirm("你确定删除当前年份的数据吗？")) {
+                return true;
+            } else {
+                return false;
+            }
         })
     })
 </script>

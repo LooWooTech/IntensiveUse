@@ -50,5 +50,18 @@ namespace IntensiveUse.Manager
             }
             return Value;
         }
+
+        public void Delete(int Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                var entity = db.Statistics.FirstOrDefault(e => e.Year == Year && e.RID == ID);
+                if (entity != null)
+                {
+                    db.Statistics.Remove(entity);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }

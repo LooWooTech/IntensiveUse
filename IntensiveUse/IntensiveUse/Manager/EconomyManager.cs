@@ -154,6 +154,25 @@ namespace IntensiveUse.Manager
             return situation;
         }
 
+        public bool Delete(int Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                var entity = db.Economys.FirstOrDefault(e => e.Year == Year && e.RID == ID);
+                if (entity != null)
+                {
+                    db.Economys.Remove(entity);
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+        }
+
 
         
     }

@@ -64,5 +64,25 @@ namespace IntensiveUse.Manager
 
             return exponent;
         }
+
+        public void Delete(int Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                foreach (IdealType item in Enum.GetValues(typeof(IdealType)))
+                {
+                    if (item == IdealType.Truth)
+                    {
+                        continue;
+                    }
+                    var entity = db.Exponents.FirstOrDefault(e => e.Year == Year && e.RID == ID && e.Type == item);
+                    if (entity != null)
+                    {
+                        db.Exponents.Remove(entity);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
     }
 }

@@ -83,5 +83,16 @@ namespace IntensiveUse.Manager
         {
             get { return _foundationManager == null ? _foundationManager = new FoundationManager() : _foundationManager; }
         }
+
+        private NewConstructionManager _newConstructionManager;
+        public NewConstructionManager NewConstructionManager
+        {
+            get { return _newConstructionManager == null ? _newConstructionManager = new NewConstructionManager() : _newConstructionManager; }
+        }
+        private SubIndexManager _subindexManager;
+        public SubIndexManager SubIndexManager
+        {
+            get { return _subindexManager == null ? _subindexManager = new SubIndexManager() : _subindexManager; }
+        }
     }
 }

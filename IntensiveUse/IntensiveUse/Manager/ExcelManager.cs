@@ -463,5 +463,108 @@ namespace IntensiveUse.Manager
                 return region.ID;
             }
         }
+
+        public void  Delete(int Year, int ID)
+        {
+            try
+            {
+                Core.PeopleManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除人口数据失败！请确保是否重复删除"+ex.ToString());
+            }
+            try
+            {
+                Core.EconmoyManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除经济数据失败！请确保是否重复删除"+ex.ToString());
+            }
+            try
+            {
+                Core.AgricultureManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除土地利用现状数据——农用地数据失败!请确保是否重复删除"+ex.ToString());
+            }
+
+            try
+            {
+                Core.ConstructionLandManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除土地利用现状数据——建设用地失败！请确保是否重复删除"+ex.ToString());
+            }
+
+            try
+            {
+                Core.NewConstructionManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除土地利用现状数据——新增建设用地失败！请确保是否删除" + ex.ToString());
+            }
+
+            try
+            {
+                Core.LandSupplyManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除土地供应数据——土地供应量数据失败！请确保是否重复删除" + ex.ToString());
+            }
+
+            try
+            {
+                Core.LandUseManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除土地供应数据——批准批次土地供应数据失败！请确保是否重复删除" + ex.ToString());
+            }
+
+            try
+            {
+                Core.ExponentManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除指标权重以及指标理想值失败！"+ex.ToString());
+            }
+
+
+            try
+            {
+                Core.IndexManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除指数权重数据失败！"+ex.ToString());
+            }
+
+            try
+            {
+                Core.SubIndexManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除分指数权重数据失败！"+ex.ToString());
+            }
+
+            try
+            {
+                Core.StatisticsManager.Delete(Year, ID);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("删除上传记录失败"+ex.ToString());
+            }
+
+           // return true;
+        }
     }
 }

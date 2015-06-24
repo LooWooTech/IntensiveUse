@@ -167,6 +167,30 @@ namespace IntensiveUse.Controllers
             return File(fileContents, "application/ms-excel", Type.ToString() + "模板.xls");
         }
 
+
+        public ActionResult Delete(string County, string City, int Year)
+        {
+            int RID = 0;
+            if (!string.IsNullOrEmpty(County))
+            {
+                RID = Core.ExcelManager.GetID(County);
+            }
+            else
+            {
+                RID = Core.ExcelManager.GetID(City);
+            }
+            Core.ExcelManager.Delete(Year, RID);
+            if (!string.IsNullOrEmpty(County))
+            {
+                return RedirectToAction("County", new { City = City, County = County });
+            }
+            else
+            {
+                return RedirectToAction("City", new { City = City });
+            }
+            //return View();
+        }
+
         
     }
 }

@@ -256,5 +256,18 @@ namespace IntensiveUse.Manager
             }
         }
 
+        public void Delete(int Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                var entity = db.IndexWeights.FirstOrDefault(e => e.Year == Year && e.RID == ID);
+                if (entity != null)
+                {
+                    db.IndexWeights.Remove(entity);
+                    db.SaveChanges();
+                }
+            }
+        }
+
     }
 }

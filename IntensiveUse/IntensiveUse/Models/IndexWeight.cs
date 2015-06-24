@@ -7,6 +7,9 @@ using System.Web;
 
 namespace IntensiveUse.Models
 {
+    /// <summary>
+    /// 指数权重
+    /// </summary>
     [Table("indexweight")]
     public class IndexWeight
     {

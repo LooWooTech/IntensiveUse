@@ -200,8 +200,10 @@
     <Compile Include="Manager\LandUseManager.cs" />
     <Compile Include="Manager\ManagerBase.cs" />
     <Compile Include="Manager\ManagerCore.cs" />
+    <Compile Include="Manager\NewConstructionManager.cs" />
     <Compile Include="Manager\PeopleManager.cs" />
     <Compile Include="Manager\StatisticsManager.cs" />
+    <Compile Include="Manager\SubIndexManager.cs" />
     <Compile Include="Models\AgricultureLand.cs" />
     <Compile Include="Models\ConstructionLand.cs" />
     <Compile Include="Models\Economy.cs" />

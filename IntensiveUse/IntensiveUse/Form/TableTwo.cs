@@ -11,7 +11,7 @@ namespace IntensiveUse.Form
 {
     public class TableTwo:TableBase,IForm
     {
-        private const int Start = 4;
+        private const int Start = 5;
         private const int Begin = 1;
         private int[] AgSerial = { 4, 5, 6, 7, 17, 32, 25, 28, 33, 9, 10, 12, 11, 15, 16, 18, 19, 20, 24, 29, 13, 22, 23, 26, 27, 30, 34,35, 36, 37 };
         public string Code { get; set; }

@@ -143,5 +143,19 @@ namespace IntensiveUse.Manager
             }
             return Data;
         }
+
+
+        public void Delete(int Year, int ID)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                var entity = db.Ratifys.FirstOrDefault(e => e.Year == Year && e.RID == ID);
+                if (entity != null)
+                {
+                    db.Ratifys.Remove(entity);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }
