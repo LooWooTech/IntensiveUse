@@ -17,7 +17,7 @@ namespace IntensiveUse.Manager
             return db;
         }
 
-        protected People SearchForPeople(int Year, int ID)
+        public People SearchForPeople(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {
@@ -69,7 +69,7 @@ namespace IntensiveUse.Manager
             }
         }
 
-        protected NewConstruction SearchForNewConstruction(int Year, int ID)
+        public NewConstruction SearchForNewConstruction(int Year, int ID)
         {
             using (var db = GetIntensiveUseContext())
             {

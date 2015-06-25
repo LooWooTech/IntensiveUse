@@ -87,7 +87,7 @@ namespace IntensiveUse.Form
             exponent[0] = Core.ExponentManager.GetTurthExponent(Year,ID);
             exponent[1] = Core.ExponentManager.SearchForExponent(Year, ID, IdealType.Value);
             exponent[2] = exponent[0] / exponent[1];
-            exponent[3] = exponent[0] / exponent[1];
+            exponent[3] = Exponent.Standardized(exponent[0], exponent[1], Core, Year, ID);
             for (var i = 0; i < 4; i++)
             {
                 DictData.Add(Begin + i, Core.FileManager.Transformation(Indexs, exponent[i]));

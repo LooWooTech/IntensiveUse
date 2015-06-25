@@ -63,13 +63,15 @@ namespace IntensiveUse.Helper
                 case CellType.Formula:
                     try
                     {
-                        double data;
-                        double.TryParse(cell.StringCellValue.Trim(), out data);
-                        return data.ToString();
+                        return cell.NumericCellValue.ToString().Trim();
+                        
                     }
                     catch
                     {
-                        return null;
+                        double data;
+                        double.TryParse(cell.StringCellValue.Trim(), out data);
+                        return data.ToString();
+                        //return null;
                     }
                 default:
                     try
