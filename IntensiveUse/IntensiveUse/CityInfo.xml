@@ -112,4 +112,12 @@
     <Division Name="庆元县"></Division>
     <Division Name="景宁畲族自治县"></Division>
   </City>
+  <City Name="银川市">
+    <Division Name="兴庆区"></Division>
+    <Division Name="金凤区"></Division>
+    <Division Name="西夏区"></Division>
+    <Division Name="灵武市"></Division>
+    <Division Name="永宁县"></Division>
+    <Division Name="贺兰县"></Division>
+  </City>
 </Citys> 
