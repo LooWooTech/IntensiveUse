@@ -11,15 +11,17 @@ namespace IntensiveUse.Form
     {
         private const int Start = 4;
         private const int Begin = 12;
-        public int[] Serials = { 12, 13, 14, 15, 16, 17, 18, 20, 21 }; 
+        public int[] Serials = { 12, 13, 14, 15, 16, 17, 18, 20, 21,22,24 }; 
         
         public string Regimentatio { get; set; }
         public int Count{get;set;}
         public Dictionary<int, People> DictPeople { get; set; }
         public Dictionary<int, Economy> DictEconomy { get; set; }
-        public TableOne(string Name)
+        public Dictionary<int, Economy> DictSuperior { get; set; }
+        public TableOne(string Name,string City)
         {
             this.Name = Name;
+            this.City = City;
             if (DictPeople == null)
             {
                 DictPeople = new Dictionary<int, People>();
@@ -27,6 +29,11 @@ namespace IntensiveUse.Form
             if (DictEconomy == null)
             {
                 DictEconomy = new Dictionary<int, Economy>();
+            }
+
+            if (DictSuperior == null)
+            {
+                DictSuperior = new Dictionary<int, Economy>();
             }
         }
         
@@ -69,6 +76,8 @@ namespace IntensiveUse.Form
                 Core.CommonManager.UpDate(DictPeople, ID);
                 Core.ExcelManager.Save(DictEconomy, ID);
                 Core.CommonManager.UpDate(DictEconomy, ID);
+
+                Superior(Core);
             }
             catch (Exception ex)
             {
@@ -76,9 +85,25 @@ namespace IntensiveUse.Form
             }
 
         }
+
+
+
+        public void Superior(ManagerCore Core)
+        {
+            if (string.IsNullOrEmpty(this.City))
+            {
+                this.City = this.Name == "银川市" ? "宁夏回族自治区" : "浙江省";
+            }
+            int ID = Core.ExcelManager.GetID(this.City);
+            foreach (var item in DictSuperior.Values)
+            {
+                item.RID = ID;
+            }
+            Change = Core.EconmoyManager.Superior(DictSuperior);
+        }
         public void GainForValue(ISheet sheet,int SerialNumber,int Year)
         {
-            double[] data = new double[9];
+            double[] data = new double[11];
             int x = 0;
             foreach(int j in Serials)
             {
@@ -111,6 +136,16 @@ namespace IntensiveUse.Form
                     Year=Year
                 });
             }
+
+            if (!DictSuperior.ContainsKey(Year))
+            {
+                DictSuperior.Add(Year, new Economy
+                {
+                    Current = data[9],
+                    Compare = data[10],
+                    Year=Year
+                });
+            }
              
         }
 
@@ -135,7 +170,7 @@ namespace IntensiveUse.Form
             foreach (var item in DictEconomy.Values)
             {
                 item.RID = ID;
-            }
+            }    
             
         }
 

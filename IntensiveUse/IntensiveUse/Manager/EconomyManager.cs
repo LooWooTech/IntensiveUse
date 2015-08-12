@@ -173,7 +173,53 @@ namespace IntensiveUse.Manager
             }
         }
 
+        public List<EconomyChange> Superior(Dictionary<int, Economy> Dict)
+        {
+            List<EconomyChange> list = new List<EconomyChange>();
+            using (var db = GetIntensiveUseContext())
+            {
+                foreach (var item in Dict.Values)
+                {
+                    var entity = db.Economys.FirstOrDefault(e => e.RID == item.RID && e.Year == item.Year);
+                    if (entity != null)
+                    {
+                        if (entity.Compare > 0&&Math.Abs(entity.Compare-item.Compare)>=0.01)
+                        {
+                            list.Add(new EconomyChange()
+                            {
+                                Original = entity.Compare,
+                                BrandNew = item.Compare,
+                                Year = item.Year,
+                                Type = DataType.Compare
+                            });
+                           
+                        }
 
+                        if (entity.Current > 0 && Math.Abs(entity.Current - item.Current) >= 0.01)
+                        {
+                            list.Add(new EconomyChange()
+                            {
+                                Original = entity.Current,
+                                BrandNew = item.Current,
+                                Year = item.Year,
+                                Type = DataType.Current
+                            });
+                        }
+                        entity.Current = item.Current;
+                        entity.Compare = item.Compare;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        db.Economys.Add(item);
+                        db.SaveChanges();
+                    }
+
+                }
+            }
+
+            return list;
+        }
         
     }
 }

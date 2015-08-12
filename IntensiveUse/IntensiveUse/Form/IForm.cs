@@ -1,4 +1,5 @@
 ﻿using IntensiveUse.Manager;
+using IntensiveUse.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace IntensiveUse.Form
         Dictionary<string, Queue<double>> GetDictValue();
 
         string GetName();
+        List<EconomyChange> GetChange();
     }
 }

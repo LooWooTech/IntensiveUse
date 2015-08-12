@@ -53,7 +53,7 @@ namespace IntensiveUse.Controllers
             switch (Type)
             {
                 case UploadFileExcel.表1:
-                    engine = new TableOne(Name);
+                    engine = new TableOne(Name,City);
                     break;
                 case UploadFileExcel.表2:
                     engine = new TableTwo(Name);
@@ -69,6 +69,14 @@ namespace IntensiveUse.Controllers
                 throw new ArgumentException("未找到当前上传文件中获取到的行政区信息，或者上传当前的文件错误，请核对文件");
             }
             engine.Save(Core);
+            var list = engine.GetChange();
+            if (list!=null&&list.Count!=0)
+            {
+                ViewBag.City = City;
+                ViewBag.County = Name;
+                ViewBag.Flag = Flag;
+                return View("Change", engine.GetChange());
+            }
             if (Flag)
             {
                 return RedirectToAction("City", new { City = Name });

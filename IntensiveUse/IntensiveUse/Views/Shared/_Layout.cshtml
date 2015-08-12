@@ -40,7 +40,14 @@
             <div class="panel-heading">
                 <h3 class="panel-title">@(ViewBag.Title)</h3>
             </div>
+           
             <div class="panel-body">
+                <div class="alert alert-success">
+                    1、修复导出附表1中年份错误；<br />
+                    2、修复县级市导出附表1 显示县级市名称；<br />
+                    3、增加导入表1上一级经济数据核对，如有不一致，显示数据改变列表；<br />
+                    4、更改导入表2；
+                </div>
                 @RenderBody()
             </div>
         </div>

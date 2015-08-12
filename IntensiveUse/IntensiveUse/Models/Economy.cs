@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -33,5 +34,32 @@ namespace IntensiveUse.Models
         /// 行政区ID
         /// </summary>
         public int RID { get; set; }
+    }
+
+
+    public class EconomyChange
+    {
+        /// <summary>
+        /// 原始数据值
+        /// </summary>
+        public double Original { get; set; }
+        /// <summary>
+        /// 替换的数据值
+        /// </summary>
+        public double BrandNew { get; set; }
+        /// <summary>
+        /// 年份
+        /// </summary>
+        public int Year { get; set; }
+
+        public DataType Type { get; set; }
+    }
+
+    public enum DataType
+    {
+        [Description("当年价")]
+        Current,
+        [Description("可比价")]
+        Compare
     }
 }

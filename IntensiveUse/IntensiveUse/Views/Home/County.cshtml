@@ -69,7 +69,6 @@
             </tr>
             @foreach (OutputExcel item in Enum.GetValues(typeof(OutputExcel)))
             {
-                var Year = DateTime.Now.Year;
                 if ((int)item > 13)
                 {
                     <tr>
@@ -77,11 +76,10 @@
                         <td>
                             @if (item == OutputExcel.附表1B4||item==OutputExcel.附表1B5)
                             {
-                                var year = DateTime.Now.Year;
                                 <form class="form-inline" method="post" action="/Home/UploadOutExcel" enctype="multipart/form-data">
                                     <div class="input-group">
                                         <input type="file" name="file" style="width:200px;height:30px;" class="form-control" />
-                                        <input type="text" name="Year" value="@(DateTime.Now.Year)" style="display:none;" />
+                                        <input type="text" name="Year" value="@(DateTime.Now.Year-1)" style="display:none;" />
                                         <input type="text" value="@item.ToString()" name="Type" style="display:none;" />
                                         <input type="text" value="@City" name="City" style="display:none;" />
                                         <input type="text" value="@County" name="County" style="display:none;" />
@@ -92,7 +90,7 @@
                         </td>
                         <td>
                             <form class="form-inline" method="post" action="/Home/DownLoad" style="float:right;">
-                                <input type="text" value="@(DateTime.Now.Year)" name="Year" style="display:none" />
+                                <input type="text" value="@(DateTime.Now.Year-1)" name="Year" style="display:none" />
                                 <input type="text" value="@City" style="display:none;" name="City" />
                                 <input type="text" value="@County" style="display:none;" name="County" />
                                 <input type="text" value="@(item)" style="display:none" name="Excel" />

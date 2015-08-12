@@ -11,9 +11,13 @@ namespace IntensiveUse.Form
 {
     public class TableTwo:TableBase,IForm
     {
-        private const int Start = 5;
+        private const int Start = 4;
         private const int Begin = 1;
-        private int[] AgSerial = { 4, 5, 6, 7, 17, 32, 25, 28, 33, 9, 10, 12, 11, 15, 16, 18, 19, 20, 24, 29, 13, 22, 23, 26, 27, 30, 34,35, 36, 37 };
+        private int[] AgSerial = { 
+                                     4, 8, 12, 17, 18, 29, 37, 40, 44, 45, 
+                                     21, 22, 24, 23, 27, 28, 30, 31, 32, 36, 41, 25, 
+                                     19, 34, 35, 38, 39,42, 46, 47,48,49
+                                 };
         public string Code { get; set; }
         public Dictionary<int, AgricultureLand> DictAgriculture { get; set; }
         public Dictionary<int, ConstructionLand> DictConstruction { get; set; }
@@ -99,7 +103,7 @@ namespace IntensiveUse.Form
             
             double sub = 0.0;
             double sum = 0.0;
-            for (var i = 0; i < 9; i++)
+            for (var i = 0; i < 10; i++)
             {
                 sub += Data[i];
             }
@@ -111,21 +115,21 @@ namespace IntensiveUse.Form
                     Arable = Data[0],
                     Garden = Data[1],
                     Forest = Data[2],
-                    Meadow = Data[3],
-                    Other = Data[4] + Data[5] + Data[6] + Data[7] + Data[8],
+                    Meadow = Data[3]+Data[4],
+                    Other = Data[5] + Data[6] + Data[7] + Data[8] + Data[9],
                     Year = Year
                 });
             }
             sum += sub;
             sub = 0;
-            for (var i = 9; i < 21; i++)
+            for (var i = 10; i < 22; i++)
             {
-                sub+=Data[i];
+                sub+=Data[i];//统计建设用地小计
             }
             double other = 0.0;
-            for (var i = 21; i < 30; i++)
+            for (var i = 22; i < 32; i++)
             {
-                other+=Data[i];
+                other+=Data[i];//统计其他土地
             }
             sum += sub;
             sum += other;
@@ -134,11 +138,11 @@ namespace IntensiveUse.Form
                 DictConstruction.Add(Year, new ConstructionLand
                 {
                     SubTotal = sub,
-                    Town = Data[9] + Data[10],
-                    MiningLease = Data[11],
-                    County = Data[12],
-                    Traffic = Data[13] + Data[14] + Data[15] + Data[16] + Data[17] + Data[18] + Data[19],
-                    OtherConstruction = Data[20],
+                    Town = Data[10] + Data[11],
+                    MiningLease = Data[12],
+                    County = Data[13],
+                    Traffic = Data[14] + Data[15] + Data[16] + Data[17] + Data[18] + Data[19] + Data[20],
+                    OtherConstruction = Data[21],
                     Other = other,
                     Sum=sum,
                     Year = Year

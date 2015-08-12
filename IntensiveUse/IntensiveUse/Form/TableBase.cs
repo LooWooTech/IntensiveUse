@@ -1,4 +1,5 @@
-﻿using NPOI.SS.UserModel;
+﻿using IntensiveUse.Models;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,7 @@ namespace IntensiveUse.Form
     public class TableBase
     {
         public string Name { get; set; }
+        protected string City { get; set; }
 
         private Dictionary<string, Queue<double>> DictValues { get; set; }
 
@@ -22,6 +24,18 @@ namespace IntensiveUse.Form
         public string GetName()
         {
             return Name;
+        }
+
+        public string GetCity()
+        {
+            return City;
+        }
+
+        protected List<EconomyChange> Change { get; set; }
+
+        public List<EconomyChange> GetChange()
+        {
+            return Change;
         }
 
         public TableBase()
