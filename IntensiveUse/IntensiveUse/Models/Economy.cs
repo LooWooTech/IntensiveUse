@@ -60,6 +60,8 @@ namespace IntensiveUse.Models
         [Description("当年价")]
         Current,
         [Description("可比价")]
-        Compare
+        Compare,
+        [Description("建设用地")]
+        Construction
     }
 }

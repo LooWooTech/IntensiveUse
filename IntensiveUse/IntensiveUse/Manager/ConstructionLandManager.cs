@@ -446,5 +446,38 @@ namespace IntensiveUse.Manager
                 }
             }
         }
+
+
+        public List<EconomyChange> Superior(Dictionary<int, ConstructionLand> Dict)
+        {
+            List<EconomyChange> list = new List<EconomyChange>();
+            using (var db = GetIntensiveUseContext())
+            {
+                foreach (var item in Dict.Values)
+                {
+                    var entity = db.Constructions.FirstOrDefault(e => e.RID == item.RID && e.Year == item.Year);
+                    if (entity != null)
+                    {
+                        if (entity.SubTotal > 0 && Math.Abs(entity.SubTotal - item.SubTotal) >= 0.01)
+                        {
+                            list.Add(new EconomyChange()
+                            {
+                                Original = entity.SubTotal,
+                                BrandNew = item.SubTotal,
+                                Year = item.Year,
+                                Type = DataType.Construction
+                            });
+                        }
+                        entity.SubTotal = item.SubTotal;
+                    }
+                    else
+                    {
+                        db.Constructions.Add(item);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            return list;
+        }
     }
 }

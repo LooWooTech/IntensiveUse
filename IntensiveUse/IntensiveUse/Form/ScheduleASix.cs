@@ -109,10 +109,14 @@ namespace IntensiveUse.Form
             Queue<double> queue = new Queue<double>();
             Core.ExcelManager.Gain(exponent, ref queue);
             DictData.Add(Begin.ToString(), queue);
-            queue.Clear();
+
+
+            Queue<double> queue2 = new Queue<double>();
             Exponent idealExponent = Core.ExponentManager.SearchForExponent(Year, CID, IdealType.Value);
-            Core.ExcelManager.Gain(idealExponent, ref queue);
-            DictData.Add((Begin + 1).ToString(), queue);
+            Core.ExcelManager.Gain(idealExponent, ref queue2);
+            DictData.Add((Begin + 1).ToString(), queue2);
+
+
             Foundation foundation = Core.FoundationManager.SearchForFoundation(Year, CID);
             System.Reflection.PropertyInfo[] propList = typeof(Foundation).GetProperties();
             foreach (var item in propList)

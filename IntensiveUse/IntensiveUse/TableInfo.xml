@@ -52,13 +52,13 @@
     <File Title="模板" Path="EXCEL/附表1B3.xls"></File>
   </Table>
   <Table Title="附表1B4" Name="">
-    <File Title="模板" Path="EXCEL/附表1A5.xls"></File>
+    <File Title="模板" Path="EXCEL/附表1B4.xls"></File>
   </Table>
   <Table Title="附表1B5" Name="">
-    <File Title="模板" Path="EXCEL/附表1A6.xls"></File>
+    <File Title="模板" Path="EXCEL/附表1B5.xls"></File>
   </Table>
   <Table Title="附表1B6" Name="">
-    <File Title="模板" Path="EXCEL/附表1A7.xls"></File>
+    <File Title="模板" Path="EXCEL/附表1B6.xls"></File>
   </Table>
   <Table Title="表1" Name="">
     <File Title="模板" Path="EXCEL/表1.xls"></File>

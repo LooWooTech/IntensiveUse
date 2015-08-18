@@ -17,9 +17,11 @@ namespace IntensiveUse.Form
         public Dictionary<int, NewConstruction> DictNewConstruction { get; set; }
         public Dictionary<int, LandSupply> DictLandSupply { get; set; }
         public Dictionary<int, Ratify> DictRatify { get; set; }
-        public TableThree(string Name)
+        public Dictionary<int, ConstructionLand> DictConstructionLand { get; set; }
+        public TableThree(string Name,string City)
         {
             this.Name = Name;
+            this.City = City;
             if (DictNewConstruction == null)
             {
                 DictNewConstruction = new Dictionary<int, NewConstruction>();
@@ -31,6 +33,10 @@ namespace IntensiveUse.Form
             if (DictRatify == null)
             {
                 DictRatify = new Dictionary<int, Ratify>();
+            }
+            if (DictConstructionLand == null)
+            {
+                DictConstructionLand = new Dictionary<int, ConstructionLand>();
             }
         }
         public void Gain(string FilePath)
@@ -78,6 +84,7 @@ namespace IntensiveUse.Form
                 Core.CommonManager.UpDate(DictLandSupply, ID);
                 Core.ExcelManager.Save(DictRatify, ID);
                 Core.CommonManager.UpDate(DictRatify, ID);
+                Superior(Core);
             }
             catch (Exception ex)
             {
@@ -85,10 +92,21 @@ namespace IntensiveUse.Form
             }
         }
 
+        public override void Superior(ManagerCore Core)
+        {
+            base.Superior(Core);
+            foreach (var item in DictConstructionLand.Values)
+            {
+                item.RID = this.SID;
+            }
+
+            Change = Core.ConstructionLandManager.Superior(DictConstructionLand);
+        }
+
         public void GainForValue(ISheet sheet, int SerialNumber, int Year)
         {
-            double[] Data=new double[8];
-            for (var i = 0; i < 8; i++)
+            double[] Data=new double[9];
+            for (var i = 0; i < 9; i++)
             {
                 IRow row = RowGet(sheet, i + Start + 2);
                 ICell cell = row.GetCell(SerialNumber, MissingCellPolicy.CREATE_NULL_AS_BLANK);
@@ -125,6 +143,16 @@ namespace IntensiveUse.Form
                     Year = Year
                 });
             }
+
+            if (!DictConstructionLand.ContainsKey(Year))
+            {
+                DictConstructionLand.Add(Year, new ConstructionLand
+                {
+                    SubTotal = Data[8],
+                    Year = Year
+                });
+            }
+            
         }
 
         public void GetMessage(IRow Row)

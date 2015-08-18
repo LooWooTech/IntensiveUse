@@ -337,6 +337,9 @@
     <Content Include="EXCEL\表1.xls" />
     <Content Include="EXCEL\表2.xls" />
     <Content Include="EXCEL\表3.xls" />
+    <Content Include="EXCEL\附表1B4.xls" />
+    <Content Include="EXCEL\附表1B5.xls" />
+    <Content Include="EXCEL\附表1B6.xls" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <Content Include="Views\Home\Change.cshtml" />
   </ItemGroup>

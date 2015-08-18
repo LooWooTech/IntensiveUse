@@ -86,21 +86,18 @@ namespace IntensiveUse.Form
 
         }
 
-
-
-        public void Superior(ManagerCore Core)
+        public override void Superior(ManagerCore Core)
         {
-            if (string.IsNullOrEmpty(this.City))
-            {
-                this.City = this.Name == "银川市" ? "宁夏回族自治区" : "浙江省";
-            }
-            int ID = Core.ExcelManager.GetID(this.City);
+            base.Superior(Core);
+            
             foreach (var item in DictSuperior.Values)
             {
-                item.RID = ID;
+                item.RID = this.SID;
             }
             Change = Core.EconmoyManager.Superior(DictSuperior);
         }
+
+
         public void GainForValue(ISheet sheet,int SerialNumber,int Year)
         {
             double[] data = new double[11];

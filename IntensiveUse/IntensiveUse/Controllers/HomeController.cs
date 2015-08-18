@@ -59,7 +59,7 @@ namespace IntensiveUse.Controllers
                     engine = new TableTwo(Name);
                     break;
                 case UploadFileExcel.表3:
-                    engine = new TableThree(Name);
+                    engine = new TableThree(Name,City);
                     break;
                 default: break;
             }

@@ -1,4 +1,5 @@
-﻿using IntensiveUse.Models;
+﻿using IntensiveUse.Manager;
+using IntensiveUse.Models;
 using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace IntensiveUse.Form
     {
         public string Name { get; set; }
         protected string City { get; set; }
+        protected int SID { get; set; }
 
         private Dictionary<string, Queue<double>> DictValues { get; set; }
 
@@ -63,6 +65,15 @@ namespace IntensiveUse.Form
                 throw new ArgumentException("未获取相关EXCEL表格行，请核对表格数据，如有冲突请联系相关人员");
             }
             return row;
+        }
+
+        public virtual void Superior(ManagerCore Core)
+        {
+            if (string.IsNullOrEmpty(this.City))
+            {
+                this.City = this.Name == "银川市" ? "宁夏回族自治区" : "浙江省";
+            }
+            this.SID = Core.ExcelManager.GetID(this.City);
         }
     }
 }
