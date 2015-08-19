@@ -71,9 +71,9 @@ namespace IntensiveUse.Manager
                     }
                     return new List<string>(){
                             situation[0].Increment.ToString("0.00"),
-                            situation[0].Extent.ToString("0.00")+"%",
+                            situation[0].Extent.ToString("0.00"),
                             situation[1].Increment.ToString("0.00"),
-                            situation[1].Extent.ToString("0.00")+"%",
+                            situation[1].Extent.ToString("0.00"),
                             coefficient.ToString("0.00"),
                             ""
                         };
@@ -86,9 +86,9 @@ namespace IntensiveUse.Manager
                     }
                     return new List<string>(){
                             situation[0].Increment.ToString("0.00"),
-                            situation[0].Extent.ToString("0.00")+"%",
+                            situation[0].Extent.ToString("0.00"),
                             situation[1].Increment.ToString("0.00"),
-                            situation[1].Extent.ToString("0.00")+"%",
+                            situation[1].Extent.ToString("0.00"),
                             coefficient1.ToString("0.00")
                         };
                 case Division.County:
@@ -101,11 +101,11 @@ namespace IntensiveUse.Manager
                     }
                     return new List<string>(){
                             situation[0].Increment.ToString("0.00"),
-                            situation[0].Extent.ToString("0.00")+"%",
+                            situation[0].Extent.ToString("0.00"),
                             situation[1].Increment.ToString("0.00"),
-                            situation[1].Extent.ToString("0.00")+"%",
+                            situation[1].Extent.ToString("0.00"),
                             situation[2].Increment.ToString("0.00"),
-                            situation[2].Extent.ToString("0.00")+"%",
+                            situation[2].Extent.ToString("0.00"),
                             buffer1.ToString("0.00"),
                             buffer2.ToString("0.00")
                         };

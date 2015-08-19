@@ -113,7 +113,7 @@ namespace IntensiveUse.Manager
             ConstructionLand construction2=SearchForConstruction(Year,ID);
             if (Math.Abs(economy1.Compare - 0) > 0.001 && Math.Abs(economy2.Compare - 0) > 0.001&&Math.Abs(construction1.SubTotal-0)>0.001)
             {
-                values[0] = (construction1.SubTotal / economy1.Compare - construction2.SubTotal / economy2.Compare) * economy1.Compare / construction1.SubTotal / 100;
+                values[0] = (construction1.SubTotal / economy1.Compare - construction2.SubTotal / economy2.Compare) * economy1.Compare / construction1.SubTotal * 100;
             }
             NewConstruction newconstruction = SearchForNewConstruction(Year, ID);
             if (Math.Abs(economy2.Compare - economy1.Compare) > 0.001)
@@ -149,7 +149,7 @@ namespace IntensiveUse.Manager
             }
             if (Math.Abs(construction2.SubTotal - 0) > 0.001)
             {
-                situation[1].Extent = situation[0].Increment / construction2.SubTotal * 100;
+                situation[1].Extent = situation[1].Increment / construction2.SubTotal * 100;
             }
             return situation;
         }

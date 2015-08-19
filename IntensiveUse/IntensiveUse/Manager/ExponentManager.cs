@@ -51,16 +51,18 @@ namespace IntensiveUse.Manager
 
         public Exponent GetTurthExponent(int Year, int ID)
         {
-            Exponent exponent = Find(Year,ID,IdealType.Truth);
-            if (exponent == null)
-            {
-                Queue<double> Data = Core.LandUseManager.CreateExponentQueue(Year, ID);
-                exponent = Create(Data);
-                exponent.Type = IdealType.Truth;
-                exponent.Year = Year;
-                exponent.RID = ID;
-                Save(exponent);
-            }
+            //Exponent exponent = Find(Year, ID, IdealType.Truth);
+            //if (exponent == null)
+            //{
+
+            //}
+            Exponent exponent = null;
+            Queue<double> Data = Core.LandUseManager.CreateExponentQueue(Year, ID);
+            exponent = Create(Data);
+            exponent.Type = IdealType.Truth;
+            exponent.Year = Year;
+            exponent.RID = ID;
+            Save(exponent);
 
             return exponent;
         }

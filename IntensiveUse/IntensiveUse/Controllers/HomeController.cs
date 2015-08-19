@@ -144,7 +144,7 @@ namespace IntensiveUse.Controllers
             workbook.Write(ms);
             ms.Flush();
             byte[] fileContents = ms.ToArray();
-            return File(fileContents, "application/ms-excel", Excel.GetDescription()+".xls");
+            return File(fileContents, "application/ms-excel",Excel.ToString()+Excel.GetDescription()+".xls");
         }
 
         public ActionResult GetForDivision(string City)

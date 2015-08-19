@@ -42,6 +42,8 @@
             </div>
            
             <div class="panel-body">
+                
+                @RenderBody()
                 <div class="alert alert-success">
                     1、修复导出附表1中年份错误;<br />
                     2、修复县级市导出附表1 显示县级市名称;<br />
@@ -49,9 +51,11 @@
                     4、更改导入表2;<br />
                     5、修复导出附表1上一级行政区建设用地总面积值为空;<br />
                     6、修复导出附表5中指标现状值为空;<br />
-                    7、县级市导出附表表头严格按照城市建设用地节约集约利用评价标准规范;
+                    7、县级市导出附表表头严格按照城市建设用地节约集约利用评价标准规范;<br />
+                    8、修复附表1B4下载内容为空;<br />
+                    9、修改附表1B2去除%;<br />
+                    10、修复附表1B5中EGCI1以及EEI1计算数值不对
                 </div>
-                @RenderBody()
             </div>
         </div>
         <footer style="clear: both; overflow: hidden;">

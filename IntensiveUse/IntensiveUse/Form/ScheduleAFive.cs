@@ -29,10 +29,10 @@ namespace IntensiveUse.Form
                 throw new ArgumentException("服务器模板文件存在问题，请告知相关人员");
             }
             string Name=string.Empty;
-            if(string.IsNullOrEmpty(City)){
-                Name=Distict;
-            }else{
+            if(string.IsNullOrEmpty(Distict)){
                 Name=City;
+            }else{
+                Name=Distict;
             }
             int CID=Core.ExcelManager.GetID(Name);
             Core.IndexManager.WriteIndexWeight(ref sheet, Index[0], Year, CID);
