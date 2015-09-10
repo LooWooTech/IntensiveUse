@@ -70,7 +70,6 @@
             </tr>
             @foreach (OutputExcel item in Enum.GetValues(typeof(OutputExcel)))
             {
-                var Year = DateTime.Now.Year;
                 if ((int)item < 14)
                 {
                     <tr>
@@ -78,11 +77,10 @@
                         <td>
                             @if (item == OutputExcel.附表1A6 || item == OutputExcel.附表1A5)
                             {
-                                var year = DateTime.Now.Year;
                                 <form class="form-inline" method="post" action="/Home/UploadOutExcel" enctype="multipart/form-data" style="float:right">
                                     <div class="input-group">
                                         <input type="file" name="file" style="width:200px; height:30px;" class="form-control" />
-                                        <input type="text" name="Year" class="form-control" value="@(DateTime.Now.Year)" style="display:none;" />
+                                        <input type="text" name="Year" class="form-control" value="@(DateTime.Now.Year-1)" style="display:none;" />
                                         <input type="text" value="@(item.ToString())" name="Type" style="display:none;" />
                                         <input type="text" name="City" value="@City" style="display:none" />
                                         <button type="submit" class="btn btn-success btn-sm">上传</button>
@@ -101,7 +99,7 @@
                                         }
                                     </select>
                                 }
-                                <input type="text" name="Year" value="@(DateTime.Now.Year)" style="display:none" />
+                                <input type="text" name="Year" value="@(DateTime.Now.Year-1)" style="display:none" />
                                 <input type="text" value="@(item)" style="display:none" name="Excel" />
                                 <input type="text" value="@City" name="City" style="display:none" />
                                 <button type="submit" class="btn btn-primary btn-xs">下载</button>

@@ -92,12 +92,16 @@ namespace IntensiveUse.Form
             {
                 DictData.Add(Begin + i, Core.FileManager.Transformation(Indexs, exponent[i]));
             }
-            SubIndex subindex = Core.ExponentManager.SearchForSubIndex(Year,ID);
-            SubIndex subindexVal = exponent[3] * subindex;
+            var exponWeight = Core.ExponentManager.SearchForExponent(Year, ID, IdealType.Weight);
+            //分指数值
+            SubIndex subindexVal = exponent[3] * exponWeight * 100;
             DictData.Add(7, Core.FileManager.Transformation(IndexScrore, subindexVal));
-            IndexWeight indexweight = Core.ExponentManager.SearchForIndexWeight(Year, ID);
-            IndexWeight indexweightVal = subindexVal * indexweight;
+            SubIndex subindex = Core.ExponentManager.SearchForSubIndex(Year,ID);
+            //指数值
+            IndexWeight indexweightVal = subindexVal * subindex;
             DictData.Add(8, Core.FileManager.Transformation(Index, indexweightVal));
+            IndexWeight indexweight = Core.ExponentManager.SearchForIndexWeight(Year, ID);
+            //总指数
             double Val = indexweightVal * indexweight;
             DictData.Add(9, new Dictionary<int, double>() { { Start, Val } });
         }

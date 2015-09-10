@@ -66,5 +66,30 @@ namespace IntensiveUse.Models
                 ULAPI = (c1.ULAPI1 + c1.ULAPI2) * c2.ULAPI
             };
         }
+
+        public static SubIndex operator *(SubIndex c1, int c2)
+        {
+            return new SubIndex()
+            {
+                PUII = c1.PUII * c2,
+                EUII = c1.EUII * c2,
+                PGCI = c1.PGCI * c2,
+                EGCI = c1.EGCI * c2,
+                PEI = c1.PEI * c2,
+                EEI = c1.EEI * c2,
+                ULAPI = c1.ULAPI * c2
+            };
+        }
+
+        public static IndexWeight operator *(SubIndex c1, SubIndex c2)
+        {
+            return new IndexWeight()
+            {
+                UII = c1.PUII * c2.PUII + c1.EUII * c2.EUII,
+                GCI = c1.PGCI * c2.PGCI + c1.EGCI * c2.EGCI,
+                EI = c1.PEI * c2.PEI + c1.EEI * c2.EEI,
+                API = c1.ULAPI * c2.ULAPI
+            };
+        }
     }
 }

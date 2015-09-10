@@ -90,6 +90,19 @@ namespace IntensiveUse.Models
                 ULAPI2 = c1.ULAPI2 / c2.ULAPI2
             };
         }
+        public static SubIndex operator *(Exponent c1, Exponent c2)
+        {
+            return new SubIndex()
+            {
+                PUII = c1.PUII1 * c2.PUII1,
+                EUII = c1.EUII1 * c2.EUII1 + c1.EUII2 * c2.EUII2,
+                PGCI = c1.PGCI * c2.PGCI,
+                EGCI = c1.EGCI1 * c2.EGCI1 + c1.EGCI2 * c2.EGCI2 + c1.EGCI3 * c2.EGCI3,
+                PEI = c1.PEI1 * c2.PEI1,
+                EEI = c1.EEI * c2.EEI,
+                ULAPI = c1.ULAPI1 * c2.ULAPI1 + c1.ULAPI2 * c2.ULAPI2
+            };
+        }
 
         /// <summary>
         /// 计算附表7中指标标准化值
@@ -125,89 +138,96 @@ namespace IntensiveUse.Models
                 {
                     val = 0.0;
                     double.TryParse(item.GetValue(c, null).ToString(), out val);
-                    if (Math.Abs(val-1)>=0||Math.Abs(val-0)>=0)
+                    if (val > 1)
                     {
-                        switch (item.Name)
-                        {
-                            case "PUII1":
-                                c.PUII1 = 1;
-                                break;
-                            case "EUII1":
-                                c.EUII1 = 1;
-                                break;
-                            case "EUII2":
-                                c.EUII2 = 1;
-                                break;
-                            case "ULAPI1":
-                                c.ULAPI1 = 1;
-                                break;
-                            case "ULAPI2":
-                                c.ULAPI2 = 1;
-                                break;
-                            case "PGCI1":
-                                if (newConstruction1.Town <= 0 && people1.PermanentSum >= people2.PermanentSum)
-                                {
-                                    c.PGCI = 1;
-                                }
-                                else if (newConstruction1.Town >= 0 && people1.PermanentSum <= people2.PermanentSum)
-                                {
-                                    c.PGCI = 0;
-                                }
-                                break;
-                            case "EGCI1":
-                                if (economy1.Compare >= economy2.Compare && construction1.SubTotal <=construction2.SubTotal)
-                                {
-                                    c.EGCI1 = 1;
-                                }
-                                else if (economy1.Compare <= economy2.Compare && construction1.SubTotal >= construction2.SubTotal)
-                                {
-                                    c.EGCI1 = 0;
-                                }
-                                break;
-                            case "EGCI2":
-                                if (newConstruction1.Construction <= 0 && economy1.Compare >= economy2.Compare)
-                                {
-                                    c.EGCI2 = 1;
-                                }
-                                else if (newConstruction1.Construction >= 0 && economy1.Compare <= economy2.Compare)
-                                {
-                                    c.EGCI2 = 0;
-                                }
-                                break;
-                            case "EGCI3":
-                                if (newConstruction1.Construction <= 0 && economy1.Aggregate >= 0)
-                                {
-                                    c.EGCI3 = 1;
-                                }
-                                else if (newConstruction1.Construction >= 0 && economy1.Aggregate <= 0)
-                                {
-                                    c.EGCI3 = 0;
-                                }
-                                break;
-                            case "PEI1":
-                                if (people1.PermanentSum >= people3.PermanentSum && construction1.Town <= construction3.Town)
-                                {
-                                    c.PEI1 = 1;
-                                }
-                                else if (people1.PermanentSum <= people3.PermanentSum && construction1.Town >= construction3.Town)
-                                {
-                                    c.PEI1 = 0;
-                                }
-                                break;
-                            case "EEI":
-                                if (economy1.Compare >= economy3.Compare && construction1.SubTotal <= construction3.SubTotal)
-                                {
-                                    c.EEI = 1;
-                                }
-                                else if (economy1.Compare <= economy3.Compare && construction1.SubTotal >= construction3.SubTotal)
-                                {
-                                    c.EEI = 0;
-                                }
-                                break;
-                            default: break;
-                        }
+                        item.SetValue(c, 1, null);
                     }
-                    
+                    #region
+                    //if (Math.Abs(val-1)>=0||Math.Abs(val-0)>=0)
+                    //{
+                    //    switch (item.Name)
+                    //    {
+                    //        case "PUII1":
+                    //            c.PUII1 = 1;
+                    //            break;
+                    //        case "EUII1":
+                    //            c.EUII1 = 1;
+                    //            break;
+                    //        case "EUII2":
+                    //            c.EUII2 = 1;
+                    //            break;
+                    //        case "ULAPI1":
+                    //            c.ULAPI1 = 1;
+                    //            break;
+                    //        case "ULAPI2":
+                    //            c.ULAPI2 = 1;
+                    //            break;
+                    //        case "PGCI1":
+                    //            if (newConstruction1.Town <= 0 && people1.PermanentSum >= people2.PermanentSum)
+                    //            {
+                    //                c.PGCI = 1;
+                    //            }
+                    //            else if (newConstruction1.Town >= 0 && people1.PermanentSum <= people2.PermanentSum)
+                    //            {
+                    //                c.PGCI = 0;
+                    //            }
+                    //            break;
+                    //        case "EGCI1":
+                    //            if (economy1.Compare >= economy2.Compare && construction1.SubTotal <=construction2.SubTotal)
+                    //            {
+                    //                c.EGCI1 = 1;
+                    //            }
+                    //            else if (economy1.Compare <= economy2.Compare && construction1.SubTotal >= construction2.SubTotal)
+                    //            {
+                    //                c.EGCI1 = 0;
+                    //            }
+                    //            break;
+                    //        case "EGCI2":
+                    //            if (newConstruction1.Construction <= 0 && economy1.Compare >= economy2.Compare)
+                    //            {
+                    //                c.EGCI2 = 1;
+                    //            }
+                    //            else if (newConstruction1.Construction >= 0 && economy1.Compare <= economy2.Compare)
+                    //            {
+                    //                c.EGCI2 = 0;
+                    //            }
+                    //            break;
+                    //        case "EGCI3":
+                    //            if (newConstruction1.Construction <= 0 && economy1.Aggregate >= 0)
+                    //            {
+                    //                c.EGCI3 = 1;
+                    //            }
+                    //            else if (newConstruction1.Construction >= 0 && economy1.Aggregate <= 0)
+                    //            {
+                    //                c.EGCI3 = 0;
+                    //            }
+                    //            break;
+                    //        case "PEI1":
+                    //            if (people1.PermanentSum >= people3.PermanentSum && construction1.Town <= construction3.Town)
+                    //            {
+                    //                c.PEI1 = 1;
+                    //            }
+                    //            else if (people1.PermanentSum <= people3.PermanentSum && construction1.Town >= construction3.Town)
+                    //            {
+                    //                c.PEI1 = 0;
+                    //            }
+                    //            break;
+                    //        case "EEI":
+                    //            if (economy1.Compare >= economy3.Compare && construction1.SubTotal <= construction3.SubTotal)
+                    //            {
+                    //                c.EEI = 1;
+                    //            }
+                    //            else if (economy1.Compare <= economy3.Compare && construction1.SubTotal >= construction3.SubTotal)
+                    //            {
+                    //                c.EEI = 0;
+                    //            }
+                    //            break;
+                    //        default: break;
+                    //    }
+
+                    //} 
+                    #endregion
+
                 }
             }
             return c;
