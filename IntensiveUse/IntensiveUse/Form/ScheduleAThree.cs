@@ -16,13 +16,18 @@ namespace IntensiveUse.Form
         {
             this.Start = 1;
             this.Begin = 2;
+            this.SerialNumber = 18;
             if (DictValue == null)
             {
                 DictValue = new Dictionary<string, List<string>>();
             }
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict,int[] Indexs)
         {
+            if (Indexs.Count() != this.SerialNumber)
+            {
+                throw new ArgumentException("提取数据精度位失败！无法进行生成表格");
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)

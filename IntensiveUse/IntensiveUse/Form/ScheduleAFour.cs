@@ -16,6 +16,7 @@ namespace IntensiveUse.Form
         {
             this.Start = 2;
             this.Begin = 2;
+            this.SerialNumber = 6;
             if (Landusechange == null)
             {
                 Landusechange = new LandUseChange()
@@ -25,8 +26,12 @@ namespace IntensiveUse.Form
                 };
             }
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict,int[] Indexs)
         {
+            if (Indexs == null || Indexs.Count() != this.SerialNumber)
+            {
+                throw new ArgumentException("精度位数据为null或者空，无法进行数据填写！");
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
@@ -43,18 +48,22 @@ namespace IntensiveUse.Form
             IRow row = ExcelHelper.OpenRow(ref sheet,Start+2);
             ICell cell = null;
             int line = Begin;
+            //填写上一级行政区 行数据
+            int serial = 0;
             foreach (var item in CitiesValue)
             {
                 cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                cell.SetCellValue(Math.Round(item, 2));
+                cell.SetCellValue(Math.Round(item, Indexs[++serial]));
             }
             row = ExcelHelper.OpenRow(ref sheet, Start + 1);
             Queue<double> queue = Core.ConstructionLandManager.TranslateOfLandUseChange(Landusechange);
             line = Begin;
+            //填写行政辖区整体  行数据
+            serial = 0;
             foreach (var item in queue)
             {
                 cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                cell.SetCellValue(Math.Round(item, 2));
+                cell.SetCellValue(Math.Round(item, Indexs[serial++]));
             }
             sheet.ShiftRows(Start + 1, sheet.LastRowNum, DictData.Count-1);
             int SerialNumber = 0;
@@ -67,10 +76,11 @@ namespace IntensiveUse.Form
                 cell = OpenCell(ref row, line++);
                 cell.SetCellValue(item);
                 var Values = DictData[item];
+                serial = 0;
                 foreach (var val in Values)
                 {
                     cell = OpenCell(ref row, line++);
-                    cell.SetCellValue(Math.Round(val, 2));
+                    cell.SetCellValue(Math.Round(val, Indexs[serial++]));
                 }
                 cell = OpenCell(ref row, line++);
 

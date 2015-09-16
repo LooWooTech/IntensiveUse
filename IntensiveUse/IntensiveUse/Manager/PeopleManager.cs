@@ -70,9 +70,9 @@ namespace IntensiveUse.Manager
                         coefficient = situation[0].Extent / situation[1].Extent;
                     }
                     return new List<string>(){
-                            situation[0].Increment.ToString("0.00"),
+                            situation[0].Increment.ToString("0.0000"),
                             situation[0].Extent.ToString("0.00"),
-                            situation[1].Increment.ToString("0.00"),
+                            situation[1].Increment.ToString("0.000000"),
                             situation[1].Extent.ToString("0.00"),
                             coefficient.ToString("0.00"),
                             ""
@@ -85,9 +85,9 @@ namespace IntensiveUse.Manager
                         coefficient1 = situation[0].Extent / situation[1].Extent;
                     }
                     return new List<string>(){
-                            situation[0].Increment.ToString("0.00"),
+                            situation[0].Increment.ToString("0.0000"),
                             situation[0].Extent.ToString("0.00"),
-                            situation[1].Increment.ToString("0.00"),
+                            situation[1].Increment.ToString("0.000000"),
                             situation[1].Extent.ToString("0.00"),
                             coefficient1.ToString("0.00")
                         };
@@ -100,11 +100,11 @@ namespace IntensiveUse.Manager
                         buffer2 = situation[1].Extent / situation[2].Extent;
                     }
                     return new List<string>(){
-                            situation[0].Increment.ToString("0.00"),
+                            situation[0].Increment.ToString("0.0000"),
                             situation[0].Extent.ToString("0.00"),
-                            situation[1].Increment.ToString("0.00"),
+                            situation[1].Increment.ToString("0.0000"),
                             situation[1].Extent.ToString("0.00"),
-                            situation[2].Increment.ToString("0.00"),
+                            situation[2].Increment.ToString("0.000000"),
                             situation[2].Extent.ToString("0.00"),
                             buffer1.ToString("0.00"),
                             buffer2.ToString("0.00")

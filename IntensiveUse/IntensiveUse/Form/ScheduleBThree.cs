@@ -15,9 +15,14 @@ namespace IntensiveUse.Form
         {
             this.Start = 2;
             this.Begin = 0;
+            this.SerialNumber = 6;
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City, string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City, string Distict,int[] Indexs)
         {
+            if (Indexs.Count() != this.SerialNumber)
+            {
+                throw new ArgumentException("提取数据精度位失败！无法进行生成表格");
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             this.Year = Year;
             this.CID = Core.ExcelManager.GetID(Distict);
@@ -33,25 +38,28 @@ namespace IntensiveUse.Form
             IRow row = ExcelHelper.OpenRow(ref sheet, Start);
             ICell cell = null;
             int line=0;
+            int Serial = 0;
             foreach (var item in DictData.Keys)
             {
                 cell = row.GetCell(Begin, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 cell.SetCellValue(item);
                 var value = DictData[item];
                 line=Begin+1;
+                Serial = 0;
                 foreach (var entity in value)
                 {
                     cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                    cell.SetCellValue(Math.Round(entity, 2));
+                    cell.SetCellValue(Math.Round(entity, Indexs[Serial++]));
                 }
             }
             row = sheet.GetRow(Start + 1);
             line=Begin+1;
+            Serial = 0;
             foreach (var item in Queue)
             {
                 cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 
-                cell.SetCellValue(Math.Round(item, 2));
+                cell.SetCellValue(Math.Round(item, Indexs[Serial++]));
             }
             return workbook;
         }

@@ -1,6 +1,7 @@
 ﻿using NPOI.SS.UserModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -171,8 +172,11 @@ namespace IntensiveUse.Helper
 
     public enum Division
     {
+        [Description("总人口发展与城乡建设用地增长匹配情况")]
         Total=0,
+        [Description("城镇人口与城镇工矿用地增长匹配情况")]
         Town=1,
+        [Description("农村人口与村庄建设用地增长匹配情况")]
         County=2
     }
 

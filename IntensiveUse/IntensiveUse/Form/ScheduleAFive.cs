@@ -20,8 +20,12 @@ namespace IntensiveUse.Form
             Gain(workbook, Core, Year, ID);
         }
 
-        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict,int[] Indexs)
         {
+            if (Indexs == null)
+            {
+                throw new ArgumentException("Indexs为null");
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
@@ -35,9 +39,9 @@ namespace IntensiveUse.Form
                 Name=Distict;
             }
             int CID=Core.ExcelManager.GetID(Name);
-            Core.IndexManager.WriteIndexWeight(ref sheet, Index[0], Year, CID);
-            Core.IndexManager.WriteSubIndex(ref sheet, Index[1], Year, CID);
-            Core.IndexManager.WriteExponent(ref sheet, Index[2], Start, Year, CID);
+            Core.IndexManager.WriteIndexWeight(ref sheet, Index[0], Year, CID,Indexs[0]);
+            Core.IndexManager.WriteSubIndex(ref sheet, Index[1], Year, CID,Indexs[0]);
+            Core.IndexManager.WriteExponent(ref sheet, Index[2], Start, Year, CID,Indexs[0]);
             return workbook;
         }
 

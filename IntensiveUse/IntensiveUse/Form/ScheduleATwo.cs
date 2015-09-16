@@ -15,10 +15,15 @@ namespace IntensiveUse.Form
         {
             this.Start = 1;
             this.Begin = 5;
+            this.SerialNumber = 32;
         }
 
-        public IWorkbook Write(string FilePath,ManagerCore Core,int Year,string City,string Distict)
+        public IWorkbook Write(string FilePath,ManagerCore Core,int Year,string City,string Distict,int[] Indexs)
         {
+            if (Indexs.Count() < this.SerialNumber)
+            {
+                throw new ArgumentException("精度位发生错误，不能小于32！");
+            }
             if (string.IsNullOrEmpty(Distict))
             {
                 this.CID = Core.ExcelManager.GetID(City);
@@ -60,11 +65,12 @@ namespace IntensiveUse.Form
                 cell.SetCellValue(item+"年");
                 
                 var values = DictData[item];
+                int Serial = 0;
                 foreach (var entity in values)
                 {
                     row = sheet.GetRow(line++);
                     cell = row.GetCell(Begin, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                    cell.SetCellValue(Math.Round(entity,2));
+                    cell.SetCellValue(Math.Round(entity,Indexs[Serial++]));
                 }
                 Begin++;
             }

@@ -12,12 +12,11 @@ namespace IntensiveUse.Form
         protected int Begin { get; set; }
         protected int Year { get; set; }
         protected int CID { get; set; }
+        protected int SerialNumber { get; set; }
         protected string City { get; set; }
         protected List<string> Disticts { get; set; }
         protected List<int> Columns { get; set; }
         protected Dictionary<string, Queue<double>> DictData { get; set; }
-        
-
         protected Queue<double> Queue { get; set; }
         protected IRow TempRow { get; set; }
 
@@ -67,7 +66,7 @@ namespace IntensiveUse.Form
             return cell;
         }
 
-        protected void WriteBase(ref ISheet sheet,int Number)
+        protected void WriteBase(ref ISheet sheet,int Number,int[] Indexs)
         {
             IRow row = sheet.GetRow(Number);
             ICell cell = null;
@@ -78,6 +77,7 @@ namespace IntensiveUse.Form
             }
             sheet.ShiftRows(Number+1, sheet.LastRowNum, DictData.Count - 1);
             int Serial = 0;
+            int lines = 0;
             foreach (var item in DictData.Keys)
             {
                 row = OpenRow(ref sheet, Serial + Number);
@@ -85,10 +85,11 @@ namespace IntensiveUse.Form
                 cell.SetCellValue(++Serial);
                 cell = OpenCell(ref row, 1);
                 cell.SetCellValue(item);
+                lines = 0;
                 foreach (var m in Columns)
                 {
                     cell = OpenCell(ref row, m);
-                    cell.SetCellValue(Math.Round(DictData[item].Dequeue(), 2));
+                    cell.SetCellValue(Math.Round(DictData[item].Dequeue(), Indexs[lines++]));
                 }
             }
         }

@@ -2,39 +2,213 @@
 <Tables>
   <Table Title="附表1A1" Name="">
     <File Title="模板" Path="EXCEL/附表1A1.xls"></File>
+    <Digits>
+      <Digit Title="常住总人口" Type="4"></Digit>
+      <Digit Title="常住城镇人口" Type="4"></Digit>
+      <Digit Title="常住农村人口" Type="4"></Digit>
+      <Digit Title="户籍总人口" Type="4"></Digit>
+      <Digit Title="户籍农业人口" Type="4"></Digit>
+      <Digit Title="户籍非农业人口" Type="4"></Digit>
+      <Digit Title="地区生产总值（当年价）" Type="4"></Digit>
+      <Digit Title="地区生产总值（可比价）" Type="4"></Digit>
+      <Digit Title="固定资产投资总额" Type="4"></Digit>
+      <Digit Title="农用地" Type="6"></Digit>
+      <Digit Title="耕地" Type="6"></Digit>
+      <Digit Title="园地" Type="6"></Digit>
+      <Digit Title="林地" Type="6"></Digit>
+      <Digit Title="牧草地" Type="6"></Digit>
+      <Digit Title="其他农用地" Type="6"></Digit>
+      <Digit Title="建设用地" Type="6"></Digit>
+      <Digit Title="城乡建设用地" Type="6"></Digit>
+      <Digit Title="城镇工矿用地" Type="6"></Digit>
+      <Digit Title="城镇用地" Type="6"></Digit>
+      <Digit Title="采矿用地" Type="6"></Digit>
+      <Digit Title="村庄用地" Type="6"></Digit>
+      <Digit Title="交通水利用地" Type="6"></Digit>
+      <Digit Title="其他建设用地" Type="6"></Digit>
+      <Digit Title="其他土地" Type="6"></Digit>
+      <Digit Title="土地总面积" Type="6"></Digit>
+      <Digit Title="新增建设用地" Type="6"></Digit>
+      <Digit Title="新增城乡建设用地" Type="6"></Digit>
+      <Digit Title="土地供应量" Type="6"></Digit>
+      <Digit Title="土地供应量—新增建设用地供应" Type="6"></Digit>
+      <Digit Title="土地供应量—存量建设用地供应面积" Type="6"></Digit>
+      <Digit Title="批准批次土地" Type="6"></Digit>
+      <Digit Title="截止评价基准年底已供地" Type="6"></Digit>
+      <Digit Title="上一级地区生产总值（当年价）" Type="4"></Digit>
+      <Digit Title="上一级地区生产总值（可比价）" Type="4"></Digit>
+      <Digit Title="上一级建设用地总面积" Type="4"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A2" Name="">
     <File Title="模板" Path="EXCEL/附表1A2.xls"></File>
+    <Digits>
+      <Digit Title="常住总人口" Type="4"></Digit>
+      <Digit Title="常住城镇人口" Type="4"></Digit>
+      <Digit Title="常住农村人口" Type="4"></Digit>
+      <Digit Title="户籍总人口" Type="4"></Digit>
+      <Digit Title="户籍农业人口" Type="4"></Digit>
+      <Digit Title="户籍非农业人口" Type="4"></Digit>
+      <Digit Title="地区生产总值（当年价）" Type="4"></Digit>
+      <Digit Title="地区生产总值（可比价）" Type="4"></Digit>
+      <Digit Title="固定资产投资总额" Type="4"></Digit>
+      <Digit Title="农用地" Type="6"></Digit>
+      <Digit Title="耕地" Type="6"></Digit>
+      <Digit Title="园地" Type="6"></Digit>
+      <Digit Title="林地" Type="6"></Digit>
+      <Digit Title="牧草地" Type="6"></Digit>
+      <Digit Title="其他农用地" Type="6"></Digit>
+      <Digit Title="建设用地" Type="6"></Digit>
+      <Digit Title="城乡建设用地" Type="6"></Digit>
+      <Digit Title="城镇工矿用地" Type="6"></Digit>
+      <Digit Title="城镇用地" Type="6"></Digit>
+      <Digit Title="采矿用地" Type="6"></Digit>
+      <Digit Title="村庄用地" Type="6"></Digit>
+      <Digit Title="交通水利用地" Type="6"></Digit>
+      <Digit Title="其他建设用地" Type="6"></Digit>
+      <Digit Title="其他土地" Type="6"></Digit>
+      <Digit Title="土地总面积" Type="6"></Digit>
+      <Digit Title="新增建设用地" Type="6"></Digit>
+      <Digit Title="新增城乡建设用地" Type="6"></Digit>
+      <Digit Title="土地供应量" Type="6"></Digit>
+      <Digit Title="土地供应量—新增建设用地供应" Type="6"></Digit>
+      <Digit Title="土地供应量—存量建设用地供应面积" Type="6"></Digit>
+      <Digit Title="批准批次土地" Type="6"></Digit>
+      <Digit Title="截止评价基准年底已供地" Type="6"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A3" Name="">
     <File Title="模板" Path="EXCEL/附表1A3.xls"></File>
+    <Digits>
+      <Digit Title="常住总人口增长量" Type="4"></Digit>
+      <Digit Title="常住总人口增长幅度" Type="2"></Digit>
+      <Digit Title="城乡建设用地增长量" Type="6"></Digit>
+      <Digit Title="城乡建设用地增长幅度" Type="2"></Digit>
+      <Digit Title="总人口与城乡建设用地增长弹性系数" Type="2"></Digit>
+      <Digit Title="常住城镇人口增长量" Type="4"></Digit>
+      <Digit Title="常住城镇人口增长幅度" Type="2"></Digit>
+      <Digit Title="城镇工矿用地增长量" Type="6"></Digit>
+      <Digit Title="城镇工矿用地增长幅度" Type="2"></Digit>
+      <Digit Title="城镇人口与城镇工矿用地增长弹性系数" Type="2"></Digit>
+      <Digit Title="常住农村人口增长量" Type="4"></Digit>
+      <Digit Title="常住农村人口增长幅度" Type="2"></Digit>
+      <Digit Title="户籍农业人口增长量" Type="4"></Digit>
+      <Digit Title="户籍农业人口人口增长幅度" Type="2"></Digit>
+      <Digit Title="村庄用地增长量" Type="6"></Digit>
+      <Digit Title="村庄用地增长幅度" Type="2"></Digit>
+      <Digit Title="农村人口与村庄用地增长弹性系数（PEI3-1）" Type="2"></Digit>
+      <Digit Title="农村人口与村庄用地增长弹性系数（PEI3-2）" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A4" Name="">
     <File Title="模板" Path="EXCEL/附表1A4.xls"></File>
+    <Digits>
+      <Digit Title="地区生产总值增长量" Type="4"></Digit>
+      <Digit Title="地区生产总值增长幅度" Type="2"></Digit>
+      <Digit Title="建设用地增长量" Type="6"></Digit>
+      <Digit Title="建设用地增长幅度" Type="2"></Digit>
+      <Digit Title="地区生产总值与建设用地增长弹性系数（EEI1）" Type="2"></Digit>
+      <Digit Title="地区生产总值与建设用地增长贡献度（ECI1）" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A5" Name="">
     <File Title="模板" Path="EXCEL/附表1A5.xls"></File>
+    <Digits>
+      <Digit Title="权重" Type="3"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A6" Name="">
     <File Title="模板" Path="EXCEL/附表1A6.xls"></File>
+    <Digits>
+      <Digit Title="指标现状值" Type="6"></Digit>
+      <Digit Title="指标理想值" Type="4"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A7" Name="">
     <File Title="模板" Path="EXCEL/附表1A7.xls"></File>
+    <Digits>
+      <Digit Title="指标现状值" Type="6"></Digit>
+      <Digit Title="指标理想值" Type="6"></Digit>
+      <Digit Title="标准化初始值" Type="6"></Digit>
+      <Digit Title="指标标准化值" Type="6"></Digit>
+      <Digit Title="分指数值" Type="2"></Digit>
+      <Digit Title="指数值" Type="2"></Digit>
+      <Digit Title="总指数" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A8" Name="">
     <File Title="模板" Path="EXCEL/附表1A8.xls"></File>
+    <Digits>
+      <Digit Title="城乡建设用地人口密度现状值" Type="6"></Digit>
+      <Digit Title="城乡建设用地人口密度标准化初始值" Type="6"></Digit>
+      <Digit Title="城乡建设用地人口密度指标标准化值" Type="6"></Digit>
+      <Digit Title="人口密度分指数值" Type="2"></Digit>
+      <Digit Title="建设用地地均固定资产投资现状值" Type="6"></Digit>
+      <Digit Title="建设用地地均固定资产投资标准化初始值" Type="6"></Digit>
+      <Digit Title="建设用地地均固定资产投资指标标准化值" Type="6"></Digit>
+      <Digit Title="建设用地地均地区生产总值现状值" Type="6"></Digit>
+      <Digit Title="建设用地地均地区生产总值标准化初始值" Type="6"></Digit>
+      <Digit Title="建设用地地均地区生产总值指标标准化值" Type="6"></Digit>
+      <Digit Title="经济强度分指数值" Type="2"></Digit>
+      <Digit Title="利用强度指数值" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A9" Name="">
     <File Title="模板" Path="EXCEL/附表1A9.xls"></File>
+    <Digits>
+      <Digit Title="单位人口增长消耗新增城乡建设用地量现状值" Type="6"></Digit>
+      <Digit Title="单位人口增长消耗新增城乡建设用地量标准化初始值" Type="6"></Digit>
+      <Digit Title="单位人口增长消耗新增城乡建设用地量指标标准化值" Type="6"></Digit>
+      <Digit Title="人口增长耗地分指数值" Type="2"></Digit>
+      <Digit Title="单位地区生产总值耗地下降率现状值" Type="6"></Digit>
+      <Digit Title="单位地区生产总值耗地下降率标准化初始值" Type="6"></Digit>
+      <Digit Title="单位地区生产总值耗地下降率指标标准化值" Type="6"></Digit>
+      <Digit Title="单位地区生产总值增长消耗新增建设用地量现状值" Type="6"></Digit>
+      <Digit Title="单位地区生产总值增长消耗新增建设用地量标准化初始值" Type="6"></Digit>
+      <Digit Title="单位地区生产总值增长消耗新增建设用地量指标标准化值" Type="6"></Digit>
+      <Digit Title="单位固定资产投资消耗新增建设用地量现状值" Type="6"></Digit>
+      <Digit Title="单位固定资产投资消耗新增建设用地量标准化初始值" Type="6"></Digit>
+      <Digit Title="单位固定资产投资消耗新增建设用地量指标标准化值" Type="6"></Digit>
+      <Digit Title="经济强度分指数值" Type="2"></Digit>
+      <Digit Title="利用强度指数值" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A10" Name="">
     <File Title="模板" Path="EXCEL/附表1A10.xls"></File>
+    <Digits>
+      <Digit Title="人口与城乡建设用地增长弹性系数现状值" Type="6"></Digit>
+      <Digit Title="人口与城乡建设用地增长弹性系数标准化初始值" Type="6"></Digit>
+      <Digit Title="人口与城乡建设用地增长弹性系数指标标准化值" Type="6"></Digit>
+      <Digit Title="人口用地弹性分指数值" Type="2"></Digit>
+      <Digit Title="地区生产总值与建设用地增长弹性系数现状值" Type="6"></Digit>
+      <Digit Title="地区生产总值与建设用地增长弹性系数标准化初始值" Type="6"></Digit>
+      <Digit Title="地区生产总值与建设用地增长弹性系数指标标准化值" Type="6"></Digit>
+      <Digit Title="经济用地弹性分指数值" Type="2"></Digit>
+      <Digit Title="用地弹性指数值" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A11" Name="">
     <File Title="模板" Path="EXCEL/附表1A11.xls"></File>
+    <Digits>
+      <Digit Title="城市存量土地供应比率现状值" Type="6"></Digit>
+      <Digit Title="城市存量土地供应比率标准化初始值" Type="6"></Digit>
+      <Digit Title="城市存量土地供应比率指标标准化值" Type="6"></Digit>
+      <Digit Title="城市批次土地供应比率现状值" Type="6"></Digit>
+      <Digit Title="城市批次土地供应比率标准化初始值" Type="6"></Digit>
+      <Digit Title="城市批次土地供应比率指标标准化值" Type="6"></Digit>
+      <Digit Title="城市用地管理绩效分指数值" Type="2"></Digit>
+      <Digit Title="管理绩效指数值" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A12" Name="">
     <File Title="模板" Path="EXCEL/附表1A12.xls"></File>
+    <Digits>
+      <Digit Title="利用强度指数" Type="2"></Digit>
+      <Digit Title="增长耗地指数" Type="2"></Digit>
+      <Digit Title="用地弹性指数" Type="2"></Digit>
+      <Digit Title="管理绩效指数" Type="2"></Digit>
+      <Digit Title="总指数" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1A13" Name="">
     <File Title="模板" Path="EXCEL/附表1A13.xls"></File>
@@ -44,21 +218,102 @@
   </Table>
   <Table Title="附表1B1" Name="">
     <File Title="模板" Path="EXCEL/附表1B1.xls"></File>
+    <Digits>
+      <Digit Title="常住总人口" Type="4"></Digit>
+      <Digit Title="常住城镇人口" Type="4"></Digit>
+      <Digit Title="常住农村人口" Type="4"></Digit>
+      <Digit Title="户籍总人口" Type="4"></Digit>
+      <Digit Title="户籍农业人口" Type="4"></Digit>
+      <Digit Title="户籍非农业人口" Type="4"></Digit>
+      <Digit Title="地区生产总值（当年价）" Type="4"></Digit>
+      <Digit Title="地区生产总值（可比价）" Type="4"></Digit>
+      <Digit Title="固定资产投资总额" Type="4"></Digit>
+      <Digit Title="农用地" Type="6"></Digit>
+      <Digit Title="耕地" Type="6"></Digit>
+      <Digit Title="园地" Type="6"></Digit>
+      <Digit Title="林地" Type="6"></Digit>
+      <Digit Title="牧草地" Type="6"></Digit>
+      <Digit Title="其他农用地" Type="6"></Digit>
+      <Digit Title="建设用地" Type="6"></Digit>
+      <Digit Title="城乡建设用地" Type="6"></Digit>
+      <Digit Title="城镇工矿用地" Type="6"></Digit>
+      <Digit Title="城镇用地" Type="6"></Digit>
+      <Digit Title="采矿用地" Type="6"></Digit>
+      <Digit Title="村庄用地" Type="6"></Digit>
+      <Digit Title="交通水利用地" Type="6"></Digit>
+      <Digit Title="其他建设用地" Type="6"></Digit>
+      <Digit Title="其他土地" Type="6"></Digit>
+      <Digit Title="土地总面积" Type="6"></Digit>
+      <Digit Title="新增建设用地" Type="6"></Digit>
+      <Digit Title="新增城乡建设用地" Type="6"></Digit>
+      <Digit Title="土地供应量" Type="6"></Digit>
+      <Digit Title="土地供应量—新增建设用地供应" Type="6"></Digit>
+      <Digit Title="土地供应量—存量建设用地供应面积" Type="6"></Digit>
+      <Digit Title="批准批次土地" Type="6"></Digit>
+      <Digit Title="截止评价基准年底已供地" Type="6"></Digit>
+      <Digit Title="上一级地区生产总值（当年价）" Type="4"></Digit>
+      <Digit Title="上一级地区生产总值（可比价）" Type="4"></Digit>
+      <Digit Title="上一级建设用地总面积" Type="4"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1B2" Name="">
     <File Title="模板" Path="EXCEL/附表1B2.xls"></File>
+    <Digits>
+      <Digit Title="常住总人口增长量" Type="4"></Digit>
+      <Digit Title="常住总人口增长幅度" Type="2"></Digit>
+      <Digit Title="城乡建设用地增长量" Type="6"></Digit>
+      <Digit Title="城乡建设用地增长幅度" Type="2"></Digit>
+      <Digit Title="总人口与城乡建设用地增长弹性系数" Type="2"></Digit>
+      <Digit Title="常住城镇人口增长量" Type="4"></Digit>
+      <Digit Title="常住城镇人口增长幅度" Type="2"></Digit>
+      <Digit Title="城镇工矿用地增长量" Type="6"></Digit>
+      <Digit Title="城镇工矿用地增长幅度" Type="2"></Digit>
+      <Digit Title="城镇人口与城镇工矿用地增长弹性系数" Type="2"></Digit>
+      <Digit Title="常住农村人口增长量" Type="4"></Digit>
+      <Digit Title="常住农村人口增长幅度" Type="2"></Digit>
+      <Digit Title="户籍农业人口增长量" Type="4"></Digit>
+      <Digit Title="户籍农业人口人口增长幅度" Type="2"></Digit>
+      <Digit Title="村庄用地增长量" Type="6"></Digit>
+      <Digit Title="村庄用地增长幅度" Type="2"></Digit>
+      <Digit Title="农村人口与村庄用地增长弹性系数（PEI3-1）" Type="2"></Digit>
+      <Digit Title="农村人口与村庄用地增长弹性系数（PEI3-2）" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1B3" Name="">
     <File Title="模板" Path="EXCEL/附表1B3.xls"></File>
+    <Digits>
+      <Digit Title="地区生产总值增长量" Type="4"></Digit>
+      <Digit Title="地区生产总值增长幅度" Type="2"></Digit>
+      <Digit Title="建设用地增长量" Type="6"></Digit>
+      <Digit Title="建设用地增长幅度" Type="2"></Digit>
+      <Digit Title="地区生产总值与建设用地增长弹性系数（EEI1）" Type="2"></Digit>
+      <Digit Title="地区生产总值与建设用地增长贡献度（ECI1）" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1B4" Name="">
     <File Title="模板" Path="EXCEL/附表1B4.xls"></File>
+    <Digits>
+      <Digit Title="权重" Type="3"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1B5" Name="">
     <File Title="模板" Path="EXCEL/附表1B5.xls"></File>
+    <Digits>
+      <Digit Title="指标现状值" Type="6"></Digit>
+      <Digit Title="指标理想值" Type="4"></Digit>
+    </Digits>
   </Table>
   <Table Title="附表1B6" Name="">
     <File Title="模板" Path="EXCEL/附表1B6.xls"></File>
+    <Digits>
+      <Digit Title="指标现状值" Type="6"></Digit>
+      <Digit Title="指标理想值" Type="6"></Digit>
+      <Digit Title="标准化初始值" Type="6"></Digit>
+      <Digit Title="指标标准化值" Type="6"></Digit>
+      <Digit Title="分指数值" Type="2"></Digit>
+      <Digit Title="指数值" Type="2"></Digit>
+      <Digit Title="总指数" Type="2"></Digit>
+    </Digits>
   </Table>
   <Table Title="表1" Name="">
     <File Title="模板" Path="EXCEL/表1.xls"></File>

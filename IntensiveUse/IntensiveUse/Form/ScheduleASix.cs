@@ -16,6 +16,7 @@ namespace IntensiveUse.Form
         {
             this.Start = 2;
             this.Begin = 4;
+            this.SerialNumber = 2;
             if (Qfoundation == null)
             {
                 Qfoundation = new Queue<string>();
@@ -58,8 +59,12 @@ namespace IntensiveUse.Form
                 exponent.RID
                 );
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City,string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City,string Distict,int[] Indexs)
         {
+            if (Indexs == null || Indexs.Count() != this.SerialNumber)
+            {
+                throw new ArgumentException("未读取到服务器上的模板文件，请联系相关人员");
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
@@ -78,6 +83,7 @@ namespace IntensiveUse.Form
             
             Message(Core);
             int line = 0;
+            int Serial = 0;
             foreach (var item in DictData.Keys)
             {
                 line = Start;
@@ -89,9 +95,10 @@ namespace IntensiveUse.Form
                     {
                         IRow row = ExcelHelper.OpenRow(ref sheet, line++);
                         ICell cell = ExcelHelper.OpenCell(ref row, a);
-                        cell.SetCellValue(Math.Round(entity, 2));
+                        cell.SetCellValue(Math.Round(entity, Indexs[Serial]));
                     }
                 }
+                Serial++;
             }
             line=Start;
             foreach (var item in Qfoundation)

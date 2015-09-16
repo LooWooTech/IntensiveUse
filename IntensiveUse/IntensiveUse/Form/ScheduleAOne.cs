@@ -15,15 +15,20 @@ namespace IntensiveUse.Form
         {
             this.Start = 35;
             this.Begin = 5;
+            this.SerialNumber = 35;
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City,string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City,string Distict,int[] Indexs)
         {
             //if (string.IsNullOrEmpty(Distict))
             //{
             //    throw new ArgumentException("请选择地级市下面的所辖区");
             //}
+            if (Indexs.Count() != this.SerialNumber)
+            {
+                throw new ArgumentException("提取数据精度位失败！无法进行生成表格");
+            }
             ScheduleATwo work = new ScheduleATwo();
-            IWorkbook workbook = work.Write(FilePath, Core, Year, City,Distict);
+            IWorkbook workbook = work.Write(FilePath, Core, Year, City,Distict,Indexs);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
             {
@@ -38,6 +43,7 @@ namespace IntensiveUse.Form
             foreach (var item in DictData.Keys)
             {
                 int line = Start;
+                int serial = 32;
                 foreach (var val in DictData[item])
                 {
                     row = sheet.GetRow(line);
@@ -51,7 +57,7 @@ namespace IntensiveUse.Form
                     {
                         cell = row.CreateCell(m);
                     }
-                    cell.SetCellValue(Math.Round(val, 2));
+                    cell.SetCellValue(Math.Round(val, Indexs[serial++]));
                 }
                 m++;
                 

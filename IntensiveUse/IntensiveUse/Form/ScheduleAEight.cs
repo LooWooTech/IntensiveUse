@@ -17,6 +17,7 @@ namespace IntensiveUse.Form
         public PEUII Sum { get; set; }
         public ScheduleAEight()
         {
+            this.SerialNumber = 12;
             if (DictData == null)
             {
                 DictData = new Dictionary<string, Queue<double>>();
@@ -38,8 +39,12 @@ namespace IntensiveUse.Form
             }
         }
 
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City, string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City, string Distict,int[] Indexs)
         {
+            if (Indexs == null || Indexs.Count() != this.SerialNumber)
+            {
+                throw new ArgumentException("精度位数据为null或者空，无法进行数据填写");
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
@@ -57,7 +62,7 @@ namespace IntensiveUse.Form
             Ready();
             Message(Core);
             this.Queue= Core.ConstructionLandManager.TranslateOfPEUII(Sum);
-            WriteBase(ref sheet,Start);
+            WriteBase(ref sheet,Start,Indexs);
             return workbook;
         }
 

@@ -29,6 +29,11 @@ namespace IntensiveUse.Manager
         public IWorkbook DownLoad(OutputExcel Type,int Year,string City,string Distict)
         {
             string TempFile = GetExcelPath(Type.ToString()).GetAbsolutePath();
+            int[] Indexs=GetDigits(Type.ToString());
+            if(Indexs==null)
+            {
+                throw new ArgumentException("未定义表格中单元格的精度问题，请联系服务器管理员！");
+            }
             ISchedule load = null;
             switch (Type)
             {
@@ -94,7 +99,7 @@ namespace IntensiveUse.Manager
                     break;
                 default: break;
             }
-            IWorkbook workbook = load.Write(TempFile, Core,Year, City,Distict);
+            IWorkbook workbook = load.Write(TempFile, Core,Year, City,Distict,Indexs);
             return workbook;
         }
         public string GetExcelPath(string excelName)
@@ -105,6 +110,22 @@ namespace IntensiveUse.Manager
                 throw new ArgumentException("配置文件中未获取"+excelName+"相关信息");
             }
             return node.Attributes["Path"].Value;
+        }
+
+        public int[] GetDigits(string excelName)
+        {
+            var nodes = configXml.SelectNodes("/Tables/Table[@Title='" + excelName + "']/Digits/Digit");
+            
+            if (nodes != null)
+            {
+                int[] Indexs = new int[nodes.Count];
+                for (var i = 0; i < nodes.Count; i++)
+                {
+                    int.TryParse(nodes[i].Attributes["Type"].Value, out Indexs[i]);
+                }
+                return Indexs;
+            }
+            return null;
         }
 
 

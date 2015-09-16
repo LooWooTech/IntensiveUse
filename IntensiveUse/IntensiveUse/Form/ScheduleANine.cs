@@ -16,6 +16,7 @@ namespace IntensiveUse.Form
         public PEGCI PEGCI { get; set; }
         public ScheduleANine()
         {
+            this.SerialNumber = 15;
             if (PEGCI == null)
             {
                 PEGCI = new PEGCI()
@@ -34,8 +35,12 @@ namespace IntensiveUse.Form
             }
         }
 
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City, string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City, string Distict,int[] Indexs)
         {
+            if (Indexs == null || Indexs.Count() != this.SerialNumber)
+            {
+                throw new ArgumentException("精度位数据为null或者空，无法进行数据填写");
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
@@ -49,7 +54,7 @@ namespace IntensiveUse.Form
             Message(Core);
             Ready();
             this.Queue= Core.ConstructionLandManager.TranslateOfPEGCI(PEGCI);
-            WriteBase(ref sheet,Start);
+            WriteBase(ref sheet,Start,Indexs);
             return workbook;
         }
         private void Ready()

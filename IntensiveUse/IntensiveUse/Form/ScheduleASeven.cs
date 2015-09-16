@@ -19,6 +19,7 @@ namespace IntensiveUse.Form
         public Dictionary<int, Dictionary<int, double>> DictData { get; set; }
         public ScheduleASeven()
         {
+            
             if (DictData == null)
             {
                 DictData = new Dictionary<int, Dictionary<int, double>>();
@@ -36,8 +37,12 @@ namespace IntensiveUse.Form
                 };
             }
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City,string Distict)
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year,string City,string Distict,int[] Indexs)
         {
+            if (Indexs == null || Indexs.Count() != 7)
+            {
+                throw new ArgumentException("精度位数据为null，或者为空，无法进行数据填写！");
+            }
             IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
             ISheet sheet = workbook.GetSheetAt(0);
             Count = sheet.LastRowNum;
@@ -54,6 +59,7 @@ namespace IntensiveUse.Form
             Message(Core, Year, ID);
             IRow row = null;
             ICell cell = null;
+            int Serial = 0;
             foreach (var line in DictData.Keys)
             {
                 foreach (var Column in DictData[line].Keys)
@@ -68,9 +74,10 @@ namespace IntensiveUse.Form
                     {
                         cell = row.CreateCell(line);
                     }
-                    cell.SetCellValue(Math.Round(DictData[line][Column],2));
+                    cell.SetCellValue(Math.Round(DictData[line][Column],Indexs[Serial]));
 
                 }
+                Serial++;
             }
             return workbook;
         }

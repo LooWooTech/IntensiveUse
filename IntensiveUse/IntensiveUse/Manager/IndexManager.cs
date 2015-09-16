@@ -89,7 +89,7 @@ namespace IntensiveUse.Manager
             };
         }
 
-        public void WriteIndexWeight(ref ISheet Sheet, int line,int Year,int ID)
+        public void WriteIndexWeight(ref ISheet Sheet, int line,int Year,int ID,int Digits)
         {
             IndexWeight indexweight = SearchForIndexWeight(Year, ID);
             Queue<double> queue = new Queue<double>();
@@ -106,7 +106,7 @@ namespace IntensiveUse.Manager
                 {
                     throw new ArgumentException("在保存指数权重数据到表格附表1A5或者1B4的时候，未读取到相关的列，请告知相关人员");
                 }
-                cell.SetCellValue(Math.Round(queue.Dequeue(), 2));
+                cell.SetCellValue(Math.Round(queue.Dequeue(), Digits));
             }
         }
 
@@ -145,7 +145,7 @@ namespace IntensiveUse.Manager
             return subindex; 
         }
 
-        public void WriteSubIndex(ref ISheet Sheet, int Line, int Year, int ID)
+        public void WriteSubIndex(ref ISheet Sheet, int Line, int Year, int ID,int Digits)
         {
             SubIndex subindex = SearchForSubIndex(Year, ID);
             Queue<double> queue = new Queue<double>();
@@ -162,7 +162,7 @@ namespace IntensiveUse.Manager
                 {
                     throw new ArgumentException("在保存分指数数据到表格附表1A5或者1B4的时候，未读取到相关的列，请告知相关人员");
                 }
-                cell.SetCellValue(Math.Round(queue.Dequeue(), 2));
+                cell.SetCellValue(Math.Round(queue.Dequeue(), Digits));
             }
         }
         /// <summary>
@@ -234,7 +234,7 @@ namespace IntensiveUse.Manager
             return foundation;
         }
 
-        public void WriteExponent(ref ISheet Sheet, int Line, int Begin, int Year, int ID)
+        public void WriteExponent(ref ISheet Sheet, int Line, int Begin, int Year, int ID,int Digits)
         {
             Exponent exponent = SearchForExponent(Year, ID, IdealType.Weight);
             Queue<double> queue = new Queue<double>();
@@ -252,7 +252,7 @@ namespace IntensiveUse.Manager
                 {
                     throw new ArgumentException("在保存指标权重数据到附表1A5或者附表1B4的时候，未读取到相关的列，请告知相关人员");
                 }
-                cell.SetCellValue(Math.Round(queue.Dequeue(), 2));
+                cell.SetCellValue(Math.Round(queue.Dequeue(), Digits));
             }
         }
 
