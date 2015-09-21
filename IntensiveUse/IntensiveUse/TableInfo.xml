@@ -315,6 +315,12 @@
       <Digit Title="总指数" Type="2"></Digit>
     </Digits>
   </Table>
+  <Table Title="区域用地状况整体评价指标现状值汇总表" Name="">
+    <File Title="模板" Path="EXCEL/CurrentSituation.xls"></File>
+    <Digits>
+      <Digit Title="现状值" Type="6"></Digit>
+    </Digits>
+  </Table>
   <Table Title="表1" Name="">
     <File Title="模板" Path="EXCEL/表1.xls"></File>
   </Table>

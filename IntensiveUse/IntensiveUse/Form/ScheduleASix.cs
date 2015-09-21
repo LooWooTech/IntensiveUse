@@ -112,18 +112,19 @@ namespace IntensiveUse.Form
 
         public void Message(ManagerCore Core)
         {
+            //指标现状值
             Exponent exponent =Core.ExponentManager.GetTurthExponent(Year,CID);
             Queue<double> queue = new Queue<double>();
             Core.ExcelManager.Gain(exponent, ref queue);
             DictData.Add(Begin.ToString(), queue);
 
-
+            //指标理想值
             Queue<double> queue2 = new Queue<double>();
             Exponent idealExponent = Core.ExponentManager.SearchForExponent(Year, CID, IdealType.Value);
             Core.ExcelManager.Gain(idealExponent, ref queue2);
             DictData.Add((Begin + 1).ToString(), queue2);
 
-
+            //理想值确定依据
             Foundation foundation = Core.FoundationManager.SearchForFoundation(Year, CID);
             System.Reflection.PropertyInfo[] propList = typeof(Foundation).GetProperties();
             foreach (var item in propList)

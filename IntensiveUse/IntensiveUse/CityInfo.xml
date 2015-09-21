@@ -1,123 +1,128 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Citys>
-  <City Name="杭州市">
-    <Division Name="上城区"></Division>
-    <Division Name="下城区"></Division>
-    <Division Name="江干区"></Division>
-    <Division Name="拱墅区"></Division>
-    <Division Name="西湖区"></Division>
-    <Division Name="滨江区"></Division>
-    <Division Name="萧山区"></Division>
-    <Division Name="余杭区"></Division>
-    <Division Name="富阳区"></Division>
-    <Division Name="建德市"></Division>
-    <Division Name="临安市"></Division>
-    <Division Name="桐庐县"></Division>
-    <Division Name="淳安县"></Division>
-  </City>
-  <City Name="宁波市">
-    <Division Name="海曙区"></Division>
-    <Division Name="江东区"></Division>
-    <Division Name="江北区"></Division>
-    <Division Name="北仑区"></Division>
-    <Division Name="镇海区"></Division>
-    <Division Name="鄞州区"></Division>
-    <Division Name="余姚市"></Division>
-    <Division Name="慈溪市"></Division>
-    <Division Name="奉化市"></Division>
-    <Division Name="象山县"></Division>
-    <Division Name="宁海县"></Division>
-  </City>
-  <City Name="温州市">
-    <Division Name="鹿城区"></Division>
-    <Division Name="龙湾区"></Division>
-    <Division Name="瓯海区"></Division>
-    <Division Name="瑞安市"></Division>
-    <Division Name="乐清市"></Division>
-    <Division Name="洞头县"></Division>
-    <Division Name="永嘉县"></Division>
-    <Division Name="平阳县"></Division>
-    <Division Name="苍南县"></Division>
-    <Division Name="文成县"></Division>
-    <Division Name="泰顺县"></Division>
-  </City>
-  <City Name="嘉兴市">
-    <Division Name="南湖区"></Division>
-    <Division Name="秀洲区"></Division>
-    <Division Name="海宁市"></Division>
-    <Division Name="平湖市"></Division>
-    <Division Name="桐乡市"></Division>
-    <Division Name="嘉善县"></Division>
-    <Division Name="海盐县"></Division>
-  </City>
-  <City Name="湖州市">
-    <Division Name="吴兴区"></Division>
-    <Division Name="南浔区"></Division>
-    <Division Name="德清县"></Division>
-    <Division Name="长兴县"></Division>
-    <Division Name="安吉县"></Division>
-  </City>
-  <City Name="绍兴市">
-    <Division Name="越城区"></Division>
-    <Division Name="柯桥区"></Division>
-    <Division Name="上虞区"></Division>
-    <Division Name="诸暨市"></Division>
-    <Division Name="嵊州市"></Division>
-    <Division Name="新昌县"></Division>
-  </City>
-  <City Name="金华市">
-    <Division Name="婺城区"></Division>
-    <Division Name="金东区"></Division>
-    <Division Name="兰溪市"></Division>
-    <Division Name="义乌市"></Division>
-    <Division Name="东阳市"></Division>
-    <Division Name="永康市"></Division>
-    <Division Name="武义县"></Division>
-    <Division Name="浦江县"></Division>
-    <Division Name="磐安县"></Division>
-  </City>
-  <City Name="衢州市">
-    <Division Name="柯城区"></Division>
-    <Division Name="衢江区"></Division>
-    <Division Name="江山市"></Division>
-    <Division Name="常山县"></Division>
-    <Division Name="开化县"></Division>
-    <Division Name="龙游县"></Division>
-  </City>
-  <City Name="舟山市">
-    <Division Name="定海区"></Division>
-    <Division Name="普陀区"></Division>
-    <Division Name="岱山县"></Division>
-    <Division Name="嵊泗县"></Division>
-  </City>
-  <City Name="台州市">
-    <Division Name="椒江区"></Division>
-    <Division Name="黄岩区"></Division>
-    <Division Name="路桥区"></Division>
-    <Division Name="温岭市"></Division>
-    <Division Name="临海市"></Division>
-    <Division Name="玉环县"></Division>
-    <Division Name="三门县"></Division>
-    <Division Name="天台县"></Division>
-    <Division Name="仙居县"></Division>
-  </City>
-  <City Name="丽水市">
-    <Division Name="莲都区"></Division>
-    <Division Name="龙泉市"></Division>
-    <Division Name="青田县"></Division>
-    <Division Name="缙云县"></Division>
-    <Division Name="遂昌县"></Division>
-    <Division Name="松阳县"></Division>
-    <Division Name="云和县"></Division>
-    <Division Name="庆元县"></Division>
-    <Division Name="景宁畲族自治县"></Division>
-  </City>
-  <City Name="银川市">
-    <Division Name="兴庆区"></Division>
-    <Division Name="金凤区"></Division>
-    <Division Name="西夏区"></Division>
-    <Division Name="灵武市"></Division>
-    <Division Name="永宁县"></Division>
-    <Division Name="贺兰县"></Division>
-  </City>
+<Citys Name="浙江省">
+  <Province Name="浙江省">
+    <City Name="杭州市">
+      <Division Name="上城区"></Division>
+      <Division Name="下城区"></Division>
+      <Division Name="江干区"></Division>
+      <Division Name="拱墅区"></Division>
+      <Division Name="西湖区"></Division>
+      <Division Name="滨江区"></Division>
+      <Division Name="萧山区"></Division>
+      <Division Name="余杭区"></Division>
+      <Division Name="富阳区"></Division>
+      <Division Name="建德市"></Division>
+      <Division Name="临安市"></Division>
+      <Division Name="桐庐县"></Division>
+      <Division Name="淳安县"></Division>
+    </City>
+    <City Name="宁波市">
+      <Division Name="海曙区"></Division>
+      <Division Name="江东区"></Division>
+      <Division Name="江北区"></Division>
+      <Division Name="北仑区"></Division>
+      <Division Name="镇海区"></Division>
+      <Division Name="鄞州区"></Division>
+      <Division Name="余姚市"></Division>
+      <Division Name="慈溪市"></Division>
+      <Division Name="奉化市"></Division>
+      <Division Name="象山县"></Division>
+      <Division Name="宁海县"></Division>
+    </City>
+    <City Name="温州市">
+      <Division Name="鹿城区"></Division>
+      <Division Name="龙湾区"></Division>
+      <Division Name="瓯海区"></Division>
+      <Division Name="瑞安市"></Division>
+      <Division Name="乐清市"></Division>
+      <Division Name="洞头县"></Division>
+      <Division Name="永嘉县"></Division>
+      <Division Name="平阳县"></Division>
+      <Division Name="苍南县"></Division>
+      <Division Name="文成县"></Division>
+      <Division Name="泰顺县"></Division>
+    </City>
+    <City Name="嘉兴市">
+      <Division Name="南湖区"></Division>
+      <Division Name="秀洲区"></Division>
+      <Division Name="海宁市"></Division>
+      <Division Name="平湖市"></Division>
+      <Division Name="桐乡市"></Division>
+      <Division Name="嘉善县"></Division>
+      <Division Name="海盐县"></Division>
+    </City>
+    <City Name="湖州市">
+      <Division Name="吴兴区"></Division>
+      <Division Name="南浔区"></Division>
+      <Division Name="德清县"></Division>
+      <Division Name="长兴县"></Division>
+      <Division Name="安吉县"></Division>
+    </City>
+    <City Name="绍兴市">
+      <Division Name="越城区"></Division>
+      <Division Name="柯桥区"></Division>
+      <Division Name="上虞区"></Division>
+      <Division Name="诸暨市"></Division>
+      <Division Name="嵊州市"></Division>
+      <Division Name="新昌县"></Division>
+    </City>
+    <City Name="金华市">
+      <Division Name="婺城区"></Division>
+      <Division Name="金东区"></Division>
+      <Division Name="兰溪市"></Division>
+      <Division Name="义乌市"></Division>
+      <Division Name="东阳市"></Division>
+      <Division Name="永康市"></Division>
+      <Division Name="武义县"></Division>
+      <Division Name="浦江县"></Division>
+      <Division Name="磐安县"></Division>
+    </City>
+    <City Name="衢州市">
+      <Division Name="柯城区"></Division>
+      <Division Name="衢江区"></Division>
+      <Division Name="江山市"></Division>
+      <Division Name="常山县"></Division>
+      <Division Name="开化县"></Division>
+      <Division Name="龙游县"></Division>
+    </City>
+    <City Name="舟山市">
+      <Division Name="定海区"></Division>
+      <Division Name="普陀区"></Division>
+      <Division Name="岱山县"></Division>
+      <Division Name="嵊泗县"></Division>
+    </City>
+    <City Name="台州市">
+      <Division Name="椒江区"></Division>
+      <Division Name="黄岩区"></Division>
+      <Division Name="路桥区"></Division>
+      <Division Name="温岭市"></Division>
+      <Division Name="临海市"></Division>
+      <Division Name="玉环县"></Division>
+      <Division Name="三门县"></Division>
+      <Division Name="天台县"></Division>
+      <Division Name="仙居县"></Division>
+    </City>
+    <City Name="丽水市">
+      <Division Name="莲都区"></Division>
+      <Division Name="龙泉市"></Division>
+      <Division Name="青田县"></Division>
+      <Division Name="缙云县"></Division>
+      <Division Name="遂昌县"></Division>
+      <Division Name="松阳县"></Division>
+      <Division Name="云和县"></Division>
+      <Division Name="庆元县"></Division>
+      <Division Name="景宁畲族自治县"></Division>
+    </City>
+  </Province>
+  <Province Name="宁夏回族自治区">
+    <City Name="银川市">
+      <Division Name="兴庆区"></Division>
+      <Division Name="金凤区"></Division>
+      <Division Name="西夏区"></Division>
+      <Division Name="灵武市"></Division>
+      <Division Name="永宁县"></Division>
+      <Division Name="贺兰县"></Division>
+    </City>
+  </Province>
+  
 </Citys> 

@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<string> list = ViewBag.List;
     List<string> HtmlList = ViewBag.Html;
+    Dictionary<string, Dictionary<string, List<string[]>>> DICT = ViewBag.Dict;
 }
 
 <div class="row">
@@ -92,7 +93,117 @@
             </div>
         </blockquote>
     </div>
+    <div class="col-lg-6">
+        <blockquote>
+            <i class="glyphicon glyphicon-credit-card"></i>&nbsp;
+            <a href="#" data-toggle="modal" data-target="#Current">导出现状值</a>
+            <div id="Current" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">导出现状数据</h4>
+                        </div>
+                        <form class="form-horizontal" action="/Home/CurrentDown" method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="" class="control-label col-lg-3">年份：</label>
+                                    <div class="col-lg-8">
+                                        <select name="Year" class="form-control">
+                                            @{
+                                                var Ayear = DateTime.Now.Year - 1;
+                                                while (Ayear > 2013)
+                                                {
+                                                    <option value="@Ayear">@(Ayear)年</option>
+                                                    Ayear--;
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label col-lg-3">省/直辖市：</label>
+                                    <div class="col-lg-6">
+                                        @foreach (var key in DICT.Keys)
+                                        {
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" value="@(key)" name="Region" />
+                                                    @(key)
+                                                </label>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label col-lg-3">市/区：</label>
+                                    <div class="col-lg-8">
+                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                            @foreach (var entry in DICT.Values)
+                                            {
+                                                foreach (var key in entry.Keys)
+                                                {
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" role="tab" id="@(key)">
+                                                            <h4 class="panel-title">
+                                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse@(key)" aria-expanded="true" aria-controls="collapse@(key)">
+                                                                    @(key)
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse@(key)" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@(key)">
+                                                            <div class="panel-body">
+                                                                <table class="table">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label class="checkbox-inline">
+                                                                                <input type="checkbox" value="@(key)" name="Region" />
+                                                                                <strong>@(key)</strong>
+                                                                            </label>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @foreach (var array in entry[key])
+                                                                    {
+                                                                        <tr>
+                                                                            @foreach (var group in array)
+                                                                            {
+                                                                                if (!string.IsNullOrEmpty(group))
+                                                                                {
+                                                                                    <td>
+                                                                                        <label class="checkbox-inline">
+                                                                                            <input type="checkbox" value="@(group)" name="Region" />@(group)
+                                                                                        </label>
+                                                                                    </td>
+                                                                                }
+
+                                                                            }
+                                                                        </tr>
+                                                                    }
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="col-lg-8 col-lg-offset-3">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                    <button type="submit" class="btn btn-primary">下载</button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </blockquote>
+    </div>
 </div>
+
 
 
 <script>

@@ -17,8 +17,8 @@ namespace IntensiveUse.Manager
     {
         private static readonly object syncRoot = new object();
 
-        private XmlDocument configXml;
-        private XmlDocument CityConfigXml;
+        private XmlDocument configXml { get; set; }
+        private XmlDocument CityConfigXml { get; set; }
         public ExcelManager()
         {
             configXml = new XmlDocument();
@@ -131,12 +131,12 @@ namespace IntensiveUse.Manager
 
         public bool Exit(string Name)
         {
-            var node = CityConfigXml.SelectSingleNode("/Citys/City[@Name='" + Name + "']");
+            var node = CityConfigXml.SelectSingleNode("/Citys/Province/City[@Name='" + Name + "']");
             if (node != null)
             {
                 return true;
             }
-            var nodes = CityConfigXml.SelectNodes("/Citys/City/Division");
+            var nodes = CityConfigXml.SelectNodes("/Citys/Province/City/Division");
             string val = string.Empty;
             for (var i = 0; i < nodes.Count; i++)
             {
@@ -153,7 +153,7 @@ namespace IntensiveUse.Manager
         public List<string> GetCity()
         {
             List<string> Citys = new List<string>();
-            var nodes = CityConfigXml.SelectNodes("/Citys/City");
+            var nodes = CityConfigXml.SelectNodes("/Citys/Province/City");
             if (nodes == null)
             {
                 throw new ArgumentException("地级市配置文件中未获取相关信息");
@@ -165,11 +165,57 @@ namespace IntensiveUse.Manager
             }
             return Citys;
         }
+        public List<string> GetProvinces()
+        {
+            var list = new List<string>();
+            var nodes = CityConfigXml.SelectNodes("/Citys/Province");
+            if (nodes == null)
+            {
+                throw new ArgumentException("配置文件错误");
+            }
+            for (var i = 0; i < nodes.Count; i++)
+            {
+                list.Add(nodes[i].Attributes["Name"].Value);
+            }
+            
+            return list;
+        }
+        public Dictionary<string, List<string>> GetCityDict(string province)
+        {
+            var dict = new Dictionary<string, List<string>>();
+            var nodes = CityConfigXml.SelectNodes("/Citys/Province[@Name='" + province + "']/City");
+            if (nodes != null)
+            {
+                for (var i = 0; i < nodes.Count; i++)
+                {
+                    var name = nodes[i].Attributes["Name"].Value;
+                    if (!dict.ContainsKey(name))
+                    {
+                        dict.Add(name, GetDistrict(name));
+                    }
+                }
+            }
+            return dict;
+        }
+
+        public Dictionary<string, Dictionary<string, List<string[]>>> GetAllProvinces()
+        {
+            var dict = new Dictionary<string, Dictionary<string, List<string[]>>>();
+            var list = GetProvinces();
+            foreach (var item in list)
+            {
+                if (!dict.ContainsKey(item))
+                {
+                    dict.Add(item, GetCityDict(item).DictToTable());
+                }
+            }
+            return dict;
+        } 
 
         public List<string> GetDistrict(string City)
         {
             List<string> Disticts = new List<string>();
-            var node = CityConfigXml.SelectSingleNode("/Citys/City[@Name='" + City + "']");
+            var node = CityConfigXml.SelectSingleNode("/Citys/Province/City[@Name='" + City + "']");
             if (node == null)
             {
                 throw new ArgumentException("未获取"+City+"所辖区相关信息");

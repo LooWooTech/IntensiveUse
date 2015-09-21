@@ -48,12 +48,22 @@ namespace IntensiveUse.Models
         public string FileTypeName { get; set; }
     }
 
+    public class CurrentSituation
+    {
+        public int Year { get; set; }
+        public string[] Regions { get; set; }
+    }
+
 
     public enum UploadFileExcel
     {
         表1 = 0,
         表2 = 1,
         表3 = 2
+    }
+    public enum SpecialExcel
+    {
+        区域用地状况整体评价指标现状值汇总表=0
     }
 
   

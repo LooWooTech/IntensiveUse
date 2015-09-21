@@ -176,6 +176,7 @@
     <Compile Include="Form\ScheduleBThree.cs" />
     <Compile Include="Form\ScheduleBTwo.cs" />
     <Compile Include="Form\ScheduleATwo.cs" />
+    <Compile Include="Form\ScheduleCurrent.cs" />
     <Compile Include="Form\TableBase.cs" />
     <Compile Include="Form\TableOne.cs" />
     <Compile Include="Form\TableThree.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\ExcelHelper.cs" />
     <Compile Include="Helper\JsonExtentsions.cs" />
+    <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="Helper\UploadHelper.cs" />
     <Compile Include="Manager\AgricultureManager.cs" />
     <Compile Include="Manager\CommonManager.cs" />
@@ -340,6 +342,7 @@
     <Content Include="EXCEL\附表1B4.xls" />
     <Content Include="EXCEL\附表1B5.xls" />
     <Content Include="EXCEL\附表1B6.xls" />
+    <Content Include="EXCEL\CurrentSituation.xls" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <Content Include="Views\Home\Change.cshtml" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntensiveUse.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -48,6 +49,23 @@ namespace IntensiveUse
             }
             file.SaveAs(GetAbsoluteUploadDirectory(fileName));
             return UploadDirectory + fileName;
+        }
+
+        public static CurrentSituation GetRegions(this HttpContextBase context)
+        {
+            var current = new CurrentSituation();
+            var Year=context.Request.Form["Year"];
+            int value = 0;
+            if (int.TryParse(Year, out value))
+            {
+                current.Year = value;
+            }
+            var str = context.Request.Form["Region"];
+            if (!string.IsNullOrEmpty(str))
+            {
+                current.Regions = str.Split(',');
+            }
+            return current;
         }
     }
 }
