@@ -12,6 +12,7 @@ namespace IntensiveUse.Form
     public class ScheduleAFour:ScheduleBase,ISchedule
     {
         public List<double> CitiesValue { get; set; }
+        public int a { get; set; }
         public ScheduleAFour()
         {
             this.Start = 2;
@@ -32,8 +33,8 @@ namespace IntensiveUse.Form
             }
             TempRow = sheet.GetRow(Start);
             this.Year = Year;
-
-            this.CID = Core.ExcelManager.GetSuperiorID(City);
+            this.a = Core.ExcelManager.GetSuperiorID(City);
+            this.CID = Core.ExcelManager.GetID(City);
 
             this.City = City;
             this.Disticts = Core.ExcelManager.GetDistrict(City);
@@ -86,7 +87,8 @@ namespace IntensiveUse.Form
 
         public void Message(ManagerCore Core)
         {
-            Situation[] Cities = Core.EconmoyManager.Find(Year, CID);
+            //浙江省数据
+            Situation[] Cities = Core.EconmoyManager.Find(Year,a);
             if (Cities == null || Cities.Count() != 2)
             {
                 throw new ArgumentException("未读取到上一级数据");
@@ -102,10 +104,19 @@ namespace IntensiveUse.Form
                 Cities[1].Extent,
                 m
             };
+            Situation[] Dcities = Core.EconmoyManager.Find(Year, CID);
             foreach (var item in Disticts)
             {
                 int ID = Core.ExcelManager.GetID(item);
-                var one= Core.EconmoyManager.Gain(Year, ID, Cities);
+                LandUseChange one;
+                if (item == City)
+                {
+                    one = Core.EconmoyManager.Gain(Year, ID, Cities);
+                }
+                else
+                {
+                    one= Core.EconmoyManager.Gain(Year, ID, Dcities);
+                }
                 Queue<double> queue = Core.ConstructionLandManager.TranslateOfLandUseChange(one);
                 if (!DictData.ContainsKey(item))
                 {
