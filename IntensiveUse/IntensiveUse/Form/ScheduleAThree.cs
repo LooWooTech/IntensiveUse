@@ -1,6 +1,7 @@
 ﻿using IntensiveUse.Helper;
 using IntensiveUse.Manager;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace IntensiveUse.Form
     public class ScheduleAThree:ScheduleBase,ISchedule
     {
         public Dictionary<string, List<string>> DictValue { get; set; }
+        private ICell TemplateCell { get; set; }
          
         public ScheduleAThree()
         {
@@ -41,6 +43,7 @@ namespace IntensiveUse.Form
             else
             {
                 Disticts = Core.ExcelManager.GetDistrict(City);
+                Disticts.Add(City);
             }
             this.Year = Year;
             this.City = City;
@@ -48,17 +51,49 @@ namespace IntensiveUse.Form
             int StartRow = 0;
             int StartLine=Begin;
             int SerialNumber = 0;
+
+            ICell cell = null;
+            foreach (var key in DictValue.Keys)
+            {
+                StartRow = Start;
+                cell = GetCell(sheet, StartRow++, StartLine);
+                if (string.IsNullOrEmpty(Distict))
+                {
+                    cell.SetCellValue(++SerialNumber);
+                    cell = GetCell(sheet, StartRow++, StartLine);
+                }
+                cell.SetCellValue(key);
+                var values = DictValue[key];
+                foreach (var entry in values)
+                {
+                    cell = GetCell(sheet, StartRow++, StartLine);
+                    cell.SetCellValue(entry);
+                }
+                StartLine++;
+            }
+            if (string.IsNullOrEmpty(Distict))
+            {
+                StartLine--;
+                sheet.AddMergedRegion(new CellRangeAddress(this.Start, this.Start + 1, StartLine, StartLine));
+                cell = GetCell(sheet, this.Start, StartLine);
+                cell.SetCellValue("城市行政辖区整体");
+            }
+
+            #region
+            /*
             foreach (var item in DictValue.Keys)
             {
                 StartRow = Start;
                 IRow row = ExcelHelper.OpenRow(ref sheet, StartRow);
                 StartRow++;
-                ICell cell = ExcelHelper.OpenCell(ref row, StartLine);
+                TemplateCell = row.GetCell(this.Begin);
+                ICell cell = ExcelHelper.OpenCell(ref row, StartLine,TemplateCell);
                 if (string.IsNullOrEmpty(Distict))
                 {
                     cell.SetCellValue(++SerialNumber);
                     row = ExcelHelper.OpenRow(ref sheet, StartRow++);
-                    cell = ExcelHelper.OpenCell(ref row, StartLine);
+                    TemplateCell = row.GetCell(this.Begin);
+                    cell = ExcelHelper.OpenCell(ref row, StartLine,TemplateCell);
                 }
                 
                 cell.SetCellValue(item);
@@ -66,12 +101,26 @@ namespace IntensiveUse.Form
                 foreach (var entity in values)
                 {
                     row = ExcelHelper.OpenRow(ref sheet, StartRow++);
-                    cell = ExcelHelper.OpenCell(ref row, StartLine);
+                    TemplateCell = row.GetCell(this.Begin);
+                    cell = ExcelHelper.OpenCell(ref row, StartLine,TemplateCell);
                     cell.SetCellValue(entity);
                 }
                 StartLine++;
-            }
+            }*/
+            #endregion
             return workbook;
+        }
+        private ICell GetCell(ISheet sheet, int IndexRow, int IndexLine)
+        {
+            IRow row = sheet.GetRow(IndexRow);
+            TemplateCell = row.GetCell(this.Begin);
+            ICell cell = row.GetCell(IndexLine);
+            if (cell == null)
+            {
+                cell = row.CreateCell(IndexLine, TemplateCell.CellType);
+                cell.CellStyle = TemplateCell.CellStyle;
+            }
+            return cell;
         }
 
         public void Message(ManagerCore Core)

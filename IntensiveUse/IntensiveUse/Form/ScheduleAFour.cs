@@ -1,6 +1,7 @@
 ﻿using IntensiveUse.Helper;
 using IntensiveUse.Manager;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +12,11 @@ namespace IntensiveUse.Form
     public class ScheduleAFour:ScheduleBase,ISchedule
     {
         public List<double> CitiesValue { get; set; }
-        public LandUseChange Landusechange { get; set; }
         public ScheduleAFour()
         {
             this.Start = 2;
             this.Begin = 2;
             this.SerialNumber = 6;
-            if (Landusechange == null)
-            {
-                Landusechange = new LandUseChange()
-                {
-                    ESituation = new Situation(),
-                    CSituation = new Situation(),
-                };
-            }
         }
         public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict,int[] Indexs)
         {
@@ -40,12 +32,15 @@ namespace IntensiveUse.Form
             }
             TempRow = sheet.GetRow(Start);
             this.Year = Year;
-            this.CID = Core.ExcelManager.GetID(City);
+
+            this.CID = Core.ExcelManager.GetSuperiorID(City);
+
             this.City = City;
             this.Disticts = Core.ExcelManager.GetDistrict(City);
+            this.Disticts.Add(City);
             Message(Core);
             int Count = DictData.Count;
-            IRow row = ExcelHelper.OpenRow(ref sheet,Start+2);
+            IRow row = ExcelHelper.OpenRow(ref sheet,Start+1);
             ICell cell = null;
             int line = Begin;
             //填写上一级行政区 行数据
@@ -55,16 +50,16 @@ namespace IntensiveUse.Form
                 cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 cell.SetCellValue(Math.Round(item, Indexs[++serial]));
             }
-            row = ExcelHelper.OpenRow(ref sheet, Start + 1);
-            Queue<double> queue = Core.ConstructionLandManager.TranslateOfLandUseChange(Landusechange);
-            line = Begin;
-            //填写行政辖区整体  行数据
-            serial = 0;
-            foreach (var item in queue)
-            {
-                cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                cell.SetCellValue(Math.Round(item, Indexs[serial++]));
-            }
+            //row = ExcelHelper.OpenRow(ref sheet, Start + 1);
+            //Queue<double> queue = Core.ConstructionLandManager.TranslateOfLandUseChange(Landusechange);
+            //line = Begin;
+            ////填写行政辖区整体  行数据
+            //serial = 0;
+            //foreach (var item in queue)
+            //{
+            //    cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            //    cell.SetCellValue(Math.Round(item, Indexs[serial++]));
+            //}
             sheet.ShiftRows(Start + 1, sheet.LastRowNum, DictData.Count-1);
             int SerialNumber = 0;
             foreach (var item in DictData.Keys)
@@ -83,8 +78,9 @@ namespace IntensiveUse.Form
                     cell.SetCellValue(Math.Round(val, Indexs[serial++]));
                 }
                 cell = OpenCell(ref row, line++);
-
             }
+            sheet.AddMergedRegion(new CellRangeAddress(Start + SerialNumber-1, Start + SerialNumber-1, 0, 1));
+            row.GetCell(0).SetCellValue("行政辖区整体");
             return workbook;
         }
 
@@ -110,17 +106,11 @@ namespace IntensiveUse.Form
             {
                 int ID = Core.ExcelManager.GetID(item);
                 var one= Core.EconmoyManager.Gain(Year, ID, Cities);
-                Landusechange += one;
                 Queue<double> queue = Core.ConstructionLandManager.TranslateOfLandUseChange(one);
                 if (!DictData.ContainsKey(item))
                 {
                     DictData.Add(item, queue);
                 }
-            }
-
-            if (DictData.Count > 0)
-            {
-                Landusechange = Landusechange / DictData.Count;
             }
         }
     }

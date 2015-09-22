@@ -16,7 +16,6 @@ namespace IntensiveUse.Manager
     public class ExcelManager:ManagerBase
     {
         private static readonly object syncRoot = new object();
-
         private XmlDocument configXml { get; set; }
         private XmlDocument CityConfigXml { get; set; }
         public ExcelManager()
@@ -111,7 +110,6 @@ namespace IntensiveUse.Manager
             }
             return node.Attributes["Path"].Value;
         }
-
         public int[] GetDigits(string excelName)
         {
             var nodes = configXml.SelectNodes("/Tables/Table[@Title='" + excelName + "']/Digits/Digit");
@@ -127,8 +125,6 @@ namespace IntensiveUse.Manager
             }
             return null;
         }
-
-
         public bool Exit(string Name)
         {
             var node = CityConfigXml.SelectSingleNode("/Citys/Province/City[@Name='" + Name + "']");
@@ -149,7 +145,6 @@ namespace IntensiveUse.Manager
             }
             return false;
         }
-
         public List<string> GetCity()
         {
             List<string> Citys = new List<string>();
@@ -197,7 +192,16 @@ namespace IntensiveUse.Manager
             }
             return dict;
         }
-
+        public string GetSuperior(string City)
+        {
+            var node = CityConfigXml.SelectSingleNode("/Citys/Province/City[@Name='" + City + "']");
+            if (node == null)
+            {
+                throw new ArgumentException("未获取" + City + "所辖区相关信息");
+            }
+            var pNode = node.ParentNode;
+            return pNode.Attributes["Name"].Value;
+        }
         public Dictionary<string, Dictionary<string, List<string[]>>> GetAllProvinces()
         {
             var dict = new Dictionary<string, Dictionary<string, List<string[]>>>();
@@ -211,7 +215,6 @@ namespace IntensiveUse.Manager
             }
             return dict;
         } 
-
         public List<string> GetDistrict(string City)
         {
             List<string> Disticts = new List<string>();
@@ -228,7 +231,6 @@ namespace IntensiveUse.Manager
             }
             return Disticts;
         }
-
         public string GetStrDistict(string City)
         {
             List<string> Distict = GetDistrict(City);
@@ -246,7 +248,6 @@ namespace IntensiveUse.Manager
             }
             return str;
         }
-
         public Region Find(string Name)
         {
             using (var db = GetIntensiveUseContext())
@@ -263,8 +264,6 @@ namespace IntensiveUse.Manager
             }
             return region.ID;
         }
-
-       
         //public void Save(Dictionary<string, Economy> DICT, int ID)
         //{
         //    using (var db = GetIntensiveUseContext())
@@ -396,7 +395,6 @@ namespace IntensiveUse.Manager
         //        }
         //    }
         //}
-
         public void Save<T>(Dictionary<int, T> DICT, int ID)
         {
             using (var db = GetIntensiveUseContext())
@@ -512,8 +510,6 @@ namespace IntensiveUse.Manager
                 }
             }
         }
-
-
         public int GetID(string Name)
         {
             if (string.IsNullOrEmpty(Name))
@@ -529,6 +525,11 @@ namespace IntensiveUse.Manager
             {
                 return region.ID;
             }
+        }
+        public int GetSuperiorID(string City)
+        {
+            var superior = GetSuperior(City);
+            return GetID(superior);
         }
 
         public void  Delete(int Year, int ID)

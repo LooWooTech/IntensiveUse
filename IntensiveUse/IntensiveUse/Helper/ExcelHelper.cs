@@ -101,10 +101,19 @@ namespace IntensiveUse.Helper
             return row;
         }
 
-        public static ICell OpenCell(ref IRow row ,int ID){
+        public static ICell OpenCell(ref IRow row ,int ID,ICell TemplateCell=null){
             ICell cell=row.GetCell(ID,MissingCellPolicy.CREATE_NULL_AS_BLANK);
             if(cell==null){
-                cell=row.CreateCell(ID);
+                if (TemplateCell != null)
+                {
+                    cell = row.CreateCell(ID, TemplateCell.CellType);
+                    cell.CellStyle = TemplateCell.CellStyle;
+                }
+                else
+                {
+                    cell = row.CreateCell(ID);
+                }
+                
             }
             return cell;
         }
