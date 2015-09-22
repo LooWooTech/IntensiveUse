@@ -34,7 +34,7 @@ namespace IntensiveUse.Form
             {
                 throw new ArgumentException("未读取模板文件中的sheet");
             }
-            this.CID=Core.ExcelManager.GetID(City);
+            this.CID=Core.ExcelManager.GetSuperiorID(City);
             this.Year = Year;
             Message(Core);
             IRow row = null;
