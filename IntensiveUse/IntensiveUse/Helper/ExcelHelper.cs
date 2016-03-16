@@ -11,6 +11,11 @@ namespace IntensiveUse.Helper
 {
     public  static class ExcelHelper
     {
+        /// <summary>
+        /// 直接打开Excel  获取Sheet
+        /// </summary>
+        /// <param name="FilePath"></param>
+        /// <returns></returns>
         public static ISheet Open(string FilePath)
         {
             IWorkbook workbook = OpenWorkbook(FilePath);
@@ -18,6 +23,11 @@ namespace IntensiveUse.Helper
             return sheet;
         }
 
+        /// <summary>
+        /// 打开Excel  获取Workbook
+        /// </summary>
+        /// <param name="FilePath"></param>
+        /// <returns></returns>
         public static IWorkbook OpenWorkbook(string FilePath)
         {
             IWorkbook workbook = null;

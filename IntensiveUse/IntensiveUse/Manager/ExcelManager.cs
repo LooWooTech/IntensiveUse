@@ -192,12 +192,22 @@ namespace IntensiveUse.Manager
             }
             return dict;
         }
-        public string GetSuperior(string City)
+        public string GetCSuperior(string City)
         {
             var node = CityConfigXml.SelectSingleNode("/Citys/Province/City[@Name='" + City + "']");
             if (node == null)
             {
                 throw new ArgumentException("未获取" + City + "所辖区相关信息");
+            }
+            var pNode = node.ParentNode;
+            return pNode.Attributes["Name"].Value;
+        }
+        public string GetDSuperior(string Distict)
+        {
+            var node = CityConfigXml.SelectSingleNode("/Citys/Province/City/Division[@Name='" + Distict + "']");
+            if (node == null)
+            {
+                throw new ArgumentException("未获取县级市"+Distict+"相关信息");
             }
             var pNode = node.ParentNode;
             return pNode.Attributes["Name"].Value;
@@ -253,6 +263,13 @@ namespace IntensiveUse.Manager
             using (var db = GetIntensiveUseContext())
             {
                 return db.Regions.Where(e => e.Name.ToLower() == Name.ToLower()).FirstOrDefault();
+            }
+        }
+        public Region Find(int id)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                return db.Regions.Find(id);
             }
         }
         public int Add(Region region)
@@ -510,6 +527,123 @@ namespace IntensiveUse.Manager
                 }
             }
         }
+        public void Save<T>(List<T> list,int rid)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                foreach(var t in list)
+                {
+                    if(t is People)
+                    {
+                        People m = t as People;
+                        var entry = db.Peoples.FirstOrDefault(e => e.RID == rid && e.Year == m.Year);
+                        if (entry == null)
+                        {
+                            db.Peoples.Add(m);
+                        }
+                        else
+                        {
+                            m.ID = entry.ID;
+                            db.Entry(entry).CurrentValues.SetValues(m);
+                        }
+                    }else if(t is Economy)
+                    {
+                        var m = t as Economy;
+                        var entry = db.Economys.FirstOrDefault(e => e.RID == rid && e.Year == m.Year);
+                        if (entry == null)
+                        {
+                            db.Economys.Add(m);
+                        }
+                        else
+                        {
+                            m.ID = entry.ID;
+                            db.Entry(entry).CurrentValues.SetValues(m);
+                        }
+                    }else if( t is AgricultureLand)
+                    {
+                        var m = t as AgricultureLand;
+                        var entry = db.Agricultures.FirstOrDefault(e => e.RID == rid && e.Year == m.Year);
+
+                        if (entry == null)
+                        {
+                            db.Agricultures.Add(m);
+                        }
+                        else
+                        {
+                            m.ID = entry.ID;
+                            db.Entry(entry).CurrentValues.SetValues(m);
+                        }
+                    }else if( t is ConstructionLand)
+                    {
+                        var m = t as ConstructionLand;
+                        var entry = db.Constructions.FirstOrDefault(e => e.RID == rid && e.Year == m.Year);
+                        if (entry == null)
+                        {
+                            db.Constructions.Add(m);
+                        }
+                        else
+                        {
+                            m.ID = entry.ID;
+                            db.Entry(entry).CurrentValues.SetValues(m);
+                        }
+                    }else if(t is NewConstruction)
+                    {
+                        var m = t as NewConstruction;
+                        var entry = db.NewConstructions.FirstOrDefault(e => e.CID == rid && e.Year == m.Year);
+                        if (entry == null)
+                        {
+                            db.NewConstructions.Add(m);
+                        }
+                        else
+                        {
+                            m.ID = entry.ID;
+                            db.Entry(entry).CurrentValues.SetValues(m);
+                        }
+                    }else if(t is LandSupply)
+                    {
+                        var m = t as LandSupply;
+                        var entry = db.LandSupplys.FirstOrDefault(e => e.RID == rid && e.Year == m.Year);
+                        if (entry == null)
+                        {
+                            db.LandSupplys.Add(m);
+                        }
+                        else
+                        {
+                            m.ID = entry.ID;
+                            db.Entry(entry).CurrentValues.SetValues(m);
+                        }
+                    }else if(t is Ratify)
+                    {
+                        var m = t as Ratify;
+                        var entry = db.Ratifys.FirstOrDefault(e => e.RID == rid && e.Year == m.Year);
+                        if (entry == null)
+                        {
+                            db.Ratifys.Add(m);
+                        }
+                        else
+                        {
+                            m.ID = entry.ID;
+                            db.Entry(entry).CurrentValues.SetValues(m);
+                        }
+                    }else if(t is Superior)
+                    {
+                        var m = t as Superior;
+                        var entry = db.Superiors.FirstOrDefault(e => e.RID == rid && e.Year == m.Year);
+                        if (entry == null)
+                        {
+                            db.Superiors.Add(m);
+                        }
+                        else
+                        {
+                            m.ID = entry.ID;
+                            db.Entry(entry).CurrentValues.SetValues(m);
+                        }
+                    }
+
+                    db.SaveChanges();
+                }
+            }
+        }
         public int GetID(string Name)
         {
             if (string.IsNullOrEmpty(Name))
@@ -526,9 +660,28 @@ namespace IntensiveUse.Manager
                 return region.ID;
             }
         }
-        public int GetSuperiorID(string City)
+        public int GetID(Region region)
         {
-            var superior = GetSuperior(City);
+            if (region == null) return 0;
+            var entry = Find(region.ID);
+            if (entry == null)
+            {
+                return Add(region);
+            }
+            else
+            {
+                return entry.ID;
+            }
+        }
+        public int GetSuperiorCID(string City)
+        {
+            var superior = GetCSuperior(City);
+            return GetID(superior);
+        }
+
+        public int GetSuperiorDID(string Distict)
+        {
+            var superior = GetDSuperior(Distict);
             return GetID(superior);
         }
 

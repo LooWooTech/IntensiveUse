@@ -13,8 +13,14 @@ namespace IntensiveUse.Form
         private const int Begin = 12;
         public int[] Serials = { 12, 13, 14, 15, 16, 17, 18, 20, 21,22,24 }; 
         
+        /// <summary>
+        /// 所辖区、县、市名
+        /// </summary>
         public string Regimentatio { get; set; }
         public int Count{get;set;}
+        /// <summary>
+        /// 年份  对应的
+        /// </summary>
         public Dictionary<int, People> DictPeople { get; set; }
         public Dictionary<int, Economy> DictEconomy { get; set; }
         public Dictionary<int, Economy> DictSuperior { get; set; }

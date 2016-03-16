@@ -33,7 +33,7 @@ namespace IntensiveUse.Form
             }
             TempRow = sheet.GetRow(Start);
             this.Year = Year;
-            this.a = Core.ExcelManager.GetSuperiorID(City);
+            this.a = Core.ExcelManager.GetSuperiorCID(City);
             this.CID = Core.ExcelManager.GetID(City);
 
             this.City = City;

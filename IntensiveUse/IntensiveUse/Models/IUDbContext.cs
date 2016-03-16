@@ -25,5 +25,6 @@ namespace IntensiveUse.Models
         public DbSet<SubIndex> SubIndexs { get; set; }
         public DbSet<Statistic> Statistics { get; set; }
         public DbSet<Foundation> Foundations { get; set; }
+        public DbSet<Superior> Superiors { get; set; }
     }
 }

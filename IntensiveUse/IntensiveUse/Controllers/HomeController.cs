@@ -28,7 +28,6 @@ namespace IntensiveUse.Controllers
             ViewBag.History = Core.StatisticsManager.Gain(City);
             return View();
         }
-
         public ActionResult County(string City,string County)
         {
             if (string.IsNullOrEmpty(County)||string.IsNullOrEmpty(City))
@@ -41,7 +40,6 @@ namespace IntensiveUse.Controllers
             ViewBag.History = Core.StatisticsManager.Gain(County);
             return View();
         }
-
         [HttpPost]
         public ActionResult UploadFile(UploadFileExcel Type,string Name,string City,bool Flag)
         {
@@ -87,7 +85,6 @@ namespace IntensiveUse.Controllers
                 return RedirectToAction("County", new { City = City, County = Name });
             }
         }
-
         [HttpPost]
         public ActionResult UploadOutExcel(OutputExcel Type,string City,int Year,string County)
         {
@@ -134,8 +131,6 @@ namespace IntensiveUse.Controllers
                 return RedirectToAction("County", new { City = City, County = County });
             }
         }
-
-
         [HttpPost]
         public ActionResult DownLoad(OutputExcel Excel,int Year,string City,string County)
         {
@@ -147,13 +142,11 @@ namespace IntensiveUse.Controllers
             byte[] fileContents = ms.ToArray();
             return File(fileContents, "application/ms-excel",Excel.ToString()+Excel.GetDescription()+".xls");
         }
-
         public ActionResult GetForDivision(string City)
         {
             List<string> html = Core.ExcelManager.GetDistrict(City);
             return HtmlResult(html);
         }
-
         public ActionResult DownLoadTemplet(UploadFileExcel Type)
         {
             IWorkbook workbook = null;
@@ -175,8 +168,6 @@ namespace IntensiveUse.Controllers
             byte[] fileContents = ms.ToArray();
             return File(fileContents, "application/ms-excel", Type.ToString() + "模板.xls");
         }
-
-
         public ActionResult Delete(string County, string City, int Year)
         {
             int RID = 0;
@@ -199,7 +190,6 @@ namespace IntensiveUse.Controllers
             }
             //return View();
         }
-
         [HttpPost]
         public ActionResult CurrentDown()
         {
@@ -211,6 +201,15 @@ namespace IntensiveUse.Controllers
             ms.Flush();
             byte[] fileContents = ms.ToArray();
             return File(fileContents, "application/ms-excel", SpecialExcel.区域用地状况整体评价指标现状值汇总表.ToString() + ".xls");
+        }
+        [HttpPost]
+        public ActionResult UploadNation()
+        {
+            var filePath = Core.FileManager.SaveFile(HttpContext);
+            var engine = new TableNationWide();
+            engine.Gain(filePath);
+            engine.Save(Core);
+            return View();
         }
 
         

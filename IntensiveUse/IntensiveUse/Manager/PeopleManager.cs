@@ -30,6 +30,17 @@ namespace IntensiveUse.Manager
                 }
             }
         }
+        public void Save(List<People> list,int rid)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                var oldList = db.Peoples.Where(e => e.RID == rid).ToList();
+                db.Peoples.RemoveRange(oldList);
+                db.SaveChanges();
+                db.Peoples.AddRange(list);
+                db.SaveChanges();
+            }
+        }
 
 
         public double[] Get(int Year, int ID)

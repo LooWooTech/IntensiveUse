@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -178,6 +179,7 @@
     <Compile Include="Form\ScheduleATwo.cs" />
     <Compile Include="Form\ScheduleCurrent.cs" />
     <Compile Include="Form\TableBase.cs" />
+    <Compile Include="Form\TableNationWide.cs" />
     <Compile Include="Form\TableOne.cs" />
     <Compile Include="Form\TableThree.cs" />
     <Compile Include="Form\TableTwo.cs" />
@@ -222,6 +224,7 @@
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Statistic.cs" />
     <Compile Include="Models\SubIndex.cs" />
+    <Compile Include="Models\Superior.cs" />
     <Compile Include="Models\UploadFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

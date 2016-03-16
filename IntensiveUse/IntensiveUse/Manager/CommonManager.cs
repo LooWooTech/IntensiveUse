@@ -8,6 +8,12 @@ namespace IntensiveUse.Manager
 {
     public class CommonManager:ManagerBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="DICT"> </param>
+        /// <param name="ID">Region  ID</param>
         public void UpDate<T>(Dictionary<int, T> DICT, int ID)
         {
             using (var db = GetIntensiveUseContext())

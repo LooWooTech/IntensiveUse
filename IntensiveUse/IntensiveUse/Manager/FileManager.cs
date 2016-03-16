@@ -14,8 +14,12 @@ namespace IntensiveUse.Manager
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public string SaveFile(HttpContextBase context,string Name)
+        public string SaveFile(HttpContextBase context,string Name=null)
         {
+            if (string.IsNullOrEmpty(Name))
+            {
+                Name = "全国数据";
+            }
             var file = UploadHelper.GetPostedFile(context);
             var ext = Path.GetExtension(file.FileName).ToLower();
             if (ext != ".xls" && ext != ".xlsx")

@@ -17,9 +17,17 @@ namespace IntensiveUse.Models
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         /// <summary>
-        /// 小计
+        /// 小计  建设用地面积
         /// </summary>
         public double SubTotal { get; set; }
+        /// <summary>
+        /// 城乡建设用地面积  （全国数据导入增加）
+        /// </summary>
+        public double TowCouConstruction { get; set; }
+        /// <summary>
+        /// 城镇工矿用地面积  （全国数据导入增加）
+        /// </summary>
+        public double TownMiningLease { get; set; }
         /// <summary>
         /// 城镇用地
         /// </summary>
