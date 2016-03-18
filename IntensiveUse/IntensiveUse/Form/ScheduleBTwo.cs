@@ -18,6 +18,10 @@ namespace IntensiveUse.Form
 
             return workbook;
         }
+        public IWorkbook AWrite(string filePath, ManagerCore core, int year, string province, string belongCity, string name, int[] indexs)
+        {
+            return null;
+        }
 
         public void Message(ManagerCore Core, int ID)
         {

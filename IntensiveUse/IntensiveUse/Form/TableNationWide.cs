@@ -13,26 +13,28 @@ namespace IntensiveUse.Form
     {
         private const int _start = 1;
         private const int _yearIndex = 8;
-        private List<Region> _regions { get; set; }
-        public Dictionary<Region,Dictionary<int,People>> DictPeople { get; set; }
-        public Dictionary<Region,Dictionary<int,Economy>> DictEconomy { get; set; }
-        public Dictionary<Region,Dictionary<int,AgricultureLand>> DictArgicultureLand { get; set; }
-        public Dictionary<Region,Dictionary<int,ConstructionLand>> DictConstructionLand { get; set; }
-        public Dictionary<Region,Dictionary<int,NewConstruction>> DictNewConstruction { get; set; }
-        public Dictionary<Region,Dictionary<int,LandSupply>> DictLandSupply { get; set; }
-        public Dictionary<Region,Dictionary<int,Ratify>> DictRatify { get; set; }
-        public Dictionary<Region,Dictionary<int,Superior>> DictSuperior { get; set; }
+        //private List<Region> _regions { get; set; }
+        private Dictionary<string,Region> _dictRegions { get; set; }
+        public Dictionary<string,Dictionary<int,People>> DictPeople { get; set; }
+        public Dictionary<string,Dictionary<int,Economy>> DictEconomy { get; set; }
+        public Dictionary<string,Dictionary<int,AgricultureLand>> DictArgicultureLand { get; set; }
+        public Dictionary<string,Dictionary<int,ConstructionLand>> DictConstructionLand { get; set; }
+        public Dictionary<string,Dictionary<int,NewConstruction>> DictNewConstruction { get; set; }
+        public Dictionary<string,Dictionary<int,LandSupply>> DictLandSupply { get; set; }
+        public Dictionary<string,Dictionary<int,Ratify>> DictRatify { get; set; }
+        public Dictionary<string,Dictionary<int,Superior>> DictSuperior { get; set; }
         public TableNationWide()
         {
-            _regions = new List<Region>();
-            DictPeople = new Dictionary<Region, Dictionary<int, People>>();
-            DictEconomy = new Dictionary<Region, Dictionary<int, Economy>>();
-            DictArgicultureLand = new Dictionary<Region, Dictionary<int, AgricultureLand>>();
-            DictConstructionLand = new Dictionary<Region, Dictionary<int, ConstructionLand>>();
-            DictNewConstruction = new Dictionary<Region, Dictionary<int, NewConstruction>>();
-            DictLandSupply = new Dictionary<Region, Dictionary<int, LandSupply>>();
-            DictRatify = new Dictionary<Region, Dictionary<int, Ratify>>();
-            DictSuperior = new Dictionary<Region, Dictionary<int, Models.Superior>>();
+            //_regions = new List<Region>();
+            _dictRegions = new Dictionary<string, Region>();
+            DictPeople = new Dictionary<string, Dictionary<int, People>>();
+            DictEconomy = new Dictionary<string, Dictionary<int, Economy>>();
+            DictArgicultureLand = new Dictionary<string, Dictionary<int, AgricultureLand>>();
+            DictConstructionLand = new Dictionary<string, Dictionary<int, ConstructionLand>>();
+            DictNewConstruction = new Dictionary<string, Dictionary<int, NewConstruction>>();
+            DictLandSupply = new Dictionary<string, Dictionary<int, LandSupply>>();
+            DictRatify = new Dictionary<string, Dictionary<int, Ratify>>();
+            DictSuperior = new Dictionary<string, Dictionary<int, Models.Superior>>();
         }
 
         /// <summary>
@@ -52,7 +54,8 @@ namespace IntensiveUse.Form
                 Zone = names[0],
                 Province = names[1],
                 BelongCity = names[2],
-                Evalutaor = (Evaluator)Enum.Parse(typeof(Evaluator), names[3]),
+                Evalutaor=names[3],
+                //Evalutaor = (Evaluator)Enum.Parse(typeof(Evaluator), names[3]),
                 FactorCode = names[4],
                 Name = names[5],
                 Code = names[6],
@@ -197,149 +200,150 @@ namespace IntensiveUse.Form
         /// <param name="row"></param>
         /// <param name="Year"></param>
         /// <param name="canton"></param>
-        private void GainForValue(IRow row,int Year,Region region)
+        private void GainForValue(IRow row,int Year,string key)
         {
+            Console.WriteLine(string.Format("年份：{0} 的人口数据",Year));
             #region    人口数据
             var people = GetPeople(row, Year);
             if (people != null)
             {
-                if (!DictPeople.ContainsKey(region))
+                if (!DictPeople.ContainsKey(key))
                 {
-                    DictPeople.Add(region, new Dictionary<int, People>() { { Year, people } });
+                    DictPeople.Add(key, new Dictionary<int, People>() { { Year, people } });
                 }
                 else
                 {
-                    if (!DictPeople[region].ContainsKey(Year))
+                    if (!DictPeople[key].ContainsKey(Year))
                     {
-                        DictPeople[region].Add(Year, people);
+                        DictPeople[key].Add(Year, people);
                     }
                 }
             }
             #endregion
-
+            Console.WriteLine(string.Format("年份：{0} 的生产值数据", Year));
             #region  生产值
             var economy = GetEconomy(row, Year);
             if (economy != null)
             {
-                if (!DictEconomy.ContainsKey(region))
+                if (!DictEconomy.ContainsKey(key))
                 {
-                    DictEconomy.Add(region, new Dictionary<int, Economy>() { { Year, economy } });
+                    DictEconomy.Add(key, new Dictionary<int, Economy>() { { Year, economy } });
                 }
                 else
                 {
-                    if (!DictEconomy[region].ContainsKey(Year))
+                    if (!DictEconomy[key].ContainsKey(Year))
                     {
-                        DictEconomy[region].Add(Year, economy);
+                        DictEconomy[key].Add(Year, economy);
                     }
                 }
             }
             #endregion
-
+            Console.WriteLine(string.Format("年份：{0} 的农用地数据", Year));
             #region  农用地
             var agricultureland = GetAgricultureLand(row, Year);
             if (agricultureland != null)
             {
-                if (!DictArgicultureLand.ContainsKey(region))
+                if (!DictArgicultureLand.ContainsKey(key))
                 {
-                    DictArgicultureLand.Add(region, new Dictionary<int, AgricultureLand>() { { Year, agricultureland } });
+                    DictArgicultureLand.Add(key, new Dictionary<int, AgricultureLand>() { { Year, agricultureland } });
                 }
                 else
                 {
-                    if (!DictArgicultureLand[region].ContainsKey(Year))
+                    if (!DictArgicultureLand[key].ContainsKey(Year))
                     {
-                        DictArgicultureLand[region].Add(Year, agricultureland);
+                        DictArgicultureLand[key].Add(Year, agricultureland);
                     }
                 }
             }
             #endregion
-
+            Console.WriteLine(string.Format("年份：{0} 的建设用地面积数据", Year));
             #region  建设用地面积
             var constructionLand = GetConstructionLand(row, Year);
             if (constructionLand != null)
             {
-                if (!DictConstructionLand.ContainsKey(region))
+                if (!DictConstructionLand.ContainsKey(key))
                 {
-                    DictConstructionLand.Add(region, new Dictionary<int, ConstructionLand>() { { Year, constructionLand } });
+                    DictConstructionLand.Add(key, new Dictionary<int, ConstructionLand>() { { Year, constructionLand } });
                 }
                 else
                 {
 
-                    if (!DictConstructionLand[region].ContainsKey(Year))
+                    if (!DictConstructionLand[key].ContainsKey(Year))
                     {
-                        DictConstructionLand[region].Add(Year, constructionLand);
+                        DictConstructionLand[key].Add(Year, constructionLand);
                     }
                 }
             }
             #endregion
-
+            Console.WriteLine(string.Format("年份：{0} 的新增建设用地数据", Year));
             #region  新增建设用地
             var newConstruction = GetNewConstruction(row, Year);
             if (newConstruction != null)
             {
 
-                if (!DictNewConstruction.ContainsKey(region))
+                if (!DictNewConstruction.ContainsKey(key))
                 {
-                    DictNewConstruction.Add(region, new Dictionary<int, NewConstruction>() { { Year, newConstruction } });
+                    DictNewConstruction.Add(key, new Dictionary<int, NewConstruction>() { { Year, newConstruction } });
                 }
                 else
                 {
-                    if (!DictNewConstruction[region].ContainsKey(Year))
+                    if (!DictNewConstruction[key].ContainsKey(Year))
                     {
-                        DictNewConstruction[region].Add(Year, newConstruction);
+                        DictNewConstruction[key].Add(Year, newConstruction);
                     }
                 }
             }
             #endregion
-
+            Console.WriteLine(string.Format("年份：{0} 的土地供应量数据", Year));
             #region 土地供应量
             var landSupply = GetLandSupply(row, Year);
             if (landSupply != null)
             {
-                if (!DictLandSupply.ContainsKey(region))
+                if (!DictLandSupply.ContainsKey(key))
                 {
-                    DictLandSupply.Add(region, new Dictionary<int, LandSupply>() { { Year, landSupply } });
+                    DictLandSupply.Add(key, new Dictionary<int, LandSupply>() { { Year, landSupply } });
                 }else
                 {
-                    if (!DictLandSupply[region].ContainsKey(Year))
+                    if (!DictLandSupply[key].ContainsKey(Year))
                     {
-                        DictLandSupply[region].Add(Year, landSupply);
+                        DictLandSupply[key].Add(Year, landSupply);
                     }
                 }
             }
             #endregion
-
+            Console.WriteLine(string.Format("年份：{0} 的批准批次土地面积数据", Year));
             #region 批准批次土地面积
             var ratify = GetRatify(row, Year);
             if (ratify != null)
             {
-                if (!DictRatify.ContainsKey(region))
+                if (!DictRatify.ContainsKey(key))
                 {
-                    DictRatify.Add(region, new Dictionary<int, Ratify>() { { Year, ratify } });
+                    DictRatify.Add(key, new Dictionary<int, Ratify>() { { Year, ratify } });
                 }
                 else
                 {
-                    if (!DictRatify[region].ContainsKey(Year))
+                    if (!DictRatify[key].ContainsKey(Year))
                     {
-                        DictRatify[region].Add(Year, ratify);
+                        DictRatify[key].Add(Year, ratify);
                     }
                 }
             }
             #endregion
-
+            Console.WriteLine(string.Format("年份：{0} 的上级相关数据", Year));
             #region 上级相关数据
 
             var superior = GetSuperior(row, Year);
             if (superior != null)
             {
-                if (!DictSuperior.ContainsKey(region))
+                if (!DictSuperior.ContainsKey(key))
                 {
-                    DictSuperior.Add(region, new Dictionary<int, Models.Superior>() { { Year, superior } });
+                    DictSuperior.Add(key, new Dictionary<int, Models.Superior>() { { Year, superior } });
                 }
                 else
                 {
-                    if (!DictSuperior[region].ContainsKey(Year))
+                    if (!DictSuperior[key].ContainsKey(Year))
                     {
-                        DictSuperior[region].Add(Year, superior);
+                        DictSuperior[key].Add(Year, superior);
                     }
                 }
             }
@@ -356,7 +360,12 @@ namespace IntensiveUse.Form
             int count = _start;
             while (flag)
             {
-                row = RowGet(sheet, count);//开始获取行对象Row
+                //row = RowGet(sheet, count);//开始获取行对象Row
+                row = sheet.GetRow(count);
+                if (row == null)
+                {
+                    break;
+                }
                 cell = row.GetCell(_yearIndex, MissingCellPolicy.CREATE_NULL_AS_BLANK);//获取关键字年份的信息
                 value = ExcelHelper.GetValue(cell).Replace("年", "");
                 if (string.IsNullOrEmpty(value))
@@ -370,14 +379,21 @@ namespace IntensiveUse.Form
                 else
                 {
                     var region = GetCanton(row);
-                    if (!_regions.Contains(region))
+                    Console.WriteLine(string.Format("获得地区：{0} 省份：{1} 所在地级市：{2} 区域名称：{3}  区域代码：{4}", region.Zone, region.Province, region.BelongCity, region.Name, region.Code));
+                    var key = string.Format("{0}{1}", region.Code, region.BelongCity);
+                    if (!string.IsNullOrEmpty(key) && !_dictRegions.ContainsKey(key))
                     {
-                        _regions.Add(region);
+                        _dictRegions.Add(key, region);
                     }
+                    //if (!_regions.Contains(region))
+                    //{
+                    //    _regions.Add(region);
+                    //}
                     int year = 0;
                     if(int.TryParse(value,out year))//获取int类型的年份数据
                     {
-                        GainForValue(row, year, region);
+                        Console.WriteLine(string.Format("读取年份为{0}的相关数据", year));
+                        GainForValue(row, year, key);
                         count++;
                     }
                 }
@@ -385,13 +401,20 @@ namespace IntensiveUse.Form
         }
         public void Save(ManagerCore core)
         {
-            foreach(var region in _regions)
+            Save(core.ExcelManager);
+        }
+
+        public void Save(ExcelManager excelManager)
+        {
+            foreach (var region in _dictRegions)
             {
-                var regionID = core.ExcelManager.GetID(region);
+                Console.WriteLine(string.Format("开始导入地区：{0} 省份：{1} 所在地级市：{2} 区域名称：{3}  区域代码：{4}", region.Value.Zone, region.Value.Province, region.Value.BelongCity, region.Value.Name, region.Value.Code));
+                var regionID = excelManager.GetID(region.Value);
+
                 #region  保存People数据
-                if (DictPeople.ContainsKey(region))
+                if (DictPeople.ContainsKey(region.Key))
                 {
-                    core.ExcelManager.Save(DictPeople[region].Select(e => new People
+                    excelManager.Save(DictPeople[region.Key].Select(e => new People
                     {
                         PermanentSum = e.Value.PermanentSum,
                         Town = e.Value.Town,
@@ -406,9 +429,9 @@ namespace IntensiveUse.Form
                 #endregion
 
                 #region 保存生产总值数据
-                if (DictEconomy.ContainsKey(region))
+                if (DictEconomy.ContainsKey(region.Key))
                 {
-                    core.ExcelManager.Save(DictEconomy[region].Select(e => new Economy
+                    excelManager.Save(DictEconomy[region.Key].Select(e => new Economy
                     {
                         Current = e.Value.Current,
                         Compare = e.Value.Compare,
@@ -420,9 +443,9 @@ namespace IntensiveUse.Form
                 #endregion
 
                 #region 保存农用地数据
-                if (DictArgicultureLand.ContainsKey(region))
+                if (DictArgicultureLand.ContainsKey(region.Key))
                 {
-                    core.ExcelManager.Save(DictArgicultureLand[region].Select(e => new AgricultureLand
+                    excelManager.Save(DictArgicultureLand[region.Key].Select(e => new AgricultureLand
                     {
                         Subtotal = e.Value.Subtotal,
                         Arable = e.Value.Arable,
@@ -437,9 +460,9 @@ namespace IntensiveUse.Form
                 #endregion
 
                 #region 保存建设用地
-                if (DictConstructionLand.ContainsKey(region))
+                if (DictConstructionLand.ContainsKey(region.Key))
                 {
-                    core.ExcelManager.Save(DictConstructionLand[region].Select(e => new ConstructionLand
+                    excelManager.Save(DictConstructionLand[region.Key].Select(e => new ConstructionLand
                     {
                         SubTotal = e.Value.SubTotal,
                         TowCouConstruction = e.Value.TowCouConstruction,
@@ -458,9 +481,9 @@ namespace IntensiveUse.Form
                 #endregion
 
                 #region 保存新增建设用地数据
-                if (DictNewConstruction.ContainsKey(region))
+                if (DictNewConstruction.ContainsKey(region.Key))
                 {
-                    core.ExcelManager.Save(DictNewConstruction[region].Select(e => new NewConstruction
+                    excelManager.Save(DictNewConstruction[region.Key].Select(e => new NewConstruction
                     {
                         Construction = e.Value.Construction,
                         Town = e.Value.Town,
@@ -471,9 +494,9 @@ namespace IntensiveUse.Form
                 #endregion
 
                 #region 土地供应量数据
-                if (DictLandSupply.ContainsKey(region))
+                if (DictLandSupply.ContainsKey(region.Key))
                 {
-                    core.ExcelManager.Save(DictLandSupply[region].Select(e => new LandSupply
+                    excelManager.Save(DictLandSupply[region.Key].Select(e => new LandSupply
                     {
                         Sum = e.Value.Sum,
                         Append = e.Value.Append,
@@ -486,9 +509,9 @@ namespace IntensiveUse.Form
                 #endregion
 
                 #region 批准批次土地供应面积
-                if (DictRatify.ContainsKey(region))
+                if (DictRatify.ContainsKey(region.Key))
                 {
-                    core.ExcelManager.Save(DictRatify[region].Select(e => new Ratify
+                    excelManager.Save(DictRatify[region.Key].Select(e => new Ratify
                     {
                         Area = e.Value.Area,
                         Already = e.Value.Already,
@@ -499,9 +522,146 @@ namespace IntensiveUse.Form
                 #endregion
 
                 #region 保存上一级数据
-                if (DictSuperior.ContainsKey(region))
+                if (DictSuperior.ContainsKey(region.Key))
                 {
-                    core.ExcelManager.Save(DictSuperior[region].Select(e => new Superior
+                    excelManager.Save(DictSuperior[region.Key].Select(e => new Superior
+                    {
+                        ProvinceCurrent = e.Value.ProvinceCurrent,
+                        ProvinceCompare = e.Value.ProvinceCompare,
+                        ProvinceConstruction = e.Value.ProvinceConstruction,
+                        CityConstruction = e.Value.CityConstruction,
+                        CityCurrent = e.Value.CityCurrent,
+                        CityCompare = e.Value.CityCompare,
+                        Year = e.Value.Year,
+                        RID = regionID
+                    }).ToList(), regionID);
+                }
+                #endregion
+
+            }
+        }
+
+        public void Save(FileManager fileManager)
+        {
+            foreach (var region in _dictRegions)
+            {
+                Console.WriteLine(string.Format("开始导入地区：{0} 省份：{1} 所在地级市：{2} 区域名称：{3}  区域代码：{4}", region.Value.Zone, region.Value.Province, region.Value.BelongCity, region.Value.Name, region.Value.Code));
+                var regionID = fileManager.GetID(region.Value);
+
+                #region  保存People数据
+                if (DictPeople.ContainsKey(region.Key))
+                {
+                    fileManager.Save(DictPeople[region.Key].Select(e => new People
+                    {
+                        PermanentSum = e.Value.PermanentSum,
+                        Town = e.Value.Town,
+                        County = e.Value.County,
+                        HouseHold = e.Value.HouseHold,
+                        Agriculture = e.Value.Agriculture,
+                        NonFram = e.Value.NonFram,
+                        Year = e.Value.Year,
+                        RID = regionID
+                    }).ToList(), regionID);
+                }
+                #endregion
+
+                #region 保存生产总值数据
+                if (DictEconomy.ContainsKey(region.Key))
+                {
+                    fileManager.Save(DictEconomy[region.Key].Select(e => new Economy
+                    {
+                        Current = e.Value.Current,
+                        Compare = e.Value.Compare,
+                        Aggregate = e.Value.Aggregate,
+                        Year = e.Value.Year,
+                        RID = regionID
+                    }).ToList(), regionID);
+                }
+                #endregion
+
+                #region 保存农用地数据
+                if (DictArgicultureLand.ContainsKey(region.Key))
+                {
+                    fileManager.Save(DictArgicultureLand[region.Key].Select(e => new AgricultureLand
+                    {
+                        Subtotal = e.Value.Subtotal,
+                        Arable = e.Value.Arable,
+                        Garden = e.Value.Garden,
+                        Forest = e.Value.Forest,
+                        Meadow = e.Value.Meadow,
+                        Other = e.Value.Other,
+                        Year = e.Value.Year,
+                        RID = regionID
+                    }).ToList(), regionID);
+                }
+                #endregion
+
+                #region 保存建设用地
+                if (DictConstructionLand.ContainsKey(region.Key))
+                {
+                    fileManager.Save(DictConstructionLand[region.Key].Select(e => new ConstructionLand
+                    {
+                        SubTotal = e.Value.SubTotal,
+                        TowCouConstruction = e.Value.TowCouConstruction,
+                        TownMiningLease = e.Value.TownMiningLease,
+                        Town = e.Value.Town,
+                        MiningLease = e.Value.MiningLease,
+                        County = e.Value.County,
+                        Traffic = e.Value.Traffic,
+                        OtherConstruction = e.Value.OtherConstruction,
+                        Other = e.Value.Other,
+                        Sum = e.Value.Sum,
+                        Year = e.Value.Year,
+                        RID = regionID
+                    }).ToList(), regionID);
+                }
+                #endregion
+
+                #region 保存新增建设用地数据
+                if (DictNewConstruction.ContainsKey(region.Key))
+                {
+                    fileManager.Save(DictNewConstruction[region.Key].Select(e => new NewConstruction
+                    {
+                        Construction = e.Value.Construction,
+                        Town = e.Value.Town,
+                        CID = regionID,
+                        Year = e.Value.Year
+                    }).ToList(), regionID);
+                }
+                #endregion
+
+                #region 土地供应量数据
+                if (DictLandSupply.ContainsKey(region.Key))
+                {
+                    fileManager.Save(DictLandSupply[region.Key].Select(e => new LandSupply
+                    {
+                        Sum = e.Value.Sum,
+                        Append = e.Value.Append,
+                        Stock = e.Value.Stock,
+                        UnExploit = e.Value.UnExploit,
+                        Year = e.Value.Year,
+                        RID = regionID
+                    }).ToList(), regionID);
+                }
+                #endregion
+
+                #region 批准批次土地供应面积
+                if (DictRatify.ContainsKey(region.Key))
+                {
+                    fileManager.Save(DictRatify[region.Key].Select(e => new Ratify
+                    {
+                        Area = e.Value.Area,
+                        Already = e.Value.Already,
+                        Year = e.Value.Year,
+                        RID = regionID
+                    }).ToList(), regionID);
+                }
+                #endregion
+
+                #region 保存上一级数据
+                if (DictSuperior.ContainsKey(region.Key))
+                {
+                    fileManager.Save(DictSuperior[region.Key].Select(e => new Superior
                     {
                         ProvinceCurrent = e.Value.ProvinceCurrent,
                         ProvinceCompare = e.Value.ProvinceCompare,

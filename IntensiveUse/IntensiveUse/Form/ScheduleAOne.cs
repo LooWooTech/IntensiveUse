@@ -73,7 +73,17 @@ namespace IntensiveUse.Form
             return workbook;
         }
 
-
+        public IWorkbook AWrite(string filePath,ManagerCore core,int year,string province,string belongCity,string name,int[] indexs)
+        {
+            ScheduleATwo work = new ScheduleATwo();
+            IWorkbook workbook = work.AWrite(filePath, core, year, province, belongCity, name, indexs);
+            var sheet=workbook.GetSheetAt(0);
+            if (sheet == null)
+            {
+                throw new ArgumentException();
+            }
+            return workbook;
+        }
         public void Message(ManagerCore Core)
         {
             for (var i = 4; i >= 0; i--)

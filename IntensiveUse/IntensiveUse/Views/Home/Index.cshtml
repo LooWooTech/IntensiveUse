@@ -4,9 +4,11 @@
     List<string> list = ViewBag.List;
     List<string> HtmlList = ViewBag.Html;
     Dictionary<string, Dictionary<string, List<string[]>>> DICT = ViewBag.Dict;
+    List<string> Provinces = ViewBag.Provinces;
 }
 
 <div class="row">
+    <h3 style="margin-left:10px;"><span class="label label-success">区域评价</span> </h3>
     <div class="col-lg-6">
         <blockquote>
             <i class="glyphicon glyphicon-plane"></i>&nbsp;
@@ -202,6 +204,11 @@
             </div>
         </blockquote>
     </div>
+    
+</div>
+<div class="row">
+    <h3 style="margin-left:10px;"><span class="label label-success">全国汇总</span></h3>
+    
     <div class="col-lg-6">
         <blockquote>
             <i class="glyphicon glyphicon-leaf"></i>&nbsp;
@@ -234,6 +241,97 @@
             </div>
         </blockquote>
     </div>
+    <div class="col-lg-6">
+        <blockquote>
+            <i class="glyphicon glyphicon-headphones"></i>&nbsp;
+            <a href="" data-toggle="modal" data-target="#CityAll">地级市</a>
+            <div id="CityAll" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModelLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">地级市</h4>
+                        </div>
+                        <form class="form-horizontal" method="post" action="/Home/ACity">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="" class="control-label col-lg-3">省份：</label>
+                                    <div class="col-lg-6">
+                                        <select name="Province1" class="form-control" id="Province">
+                                            @foreach (var province in Provinces)
+                                            {
+                                                <option value="@(province)">@(province)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label col-lg-3">地级市:</label>
+                                    <div class="col-lg-6">
+                                        <select name="BelongCity1" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+
+                      
+                    </div>
+                </div>
+            </div>
+        </blockquote>
+    </div>
+    <div class="col-lg-6">
+        <blockquote>
+            <i class="glyphicon glyphicon-lock"></i>&nbsp;
+            <a href="" data-toggle="modal" data-target="#CountyAll">区县级</a>
+            <div id="CountyAll" class="modal fade" tabindex="-1" role="dialog" aria-label="myModelLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">区县级</h4>
+                        </div>
+                        <form class="form-horizontal" method="post" action="/Home/ACounty">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="" class="control-label col-lg-3">省份：</label>
+                                    <div class="col-lg-6">
+                                        <select name="Province2" class="form-control">
+                                            @foreach(var province in Provinces)
+                                            {
+                                                <option value="@(province)">@(province)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label col-lg-3">地级市:</label>
+                                    <div class="col-lg-6">
+                                        <select name="BelongCity2" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label col-lg-3">区县：</label>
+                                    <div class="col-lg-6">
+                                        <select name="ACounty" class="form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" class="btn btn-primary">确定</button>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </blockquote>
+    </div>
 </div>
 
 
@@ -258,5 +356,64 @@
             xmlhttp.open("GET", "/Home/GetForDivision?City=" + value, true);
             xmlhttp.send();
         })
+
+        $("[name='Province1']").click(function () {
+            var val = $(this).val();
+            var xmlhttp;
+            var node;
+            var txt;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    $("[name='BelongCity1']").empty().append(xmlhttp.responseText);
+                }
+            }
+            xmlhttp.open("GET", "/Home/GetACitys?province=" + val, true);
+            xmlhttp.send();
+        });
+
+        $("[name='Province2']").click(function () {
+            var val = $(this).val();
+            var xmlhttp;
+            var node;
+            var txt;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    $("[name='BelongCity2']").empty().append(xmlhttp.responseText);
+                }
+            }
+            xmlhttp.open("GET", "/Home/GetACitys?province=" + val, true);
+            xmlhttp.send();
+        });
+
+        $("[name='BelongCity2']").click(function () {
+            var val = $(this).val();
+            var provin = $("[name='Province2']").val();
+            var xmlhttp;
+            var node;
+            var txt;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    $("[name='ACounty']").empty().append(xmlhttp.responseText);
+                }
+            }
+            xmlhttp.open("GET", "/Home/GetCountys?province="+provin+"&&belongCity=" + val, true);
+            xmlhttp.send();
+        })
+
     })
 </script>

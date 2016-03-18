@@ -25,6 +25,93 @@ namespace IntensiveUse.Manager
             configXml.Load(ConfigurationManager.AppSettings["TABLE_FILE_PATH"]);
             CityConfigXml.Load(ConfigurationManager.AppSettings["CITY_FILE_PATH"]);
         }
+
+        public IWorkbook ADownLoad(OutputExcel type,int year,string province,string belongCity,string name)
+        {
+            var tempfile = GetExcelPath(type.ToString()).GetAbsolutePath();
+            var indexs = GetDigits(type.ToString());
+            if (indexs == null)
+            {
+                throw new ArgumentException("未定义表格中单元格的精度问题");
+            }
+            ISchedule load = null;
+            switch (type)
+            {
+                case OutputExcel.附表1A1:
+                    load = new ScheduleAOne();
+                    break;
+                case OutputExcel.附表1A2:
+                    load = new ScheduleATwo();
+                    break;
+                case OutputExcel.附表1A3:
+                    load = new ScheduleAThree();
+                    break;
+                case OutputExcel.附表1A4:
+                    load = new ScheduleAFour();
+                    break;
+                case OutputExcel.附表1A5:
+                    load = new ScheduleAFive();
+                    break;
+                case OutputExcel.附表1A6:
+                    load = new ScheduleASix();
+                    break;
+                case OutputExcel.附表1A7:
+                    load = new ScheduleASeven();
+                    break;
+                case OutputExcel.附表1A8:
+                    load = new ScheduleAEight();
+                    break;
+                case OutputExcel.附表1A9:
+                    load = new ScheduleANine();
+                    break;
+                case OutputExcel.附表1A10:
+                    load = new ScheduleATen();
+                    break;
+                case OutputExcel.附表1A11:
+                    load = new ScheduleAEleven();
+                    break;
+                case OutputExcel.附表1A12:
+                    load = new ScheduleATwelve();
+                    break;
+                case OutputExcel.附表1A13:
+                    load = new ScheduleAThirteen();
+                    break;
+                case OutputExcel.附表1A14:
+                    load = new ScheduleAFourteen();
+                    break;
+                case OutputExcel.附表1B1:
+                    load = new ScheduleAOne();
+                    break;
+                case OutputExcel.附表1B2:
+                    load = new ScheduleAThree();
+                    break;
+                case OutputExcel.附表1B3:
+                    load = new ScheduleBThree();
+                    break;
+                case OutputExcel.附表1B4:
+                    load = new ScheduleAFive();
+                    break;
+                case OutputExcel.附表1B5:
+                    load = new ScheduleASix();
+                    break;
+                case OutputExcel.附表1B6:
+                    load = new ScheduleASeven();
+                    break;
+                default: break;
+            }
+            IWorkbook workbook = load.AWrite(tempfile, Core, year, province, belongCity, name, indexs);
+            return workbook;
+
+        }
+
+        /// <summary>
+        /// 适用于区域评价下载
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <param name="Year"></param>
+        /// <param name="City"></param>
+        /// <param name="Distict"></param>
+        /// <returns></returns>
         public IWorkbook DownLoad(OutputExcel Type,int Year,string City,string Distict)
         {
             string TempFile = GetExcelPath(Type.ToString()).GetAbsolutePath();

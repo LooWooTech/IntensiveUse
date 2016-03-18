@@ -25,7 +25,8 @@ namespace IntensiveUse.Models
         /// <summary>
         /// 区域评价对象
         /// </summary>
-        public Evaluator Evalutaor { get; set; }
+        //public Evaluator Evalutaor { get; set; }
+        public string Evalutaor { get; set; }
         /// <summary>
         /// 要素代码
         /// </summary>

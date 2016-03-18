@@ -19,6 +19,7 @@ namespace IntensiveUse.Controllers
             ViewBag.List = Core.ExcelManager.GetCity();
             ViewBag.Html = Core.ExcelManager.GetDistrict("杭州市");
             ViewBag.Dict = Core.ExcelManager.GetAllProvinces();
+            ViewBag.Provinces = Core.RegionManager.GetProvonces();//全国数据获取所有省份
             return View();
         }
         public ActionResult City(string City)
@@ -47,7 +48,8 @@ namespace IntensiveUse.Controllers
             {
                 throw new ArgumentException("服务器内部错误");
             }
-            var FilePath = Core.FileManager.SaveFile(HttpContext,Type.ToString());
+            var uploadfile= Core.FileManager.SaveFile(HttpContext, Type.ToString());
+            var FilePath = uploadfile.SavePath;
             IForm engine = null;
             switch (Type)
             {
@@ -88,7 +90,8 @@ namespace IntensiveUse.Controllers
         [HttpPost]
         public ActionResult UploadOutExcel(OutputExcel Type,string City,int Year,string County)
         {
-            var FilePath = Core.FileManager.SaveFile(HttpContext, Type.ToString());
+            var uploadfile= Core.FileManager.SaveFile(HttpContext, Type.ToString());
+            var FilePath = uploadfile.SavePath;
             IRead engine = null;
             switch (Type)
             {
@@ -131,6 +134,15 @@ namespace IntensiveUse.Controllers
                 return RedirectToAction("County", new { City = City, County = County });
             }
         }
+
+        /// <summary>
+        /// 下载 区域评价
+        /// </summary>
+        /// <param name="Excel"></param>
+        /// <param name="Year"></param>
+        /// <param name="City"></param>
+        /// <param name="County"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult DownLoad(OutputExcel Excel,int Year,string City,string County)
         {
@@ -142,9 +154,40 @@ namespace IntensiveUse.Controllers
             byte[] fileContents = ms.ToArray();
             return File(fileContents, "application/ms-excel",Excel.ToString()+Excel.GetDescription()+".xls");
         }
+        /// <summary>
+        /// 下载 全国汇总
+        /// </summary>
+        /// <param name="excel"></param>
+        /// <param name="year"></param>
+        /// <param name="province"></param>
+        /// <param name="belongCity"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ADownLoad(OutputExcel excel,int year,string province,string belongCity,string name)
+        {
+            IWorkbook workbook = null;
+            var ms = new MemoryStream();
+            workbook = Core.ExcelManager.ADownLoad(excel, year, province, belongCity, name);
+            workbook.Write(ms);
+            ms.Flush();
+            byte[] fileContents = ms.ToArray();
+            return File(fileContents, "application/ms-excel", excel.ToString() + excel.GetDescription() + ".xls");
+        }
+
         public ActionResult GetForDivision(string City)
         {
             List<string> html = Core.ExcelManager.GetDistrict(City);
+            return HtmlResult(html);
+        }
+        public ActionResult GetACitys(string province)
+        {
+            var html = Core.RegionManager.GetCitys(province);
+            return HtmlResult(html);
+        }
+        public ActionResult GetCountys(string province,string belongCity)
+        {
+            var html = Core.RegionManager.GetCounty(province, belongCity);
             return HtmlResult(html);
         }
         public ActionResult DownLoadTemplet(UploadFileExcel Type)
@@ -205,10 +248,20 @@ namespace IntensiveUse.Controllers
         [HttpPost]
         public ActionResult UploadNation()
         {
-            var filePath = Core.FileManager.SaveFile(HttpContext);
-            var engine = new TableNationWide();
-            engine.Gain(filePath);
-            engine.Save(Core);
+            var uploadfile= Core.FileManager.SaveFile(HttpContext);//导入全国数据  纯粹是保存在服务器中
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult ACity(string province1,string belongCity1)
+        {
+            ViewBag.Region = Core.RegionManager.Get(province1, belongCity1);
+            ViewBag.Countys = Core.RegionManager.GetCounty(province1, belongCity1);
+            return View();
+        }
+
+        public ActionResult ACounty(string province2,string belongCity2,string ACounty)
+        {
+            ViewBag.Region = Core.RegionManager.Get(province2, belongCity2, ACounty);
             return View();
         }
 

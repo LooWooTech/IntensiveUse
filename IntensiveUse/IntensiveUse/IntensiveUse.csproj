@@ -208,6 +208,7 @@
     <Compile Include="Manager\ManagerCore.cs" />
     <Compile Include="Manager\NewConstructionManager.cs" />
     <Compile Include="Manager\PeopleManager.cs" />
+    <Compile Include="Manager\RegionManager.cs" />
     <Compile Include="Manager\StatisticsManager.cs" />
     <Compile Include="Manager\SubIndexManager.cs" />
     <Compile Include="Models\AgricultureLand.cs" />
@@ -350,6 +351,7 @@
     <Content Include="EXCEL\CurrentSituation.xls" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <Content Include="Views\Home\Change.cshtml" />
+    <Content Include="Views\Home\ACity.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

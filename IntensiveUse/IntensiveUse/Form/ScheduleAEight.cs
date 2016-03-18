@@ -38,14 +38,14 @@ namespace IntensiveUse.Form
                 };
             }
         }
-
-        public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City, string Distict,int[] Indexs)
+        public IWorkbook WriteBase(string filePath,ManagerCore core,int[] indexs)
         {
-            if (Indexs == null || Indexs.Count() != this.SerialNumber)
+            if (indexs == null || indexs.Count() != this.SerialNumber)
             {
                 throw new ArgumentException("精度位数据为null或者空，无法进行数据填写");
             }
-            IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
+
+            IWorkbook workbook = ExcelHelper.OpenWorkbook(filePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
             {
@@ -56,16 +56,73 @@ namespace IntensiveUse.Form
             {
                 TempRow = row;
             }
+
+            Ready();
+            Message(core);
+            this.Queue = core.ConstructionLandManager.TranslateOfPEUII(Sum);
+            WriteBase(ref sheet, Start, indexs);
+            return workbook;
+        }
+        /// <summary>
+        /// 适用于区域评价
+        /// </summary>
+        /// <param name="FilePath"></param>
+        /// <param name="Core"></param>
+        /// <param name="Year"></param>
+        /// <param name="City"></param>
+        /// <param name="Distict"></param>
+        /// <param name="Indexs"></param>
+        /// <returns></returns>
+        public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City, string Distict,int[] Indexs)
+        {
+            //if (Indexs == null || Indexs.Count() != this.SerialNumber)
+            //{
+            //    throw new ArgumentException("精度位数据为null或者空，无法进行数据填写");
+            //}
+
             Disticts = Core.ExcelManager.GetDistrict(City);
             this.Year = Year;
             this.CID = Core.ExcelManager.GetID(City);
-            Ready();
-            Message(Core);
-            this.Queue= Core.ConstructionLandManager.TranslateOfPEUII(Sum);
-            WriteBase(ref sheet,Start,Indexs);
-            return workbook;
-        }
 
+            return WriteBase(FilePath, Core, Indexs);
+
+            //IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
+            //ISheet sheet = workbook.GetSheetAt(0);
+            //if (sheet == null)
+            //{
+            //    throw new ArgumentException("未读取到服务器上的模板文件，请联系相关人员");
+            //}
+            //IRow row = sheet.GetRow(Start);
+            //if (row != null)
+            //{
+            //    TempRow = row;
+            //}
+            
+            //Ready();
+            //Message(Core);
+            //this.Queue= Core.ConstructionLandManager.TranslateOfPEUII(Sum);
+            //WriteBase(ref sheet,Start,Indexs);
+            //return workbook;
+        }
+        /// <summary>
+        /// 适用于 全国汇总
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="core"></param>
+        /// <param name="year"></param>
+        /// <param name="province"></param>
+        /// <param name="belongCity"></param>
+        /// <param name="distict"></param>
+        /// <param name="indexs"></param>
+        /// <returns></returns>
+        public IWorkbook AWrite(string filePath,ManagerCore core,int year,string province,string belongCity,string distict,int[] indexs)
+        {
+            Disticts = core.RegionManager.GetCounty(province, belongCity);
+            this.Year = year;
+            this.CID = core.RegionManager.GetID(province, belongCity);
+
+            return WriteBase(filePath, core, indexs);
+        }
         private void Ready()
         {
             for (var i = 2; i < Line; i++)
@@ -73,8 +130,6 @@ namespace IntensiveUse.Form
                 Columns.Add(i);
             }
         }
-        
-
         public void Message(ManagerCore Core)
         {
             foreach (var item in Disticts)

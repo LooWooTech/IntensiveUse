@@ -58,7 +58,10 @@ namespace IntensiveUse.Form
                 
             return workbook;
         }
-
+        public IWorkbook AWrite(string filePath, ManagerCore core, int year, string province, string belongCity, string name, int[] indexs)
+        {
+            return null;
+        }
         private void Ready()
         {
             for (var i = 2; i < Line; i++)

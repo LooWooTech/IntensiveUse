@@ -110,6 +110,10 @@ namespace IntensiveUse.Form
             #endregion
             return workbook;
         }
+        public IWorkbook AWrite(string filePath, ManagerCore core, int year, string province, string belongCity, string name, int[] indexs)
+        {
+            return null;
+        }
         private ICell GetCell(ISheet sheet, int IndexRow, int IndexLine)
         {
             IRow row = sheet.GetRow(IndexRow);

@@ -28,9 +28,9 @@ namespace IntensiveUse.Models
         /// </summary>
         public DateTime CreateTime { get; set; }
         /// <summary>
-        /// 保存路径
+        /// 保存路径  全路径
         /// </summary>
-        [MaxLength(127)]
+        [MaxLength(1023)]
         public string SavePath { get; set; }
         /// <summary>
         /// 文件分析状态
@@ -46,6 +46,14 @@ namespace IntensiveUse.Models
         /// 上传文件表格类型名称
         /// </summary>
         public string FileTypeName { get; set; }
+        /// <summary>
+        /// 是否分析过
+        /// </summary>
+        public bool AnalyzeFlag { get; set; }
+        /// <summary>
+        /// 文件长度
+        /// </summary>
+        public long Length { get; set; }
     }
 
     public class CurrentSituation

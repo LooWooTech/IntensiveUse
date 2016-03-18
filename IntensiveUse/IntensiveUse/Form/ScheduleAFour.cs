@@ -84,7 +84,10 @@ namespace IntensiveUse.Form
             row.GetCell(0).SetCellValue("行政辖区整体");
             return workbook;
         }
-
+        public IWorkbook AWrite(string filePath,ManagerCore core,int year,string province,string belongCity,string name,int[] indexs)
+        {
+            return null;
+        }
         public void Message(ManagerCore Core)
         {
             //浙江省数据

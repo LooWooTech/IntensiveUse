@@ -94,5 +94,10 @@ namespace IntensiveUse.Manager
         {
             get { return _subindexManager == null ? _subindexManager = new SubIndexManager() : _subindexManager; }
         }
+        private RegionManager _regionManager;
+        public RegionManager RegionManager
+        {
+            get { return _regionManager == null ? _regionManager = new RegionManager() : _regionManager; }
+        }
     }
 }
