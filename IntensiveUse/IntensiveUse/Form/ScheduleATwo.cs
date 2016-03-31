@@ -170,22 +170,22 @@ namespace IntensiveUse.Form
             {
                 int em = Year - i;
                 Queue<double> Data = new Queue<double>();
-                double[] peoples = Core.PeopleManager.Get(em, CID);
+                double[] peoples = Core.PeopleManager.Get(em, CID);//获取当前城市 em年的人口数据
                 foreach (var entity in peoples)
                 {
                     Data.Enqueue(entity);
                 }
-                double[] economys = Core.EconmoyManager.Get(em, CID);
+                double[] economys = Core.EconmoyManager.Get(em, CID);//获取当前城市em年的经济数据
                 foreach (var entity in economys)
                 {
                     Data.Enqueue(entity);
                 }
-                List<double> landuse = Core.LandUseManager.Get(em, CID);
+                List<double> landuse = Core.LandUseManager.Get(em, CID);//获取当前em年的土地利用现状数据
                 foreach (var entity in landuse)
                 {
                     Data.Enqueue(entity);
                 }
-                List<double> landsupply = Core.LandSupplyManager.Get(em, CID);
+                List<double> landsupply = Core.LandSupplyManager.Get(em, CID);//获取当前em年底土地供应数据
                 foreach (var entity in landsupply)
                 {
                     Data.Enqueue(entity);

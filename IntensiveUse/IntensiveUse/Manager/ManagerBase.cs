@@ -148,6 +148,21 @@ namespace IntensiveUse.Manager
             }
         }
 
+        public Superior SearchForSuperior(int year, int rid)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                var model = db.Superiors.FirstOrDefault(e => e.Year == year && e.RID == rid);
+
+                if (model == null)
+                {
+                    model = new Superior();
+                }
+                return model;
+            }
+        }
+
+
         public void Gain<T>(T Complex, ref Queue<double> queue)
         {
             System.Reflection.PropertyInfo[] propList = typeof(T).GetProperties();

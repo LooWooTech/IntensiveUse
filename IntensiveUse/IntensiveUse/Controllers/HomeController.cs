@@ -20,6 +20,8 @@ namespace IntensiveUse.Controllers
             ViewBag.Html = Core.ExcelManager.GetDistrict("杭州市");
             ViewBag.Dict = Core.ExcelManager.GetAllProvinces();
             ViewBag.Provinces = Core.RegionManager.GetProvonces();//全国数据获取所有省份
+            ViewBag.ALLProvinces = Core.RegionManager.GetAll();
+            ViewBag.Files = Core.FileManager.GetAnalyzingFile();
             return View();
         }
         public ActionResult City(string City)
@@ -244,6 +246,19 @@ namespace IntensiveUse.Controllers
             ms.Flush();
             byte[] fileContents = ms.ToArray();
             return File(fileContents, "application/ms-excel", SpecialExcel.区域用地状况整体评价指标现状值汇总表.ToString() + ".xls");
+        }
+
+        [HttpPost]
+        public ActionResult ACurrentDown(int year)
+        {
+            var filePath = Core.ExcelManager.GetExcelPath(SpecialExcel.城市区域用地现状值汇总表.ToString()).GetAbsolutePath();
+            var workbook = ScheduleCurrent.AWrite(filePath, Core, year);
+            MemoryStream ms = new MemoryStream();
+            workbook.Write(ms);
+            ms.Flush();
+            byte[] fileContents = ms.ToArray();
+            return File(fileContents, "application/ms-excel", SpecialExcel.城市区域用地现状值汇总表.ToString()+".xls");
+
         }
         [HttpPost]
         public ActionResult UploadNation()

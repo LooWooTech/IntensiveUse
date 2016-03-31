@@ -99,5 +99,10 @@ namespace IntensiveUse.Manager
         {
             get { return _regionManager == null ? _regionManager = new RegionManager() : _regionManager; }
         }
+        private SuperiorManager _superiorManager;
+        public SuperiorManager SuperiorManager
+        {
+            get { return _superiorManager == null ? _superiorManager = new SuperiorManager() : _superiorManager; }
+        }
     }
 }

@@ -211,8 +211,10 @@
     <Compile Include="Manager\RegionManager.cs" />
     <Compile Include="Manager\StatisticsManager.cs" />
     <Compile Include="Manager\SubIndexManager.cs" />
+    <Compile Include="Manager\SuperiorManager.cs" />
     <Compile Include="Models\AgricultureLand.cs" />
     <Compile Include="Models\ConstructionLand.cs" />
+    <Compile Include="Models\DataSet.cs" />
     <Compile Include="Models\Economy.cs" />
     <Compile Include="Models\Exponent.cs" />
     <Compile Include="Models\Foundation.cs" />
@@ -248,7 +250,9 @@
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\Respond.min.js" />
     <Content Include="TableInfo.xml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -349,6 +353,7 @@
     <Content Include="EXCEL\附表1B5.xls" />
     <Content Include="EXCEL\附表1B6.xls" />
     <Content Include="EXCEL\CurrentSituation.xls" />
+    <Content Include="EXCEL\CityCurrentSituation.xls" />
     <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <Content Include="Views\Home\Change.cshtml" />
     <Content Include="Views\Home\ACity.cshtml" />

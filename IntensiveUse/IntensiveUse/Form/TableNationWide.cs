@@ -380,7 +380,7 @@ namespace IntensiveUse.Form
                 {
                     var region = GetCanton(row);
                     Console.WriteLine(string.Format("获得地区：{0} 省份：{1} 所在地级市：{2} 区域名称：{3}  区域代码：{4}", region.Zone, region.Province, region.BelongCity, region.Name, region.Code));
-                    var key = string.Format("{0}{1}", region.Code, region.BelongCity);
+                    var key = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}", region.Code, region.BelongCity,region.Name,region.Zone,region.Province,region.FactorCode,region.Evalutaor,region.Degree);
                     if (!string.IsNullOrEmpty(key) && !_dictRegions.ContainsKey(key))
                     {
                         _dictRegions.Add(key, region);

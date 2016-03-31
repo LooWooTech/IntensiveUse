@@ -42,14 +42,31 @@ namespace IntensiveUse.Manager
                 EEI1 = m,
                 ECI1 = n
             };
-            //return new List<double>(){
-            //    values[0].Increment,
-            //    values[0].Extent,
-            //    values[1].Increment,
-            //    values[1].Extent,
-            //    m,
-            //    n
-            //};
+        }
+        public LandUseChange AGain(int year,int rid,Situation[] situations)
+        {
+            Situation[] values = Find(year, rid);
+            if (values == null || values.Count() != 2)
+            {
+                throw new ArgumentException("读取数据失败！");
+            }
+            double m = 0.0, n = 0.0;
+            if (Math.Abs(values[1].Extent - 0) > 0.001)
+            {
+                m = values[0].Extent / values[1].Extent;
+            }
+            if (Math.Abs(situations[1].Increment - 0) > 0.001 && Math.Abs(situations[0].Increment - 0) > 0.001 && Math.Abs(values[0].Increment - 0) > 0.001 && Math.Abs(values[1].Increment - 0) > 0.001)
+            {
+                n = values[0].Increment * situations[1].Increment / situations[0].Increment / values[1].Increment;
+            }
+            
+            return new LandUseChange
+            {
+                ESituation = values[0],
+                CSituation = values[1],
+                EEI1 = m,
+                ECI1=n
+            };
         }
 
         public Situation[] Find(int Year, int ID)
@@ -63,11 +80,11 @@ namespace IntensiveUse.Manager
             Situation[] situation = new Situation[2];
             situation[0] = new Situation()
             {
-                Increment = economy1.Compare - economy2.Compare
+                Increment = economy1.Compare - economy2.Compare//year 年与year-3 年的可比价差
             };
             situation[1] = new Situation()
             {
-                Increment = construction1.SubTotal - construction2.SubTotal
+                Increment = construction1.SubTotal - construction2.SubTotal// year年与year-3 年的 建设用地纵面
             };
             if (Math.Abs(economy2.Compare - 0) > 0.001)
             {
@@ -79,6 +96,7 @@ namespace IntensiveUse.Manager
             }
             return situation;
         }
+
 
         public double[] GetEUII(int Year, int ID)
         {

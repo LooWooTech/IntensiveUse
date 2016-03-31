@@ -19,10 +19,6 @@ namespace IntensiveUse.Form
         }
         public IWorkbook Write(string FilePath, ManagerCore Core, int Year, string City,string Distict,int[] Indexs)
         {
-            //if (string.IsNullOrEmpty(Distict))
-            //{
-            //    throw new ArgumentException("请选择地级市下面的所辖区");
-            //}
             if (Indexs.Count() != this.SerialNumber)
             {
                 throw new ArgumentException("提取数据精度位失败！无法进行生成表格");
@@ -80,26 +76,73 @@ namespace IntensiveUse.Form
             var sheet=workbook.GetSheetAt(0);
             if (sheet == null)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("未读取Sheet");
+            }
+            this.CID = core.RegionManager.GetID(province, belongCity, name);
+            this.Year = year;
+            Message(core, true, !string.IsNullOrEmpty(name));
+            IRow row = null;
+            ICell cell = null;
+            int m = Begin;
+            foreach (var item in DictData.Keys)
+            {
+                int line = Start;
+                int serial = 32;
+                foreach (var val in DictData[item])
+                {
+                    row = sheet.GetRow(line);
+                    if (row == null)
+                    {
+                        row = sheet.CreateRow(line);
+                    }
+                    line++;
+                    cell = row.GetCell(m, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    if (cell == null)
+                    {
+                        cell = row.CreateCell(m);
+                    }
+                    cell.SetCellValue(Math.Round(val, indexs[serial++]));
+                }
+                m++;
+
             }
             return workbook;
+            //return workbook;
         }
-        public void Message(ManagerCore Core)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Core"></param>
+        /// <param name="flag">false: 区域评价  true：全国汇总</param>
+        /// <param name="pbFlag">false: 省份  true:地级市</param>
+        public void Message(ManagerCore Core,bool flag=false,bool pbFlag=false)
         {
             for (var i = 4; i >= 0; i--)
             {
                 int em=(Year-i);
-                Economy economy = Core.EconmoyManager.SearchForEconomy(em, CID);
-                ConstructionLand construction = Core.EconmoyManager.SearchForConstruction(em, CID);
-                Queue<double> queue=new Queue<double>();
-                queue.Enqueue(economy.Current);
-                queue.Enqueue(economy.Compare);
-                queue.Enqueue(construction.SubTotal);
+                Queue<double> queue = new Queue<double>();
+                if (flag)
+                {
+                    var superior = Core.SuperiorManager.SearchForSuperior(em, CID);
+                    queue.Enqueue(pbFlag?superior.CityCurrent:superior.ProvinceCurrent);
+                    queue.Enqueue(pbFlag ? superior.CityCompare : superior.ProvinceCompare);
+                    queue.Enqueue(pbFlag ? superior.CityConstruction : superior.ProvinceConstruction);
+                }
+                else
+                {
+                    Economy economy = Core.EconmoyManager.SearchForEconomy(em, CID);
+                    ConstructionLand construction = Core.EconmoyManager.SearchForConstruction(em, CID);
+                    queue.Enqueue(economy.Current);
+                    queue.Enqueue(economy.Compare);
+                    queue.Enqueue(construction.SubTotal);
+                }
+                
                 if (!DictData.ContainsKey(em.ToString()))
                 {
                     DictData.Add(em.ToString(), queue);
                 }
             }
         }
+        
     }
 }

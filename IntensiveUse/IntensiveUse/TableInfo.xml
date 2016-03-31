@@ -321,6 +321,9 @@
       <Digit Title="现状值" Type="6"></Digit>
     </Digits>
   </Table>
+  <Table Title="城市区域用地现状值汇总表" Name="">
+    <File Title="模板" Path="EXCEL/CityCurrentSituation.xls"></File>
+  </Table>
   <Table Title="表1" Name="">
     <File Title="模板" Path="EXCEL/表1.xls"></File>
   </Table>

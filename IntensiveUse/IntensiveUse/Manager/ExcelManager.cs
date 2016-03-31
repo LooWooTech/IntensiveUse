@@ -359,6 +359,13 @@ namespace IntensiveUse.Manager
                 return db.Regions.Find(id);
             }
         }
+        public Region Find(Region region)
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                return db.Regions.Where(e => e.Zone == region.Zone && e.Province == region.Province && e.BelongCity == region.BelongCity && e.Evalutaor == e.FactorCode && e.Name == region.Name && e.Code == region.Code && e.Degree == region.Degree).FirstOrDefault();
+            }
+        }
         public int Add(Region region)
         {
             using (var db = GetIntensiveUseContext())
@@ -750,7 +757,7 @@ namespace IntensiveUse.Manager
         public int GetID(Region region)
         {
             if (region == null) return 0;
-            var entry = Find(region.ID);
+            var entry = Find(region);
             if (entry == null)
             {
                 return Add(region);
@@ -874,5 +881,137 @@ namespace IntensiveUse.Manager
 
            // return true;
         }
+
+        public DataSet GetDataSet(Exponent exponent,LandUseChange landUseChange,int year,Region region)
+        {
+            var dataSet = new DataSet();
+            var people1 = SearchForPeople(year, region.ID);//14年的人口数据
+            var people2 = SearchForPeople(year - 3, region.ID);//11年的人口数据
+            var construction1 = SearchForConstruction(year, region.ID);
+            var construction2 = SearchForConstruction(year - 3, region.ID);
+            #region  获取 土地利用趋势类型 人口
+            if (people1.PermanentSum > people2.PermanentSum)
+            {
+                if (construction1.TowCouConstruction <= construction2.TowCouConstruction)
+                {
+                    dataSet.People = Tendency.内涵挖潜型;
+                }
+                else if (exponent.PEI1 > 1)
+                {
+                    dataSet.People = Tendency.集约趋势型;
+                }
+                else if (Math.Abs(exponent.PEI1 - 1) < 0.000001)
+                {
+                    dataSet.People = Tendency.相对稳定型;
+                }
+                else
+                {
+                    dataSet.People= Tendency.粗放趋势型;
+                }
+                
+            }
+            else if (Math.Abs(people1.PermanentSum - people2.PermanentSum) < 0.0001)
+            {
+                if (construction1.TowCouConstruction > construction2.TowCouConstruction)
+                {
+                    dataSet.People= Tendency.粗放趋势型;
+                }
+                else if (Math.Abs(construction1.TowCouConstruction - construction2.TowCouConstruction) < 0.000001)
+                {
+                    dataSet.People= Tendency.相对稳定型;
+                }
+                else
+                {
+                    dataSet.People= Tendency.集约趋势型;
+                }
+            }
+            else
+            {
+                if (construction1.TowCouConstruction >= construction2.TowCouConstruction)
+                {
+                    dataSet.People= Tendency.粗放趋势型;
+                }
+                else if (exponent.PEI1 > 1)
+                {
+                    dataSet.People= Tendency.粗放趋势型;
+                }
+                else if (Math.Abs(exponent.PEI1 - 1) < 0.000001)
+                {
+                    dataSet.People= Tendency.相对稳定型;
+                }
+                else
+                {
+                    dataSet.People= Tendency.集约趋势型;
+                }
+            }
+            #endregion
+            double r, rmax = .0;
+            var superior1 = SearchForSuperior(year, region.ID);
+            var superior2 = SearchForSuperior(year - 3, region.ID);
+            var economy1 = SearchForEconomy(year, region.ID);
+            var economy2 = SearchForEconomy(year - 3, region.ID);
+            if (region.Evalutaor.Trim() == "地级以上城市辖区整体")
+            {
+                r = ((superior1.ProvinceCompare - superior2.ProvinceCompare) / superior2.ProvinceCompare) / ((superior1.ProvinceConstruction - superior2.ProvinceConstruction) / superior2.ProvinceConstruction);
+            }
+            else
+            {
+                r = ((superior1.CityCompare - superior2.CityCompare) / superior2.CityCompare) / ((superior1.CityConstruction - superior2.CityConstruction) / superior2.CityConstruction);
+            }
+            rmax = r > 1 ? r : 1;
+
+            #region  获取土地利用趋势类型 经济
+
+            if (economy1.Compare > economy2.Compare)
+            {
+                if (construction1.SubTotal <= construction2.SubTotal)
+                {
+                    dataSet.Economy = Tendency.内涵挖潜型;
+                }else if ((landUseChange.EEI1 > rmax && landUseChange.ECI1 >= 1) || ((Math.Abs(landUseChange.EEI1 - rmax) < 0.00001) && landUseChange.ECI1 > 1))
+                {
+                    dataSet.Economy = Tendency.集约趋势型;
+                }else if ((Math.Abs(landUseChange.EEI1 - rmax) < 0.000001) && (Math.Abs(landUseChange.ECI1 - 1) < 0.00001))
+                {
+                    dataSet.Economy = Tendency.相对稳定型;
+                }
+                else
+                {
+                    dataSet.Economy = Tendency.粗放趋势型;
+                }
+            }else if (Math.Abs(economy1.Compare - economy2.Compare) < 0.0001)
+            {
+                if (construction1.SubTotal < construction2.SubTotal)
+                {
+                    dataSet.Economy = Tendency.集约趋势型;
+                }else if (Math.Abs(construction1.SubTotal - construction2.SubTotal) < 0.000001)
+                {
+                    dataSet.Economy = Tendency.相对稳定型;
+                }
+                else
+                {
+                    dataSet.Economy = Tendency.粗放趋势型;
+                }
+            }
+            else
+            {
+                if (construction1.SubTotal >= construction2.SubTotal)
+                {
+                    dataSet.Economy = Tendency.粗放趋势型;
+                }else if ((landUseChange.EEI1 > rmax) || (landUseChange.ECI1 > 1))
+                {
+                    dataSet.Economy = Tendency.粗放趋势型;
+                }else if ((Math.Abs(landUseChange.EEI1 - rmax) < 0.000001) && (Math.Abs(landUseChange.ECI1 - 1) < 0.000001))
+                {
+                    dataSet.Economy = Tendency.相对稳定型;
+                }
+                else
+                {
+                    dataSet.Economy = Tendency.集约趋势型;
+                }
+            }
+            #endregion
+            return dataSet;
+        }
+
     }
 }

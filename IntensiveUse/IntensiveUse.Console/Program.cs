@@ -38,7 +38,7 @@ namespace IntensiveUse.Console
                 else
                 {
                     System.Console.WriteLine("当前不存在没有分析过的Excel文件");
-                    _times = 10000;
+                    _times = 1000000;
                 }
                 try
                 {
@@ -48,7 +48,7 @@ namespace IntensiveUse.Console
                 {
                     System.Console.WriteLine(ex.Message + ex.ToString());
                 }
-                System.Console.ReadLine();
+                //System.Console.ReadLine();
                 Thread.Sleep(_times);
             }
         }

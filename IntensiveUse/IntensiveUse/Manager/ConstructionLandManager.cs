@@ -69,6 +69,14 @@ namespace IntensiveUse.Manager
             queue.Enqueue(LUC.ECI1);
             return queue;
         }
+        
+        public void GetALandUseChange(LandUseChange landUseChange,ref Queue<double> queue)
+        {
+            Gain(landUseChange.ESituation, ref queue);
+            Gain(landUseChange.CSituation, ref queue);
+            queue.Enqueue(landUseChange.EEI1);
+            queue.Enqueue(landUseChange.ECI1);
+        }
 
         
 

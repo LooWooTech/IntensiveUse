@@ -24,32 +24,21 @@ namespace IntensiveUse.Form
                 DictValue = new Dictionary<string, List<string>>();
             }
         }
-        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict,int[] Indexs)
+        public IWorkbook WriteBase(string filePath,ManagerCore core,int[] indexs,string name,string province=null,string belongCity=null)
         {
-            if (Indexs.Count() != this.SerialNumber)
+            if (indexs.Count() != this.SerialNumber)
             {
                 throw new ArgumentException("提取数据精度位失败！无法进行生成表格");
             }
-            IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
+            IWorkbook workbook = ExcelHelper.OpenWorkbook(filePath);
             ISheet sheet = workbook.GetSheetAt(0);
             if (sheet == null)
             {
                 throw new ArgumentException("打开模板失败,服务器缺失文件");
             }
-            if (!string.IsNullOrEmpty(Distict))
-            {
-                Disticts.Add(Distict);
-            }
-            else
-            {
-                Disticts = Core.ExcelManager.GetDistrict(City);
-                Disticts.Add(City);
-            }
-            this.Year = Year;
-            this.City = City;
-            Message(Core);
+            Message(core,province,belongCity);
             int StartRow = 0;
-            int StartLine=Begin;
+            int StartLine = Begin;
             int SerialNumber = 0;
 
             ICell cell = null;
@@ -57,7 +46,7 @@ namespace IntensiveUse.Form
             {
                 StartRow = Start;
                 cell = GetCell(sheet, StartRow++, StartLine);
-                if (string.IsNullOrEmpty(Distict))
+                if (string.IsNullOrEmpty(name))
                 {
                     cell.SetCellValue(++SerialNumber);
                     cell = GetCell(sheet, StartRow++, StartLine);
@@ -71,14 +60,74 @@ namespace IntensiveUse.Form
                 }
                 StartLine++;
             }
-            if (string.IsNullOrEmpty(Distict))
+            if (string.IsNullOrEmpty(name))
             {
                 StartLine--;
                 sheet.AddMergedRegion(new CellRangeAddress(this.Start, this.Start + 1, StartLine, StartLine));
                 cell = GetCell(sheet, this.Start, StartLine);
                 cell.SetCellValue("城市行政辖区整体");
             }
+            return workbook;
+        }
+        public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict,int[] Indexs)
+        {
+            #region 2016.3.18 集成全国汇总
+            //if (Indexs.Count() != this.SerialNumber)
+            //{
+            //    throw new ArgumentException("提取数据精度位失败！无法进行生成表格");
+            //}
+            //IWorkbook workbook = ExcelHelper.OpenWorkbook(FilePath);
+            //ISheet sheet = workbook.GetSheetAt(0);
+            //if (sheet == null)
+            //{
+            //    throw new ArgumentException("打开模板失败,服务器缺失文件");
+            //}
 
+            //Message(Core);
+            //int StartRow = 0;
+            //int StartLine=Begin;
+            //int SerialNumber = 0;
+
+            //ICell cell = null;
+            //foreach (var key in DictValue.Keys)
+            //{
+            //    StartRow = Start;
+            //    cell = GetCell(sheet, StartRow++, StartLine);
+            //    if (string.IsNullOrEmpty(Distict))
+            //    {
+            //        cell.SetCellValue(++SerialNumber);
+            //        cell = GetCell(sheet, StartRow++, StartLine);
+            //    }
+            //    cell.SetCellValue(key);
+            //    var values = DictValue[key];
+            //    foreach (var entry in values)
+            //    {
+            //        cell = GetCell(sheet, StartRow++, StartLine);
+            //        cell.SetCellValue(entry);
+            //    }
+            //    StartLine++;
+            //}
+            //if (string.IsNullOrEmpty(Distict))
+            //{
+            //    StartLine--;
+            //    sheet.AddMergedRegion(new CellRangeAddress(this.Start, this.Start + 1, StartLine, StartLine));
+            //    cell = GetCell(sheet, this.Start, StartLine);
+            //    cell.SetCellValue("城市行政辖区整体");
+            //}
+            // return workbook;
+            #endregion
+            if (!string.IsNullOrEmpty(Distict))
+            {
+                Disticts.Add(Distict);
+            }
+            else
+            {
+                Disticts = Core.ExcelManager.GetDistrict(City);
+                Disticts.Add(City);
+            }
+            this.Year = Year;
+            //this.City = City;
+            return WriteBase(FilePath, Core, Indexs, Distict);
             #region
             /*
             foreach (var item in DictValue.Keys)
@@ -108,11 +157,22 @@ namespace IntensiveUse.Form
                 StartLine++;
             }*/
             #endregion
-            return workbook;
+
         }
         public IWorkbook AWrite(string filePath, ManagerCore core, int year, string province, string belongCity, string name, int[] indexs)
         {
-            return null;
+            if (!string.IsNullOrEmpty(name))
+            {
+                Disticts.Add(name);
+            }
+            else
+            {
+                Disticts = core.RegionManager.GetCounty(province, belongCity);
+                Disticts.Add(belongCity);
+            }
+            this.Year = year;
+            //this.City=
+            return WriteBase(filePath, core, indexs, name, province, belongCity);
         }
         private ICell GetCell(ISheet sheet, int IndexRow, int IndexLine)
         {
@@ -127,11 +187,19 @@ namespace IntensiveUse.Form
             return cell;
         }
 
-        public void Message(ManagerCore Core)
+        public void Message(ManagerCore Core,string province,string belongCity)
         {
             foreach (var item in Disticts)
             {
-                int ID = Core.ExcelManager.GetID(item);
+                int ID = 0;
+                if (string.IsNullOrEmpty(province) || string.IsNullOrEmpty(belongCity))
+                {
+                    ID = Core.ExcelManager.GetID(item);
+                }
+                else
+                {
+                    ID = Core.RegionManager.GetID(province, belongCity, item);
+                }
                 List<string> values = Core.PeopleManager.Statistics(ID,Year);
                 if (!DictValue.ContainsKey(item))
                 {

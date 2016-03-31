@@ -71,7 +71,8 @@ namespace IntensiveUse.Models
     }
     public enum SpecialExcel
     {
-        区域用地状况整体评价指标现状值汇总表=0
+        区域用地状况整体评价指标现状值汇总表=0,
+        城市区域用地现状值汇总表=1
     }
 
   

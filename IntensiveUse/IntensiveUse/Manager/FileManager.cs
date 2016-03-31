@@ -88,7 +88,7 @@ namespace IntensiveUse.Manager
             if (region == null) return 0;
             using (var db = GetIntensiveUseContext())
             {
-                var entry = db.Regions.Find(region.ID);
+                var entry = db.Regions.FirstOrDefault(e => e.Zone == region.Zone && e.Province == region.Province && e.BelongCity == region.BelongCity && e.Evalutaor == region.Evalutaor && e.FactorCode == region.FactorCode && e.Name == region.Name && e.Degree == region.Degree);
                 if (entry == null)
                 {
                     db.Regions.Add(region);
@@ -247,6 +247,14 @@ namespace IntensiveUse.Manager
                     entry.AnalyzeFlag = false;
                     db.SaveChanges();
                 }
+            }
+        }
+
+        public List<UploadFile> GetAnalyzingFile()
+        {
+            using (var db = GetIntensiveUseContext())
+            {
+                return db.UploadFiles.Where(e => e.AnalyzeFlag == true).OrderBy(e=>e.ID).ToList();
             }
         }
 

@@ -21,6 +21,16 @@ namespace IntensiveUse.Form
         }
         public IWorkbook Write(string FilePath, ManagerCore Core,int Year, string City,string Distict,int[] Indexs)
         {
+            this.Year = Year;
+            this.a = Core.ExcelManager.GetSuperiorCID(City);
+            this.CID = Core.ExcelManager.GetID(City);
+
+            this.City = City;
+            this.Disticts = Core.ExcelManager.GetDistrict(City);
+            this.Disticts.Add(City);
+
+
+
             if (Indexs == null || Indexs.Count() != this.SerialNumber)
             {
                 throw new ArgumentException("精度位数据为null或者空，无法进行数据填写！");
@@ -32,13 +42,9 @@ namespace IntensiveUse.Form
                 throw new ArgumentException("打开模板失败,服务器缺失文件");
             }
             TempRow = sheet.GetRow(Start);
-            this.Year = Year;
-            this.a = Core.ExcelManager.GetSuperiorCID(City);
-            this.CID = Core.ExcelManager.GetID(City);
 
-            this.City = City;
-            this.Disticts = Core.ExcelManager.GetDistrict(City);
-            this.Disticts.Add(City);
+          
+
             Message(Core);
             int Count = DictData.Count;
             IRow row = ExcelHelper.OpenRow(ref sheet,Start+1);
@@ -51,16 +57,6 @@ namespace IntensiveUse.Form
                 cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 cell.SetCellValue(Math.Round(item, Indexs[++serial]));
             }
-            //row = ExcelHelper.OpenRow(ref sheet, Start + 1);
-            //Queue<double> queue = Core.ConstructionLandManager.TranslateOfLandUseChange(Landusechange);
-            //line = Begin;
-            ////填写行政辖区整体  行数据
-            //serial = 0;
-            //foreach (var item in queue)
-            //{
-            //    cell = row.GetCell(line++, MissingCellPolicy.CREATE_NULL_AS_BLANK);
-            //    cell.SetCellValue(Math.Round(item, Indexs[serial++]));
-            //}
             sheet.ShiftRows(Start + 1, sheet.LastRowNum, DictData.Count-1);
             int SerialNumber = 0;
             foreach (var item in DictData.Keys)
@@ -112,11 +108,11 @@ namespace IntensiveUse.Form
             {
                 int ID = Core.ExcelManager.GetID(item);
                 LandUseChange one;
-                if (item == City)
+                if (item == City)//如果是地级市  那个使用浙江省的可比价数据
                 {
                     one = Core.EconmoyManager.Gain(Year, ID, Cities);
                 }
-                else
+                else//如果是区县  使用上一级行政区（地级市）的可比价数据
                 {
                     one= Core.EconmoyManager.Gain(Year, ID, Dcities);
                 }
